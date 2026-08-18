@@ -5,7 +5,7 @@
 // minimal page rather than through AppShell's nav/sync (the user isn't
 // authenticated yet, so there's nothing to sync or navigate to).
 
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [password, setPassword] = useState("");
