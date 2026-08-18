@@ -11,7 +11,9 @@ Each deployment is your own, private copy: your data lives in Hevy and in your b
 
 ## Screenshots
 
-_Coming soon — a screenshot/GIF of the dashboard body map will go here once captured from a real account._
+![Dashboard: monthly body heat map (front and back), neglect radar and recent workouts](docs/screenshots/dashboard.png)
+
+![Analytics: 12-month consistency heatmap, sets by sub-muscle with a group filter, sets by muscle group, hours trained](docs/screenshots/analytics.png)
 
 ## Requirements
 
@@ -105,7 +107,7 @@ Planned next, roughly in order (PRs welcome on any of them):
 - Plateau detection per exercise, rolled up to the sub-muscles it trains
 - Shareable summary cards (weekly body map, streaks, PRs)
 - One-click "copy my training summary" for pasting into an AI assistant
-- Screenshots and a short demo GIF for this README
+- A short demo GIF for this README
 
 Not planned: multi-user hosting, integrations beyond Hevy, or a backend database — HevyMap stays a single-user, self-deployed app.
 
