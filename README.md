@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HevyMap
 
-## Getting Started
+Open-source sub-muscle volume tracker built on the [Hevy](https://hevy.com) API.
 
-First, run the development server:
+Hevy tracks muscle groups coarsely ("chest", "shoulders"). HevyMap pulls your workouts via the Hevy API and allocates every set to fine-grained sub-muscles (front/side/rear delts, upper/mid/lower chest, triceps heads, etc.), visualized on an interactive anatomical body map with weekly volume tracking against evidence-based targets.
+
+One deployment = one user's data. No accounts, no database — all your workout data lives in your browser (IndexedDB) and in Hevy. MIT licensed.
+
+## Stack
+
+- Next.js (App Router), TypeScript (strict), Tailwind CSS + shadcn/ui
+- Recharts for trend charts
+- IndexedDB (`idb`) for workout cache, localStorage for lightweight prefs
+- Deployable on Vercel (hobby tier) or fully local
+
+## Local setup
 
 ```bash
+git clone https://github.com/longtimec0ming/hevymap.git
+cd hevymap
+npm install
+cp .env.example .env.local   # then fill in HEVY_API_KEY
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Get a Hevy API key from Hevy Pro → Settings → Developer.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Purpose |
+|---|---|---|
+| `HEVY_API_KEY` | yes | Server-side only, used by the Hevy API proxy. Never exposed to the client. |
+| `ACCESS_PASSWORD` | no | If set, gates the whole app behind a password form (useful when self-hosting somewhere reachable by others). Unset = no gate. |
 
-## Learn More
+## Commands
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev         # local dev server
+npm run build        # production build
+npm run test          # Vitest (includes muscle-map validation)
+npm run lint            # ESLint
+npm run typecheck        # tsc --noEmit
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy to Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+_Deploy button coming once the app is feature-complete (build step 7)._
 
-## Deploy on Vercel
+## Build status
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Tracking `CLAUDE.md`'s build order. Updated as each step lands.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] **Step 1 — Data foundation:** `data/taxonomy.ts` (26 canonical sub-muscles), `muscle-map.json` schema + types, validation tests (sum-to-1.0, valid sub-muscle keys only)
+- [ ] **Step 2 — Platform:** Hevy API proxy route, `lib/hevy.ts` client (pagination, count, incremental sync), IndexedDB layer
+- [ ] **Step 3 — Volume math:** `lib/volume.ts` fractional set/tonnage allocation + tests
+- [ ] **Step 4 — Muscle map seeding:** populate `data/muscle-map.json` for the full Hevy standard exercise bank
+- [ ] **Step 5 — Pages:** dashboard, workouts, history, exercises, settings
+- [ ] **Step 6 — Body map:** SVG anatomical figure (front + back, 26 addressable paths), heatmap + drill-down
+- [ ] **Step 7 — Ship polish:** access-password middleware, README deploy button, CONTRIBUTING.md
+
+## Docs
+
+- [`PLAN.md`](./PLAN.md) — full product & technical spec
+- [`CLAUDE.md`](./CLAUDE.md) — how to work in this repo, build order, hard invariants
+- `CONTRIBUTING.md` — coming in step 7, focused on `muscle-map.json` PRs
+
+## License
+
+MIT
