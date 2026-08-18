@@ -8,12 +8,23 @@ import { getHevyKeyFromRequest } from "@/lib/hevy-key";
 
 const HEVY_API_BASE = "https://api.hevyapp.com/v1";
 
-// Methods Hevy's API actually supports across its endpoints (workouts,
-// exercise_templates, routines, ...). We forward all of them generically
-// rather than special-casing per-endpoint.
-const FORWARDED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"] as const;
+// HevyMap only ever reads from Hevy (see PLAN.md — no write flows exist in
+// the app; lib/hevy.ts's client only issues GET). Restricting the proxy to
+// GET keeps it from becoming a generic authenticated write-proxy to a
+// third-party API if a future bug (here or in a fork) ever lets an
+// attacker control the path/body.
+const FORWARDED_METHODS = ["GET"] as const;
 
 async function forward(request: NextRequest, path: string[]): Promise<Response> {
+  // Reject path segments that could walk the request outside `/v1/...` on
+  // api.hevyapp.com (e.g. `..`). This can't reach a different host — the
+  // segments are string-joined onto HEVY_API_BASE, never used to build a
+  // new origin — but it's a cheap belt-and-braces check against hitting
+  // unintended upstream paths.
+  if (path.some((segment) => segment === "." || segment === "..")) {
+    return Response.json({ error: "Invalid path." }, { status: 400 });
+  }
+
   // Resolution order: server-configured HEVY_API_KEY -> the user's own key
   // (pasted via /api/hevy-key, stored as an encrypted cookie) -> no key at
   // all. lib/hevy.ts's client recognizes the "no_api_key" error and routes
@@ -25,20 +36,17 @@ async function forward(request: NextRequest, path: string[]): Promise<Response> 
 
   const targetUrl = `${HEVY_API_BASE}/${path.join("/")}${request.nextUrl.search}`;
 
+  // Only the headers Hevy's API actually needs. Client-sent headers (its
+  // own cookies, auth, etc.) are never forwarded upstream.
   const headers = new Headers();
   headers.set("api-key", apiKey);
-  const contentType = request.headers.get("content-type");
-  if (contentType) headers.set("content-type", contentType);
   headers.set("accept", "application/json");
-
-  const hasBody = request.method !== "GET" && request.method !== "HEAD";
 
   let upstreamResponse: Response;
   try {
     upstreamResponse = await fetch(targetUrl, {
-      method: request.method,
+      method: "GET",
       headers,
-      body: hasBody ? await request.text() : undefined,
       // Never cache API responses; workout data changes constantly and
       // this is a stateless proxy, not a cache layer.
       cache: "no-store",

@@ -21,6 +21,18 @@ export default function LoginPage() {
   );
 }
 
+// `from` comes from the URL (set by proxy.ts, but also directly forgeable
+// by anyone linking to /login?from=...), so it must be constrained to a
+// same-origin relative path before it's used for a client-side redirect —
+// otherwise a crafted link could send a user who just entered their
+// password on to an external site. Only a single leading "/" is accepted;
+// "//evil.com" and "https://evil.com" (protocol-relative / absolute) are
+// rejected.
+function getSafeRedirect(from: string | null): string {
+  if (from && from.startsWith("/") && !from.startsWith("//")) return from;
+  return "/";
+}
+
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -47,8 +59,7 @@ function LoginForm() {
         return;
       }
 
-      const redirectTo = searchParams.get("from") || "/";
-      router.push(redirectTo);
+      router.push(getSafeRedirect(searchParams.get("from")));
       router.refresh();
     } catch {
       setError("Something went wrong. Try again.");
