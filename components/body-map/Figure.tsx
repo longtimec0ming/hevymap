@@ -4,15 +4,12 @@ import type { KeyboardEvent, MouseEvent } from "react";
 import type { SubMuscleId } from "@/data/taxonomy";
 import type { MuscleStatus } from "./color-scale";
 import {
-  BACK_REGIONS,
-  DETAIL_LINES_BACK,
-  DETAIL_LINES_FRONT,
-  FRONT_REGIONS,
-  SILHOUETTE_BACK,
-  SILHOUETTE_FRONT,
+  BACK_ART,
+  FRONT_ART,
+  MIRROR_TRANSFORM,
   VIEW_BOX,
   type MuscleRegion,
-  type MuscleShape,
+  type ViewArt,
 } from "./muscle-regions";
 
 interface FigureProps {
@@ -27,16 +24,19 @@ interface FigureProps {
   ) => void;
 }
 
-const OUTLINE_COLOR = "#e2e8f0";
-const OUTLINE_WIDTH = 1.1;
-const SILHOUETTE_FILL = "#1c2128";
-const SILHOUETTE_STROKE = "#31363f";
+// Line-art palette: a pale neutral body against the near-black app background
+// with a single dark stroke weight, so only muscles carrying volume take a
+// colour from the heat ramp. Muscles with no data keep the neutral fill —
+// never invisible.
+const BODY_FILL = "oklch(0.9 0 0)";
+const BODY_FILL_OPACITY = 0.88;
+const STROKE = "oklch(0.34 0.02 265)";
+const STROKE_WIDTH = 1.2;
+const OUTLINE_WIDTH = 1.9;
+const DETAIL_STROKE = "oklch(0.48 0.02 265)";
+const HIGHLIGHT_STROKE = "oklch(0.98 0 0)";
 
-function shapeToSvg(shape: MuscleShape, extraProps: Record<string, unknown>) {
-  return <path d={shape.d} {...extraProps} />;
-}
-
-function MuscleRegionShapes({
+function MuscleShapes({
   region,
   status,
   isHighlighted,
@@ -54,10 +54,6 @@ function MuscleRegionShapes({
     event?: MouseEvent<SVGElement> | KeyboardEvent<SVGElement>,
   ) => void;
 }) {
-  const fill = status.isEmpty ? SILHOUETTE_FILL : status.color;
-  const stroke = isHighlighted ? "#f8fafc" : status.isEmpty ? "#454b56" : "rgba(15,17,21,0.55)";
-  const strokeWidth = isHighlighted ? 2.5 : status.isEmpty ? 1 : 1;
-
   const handleClick = () => onMuscleClick?.(region.id);
   const handleEnter = (event: MouseEvent<SVGElement>) => {
     onMuscleHover?.(region.id);
@@ -67,9 +63,11 @@ function MuscleRegionShapes({
     onMuscleHover?.(null);
     onMuscleFocus?.(null);
   };
-  const handleFocus = (event: KeyboardEvent<SVGElement>) => {
+  // Keyboard focus carries no pointer position, so the tooltip anchors to the
+  // container instead (see BodyMap's handleFocus).
+  const handleFocus = () => {
     onMuscleHover?.(region.id);
-    onMuscleFocus?.(region.id, event);
+    onMuscleFocus?.(region.id);
   };
   const handleBlur = () => {
     onMuscleHover?.(null);
@@ -82,16 +80,17 @@ function MuscleRegionShapes({
     }
   };
 
-  const shapeProps = {
-    fill,
-    stroke,
-    strokeWidth,
+  const props = {
+    fill: status.isEmpty ? BODY_FILL : status.color,
+    fillOpacity: status.isEmpty ? BODY_FILL_OPACITY : 1,
+    stroke: isHighlighted ? HIGHLIGHT_STROKE : STROKE,
+    strokeWidth: isHighlighted ? 2.4 : STROKE_WIDTH,
     "data-muscle-id": region.id,
     role: "button" as const,
     tabIndex: 0,
     "aria-label": region.id,
-    className: "cursor-pointer outline-none transition-[stroke,stroke-width,filter] duration-150 focus-visible:stroke-white",
-    style: isHighlighted ? { filter: "drop-shadow(0 0 6px rgba(255,255,255,0.55))" } : undefined,
+    className:
+      "cursor-pointer outline-none transition-[stroke,stroke-width] duration-150 focus-visible:stroke-white",
     onClick: handleClick,
     onMouseEnter: handleEnter,
     onMouseLeave: handleLeave,
@@ -102,59 +101,52 @@ function MuscleRegionShapes({
 
   return (
     <>
-      {region.shapes.map((shape, i) => (
-        <g key={`${region.id}-${i}`}>{shapeToSvg(shape, shapeProps)}</g>
+      {region.shapes.map((d, i) => (
+        <path key={`${region.id}-${i}`} d={d} {...props} />
       ))}
-      {region.mirror && (
-        <g transform="translate(300,0) scale(-1,1)">
-          {region.shapes.map((shape, i) => (
-            <g key={`${region.id}-mirror-${i}`}>{shapeToSvg(shape, shapeProps)}</g>
-          ))}
-        </g>
-      )}
     </>
   );
 }
 
-export function Figure({
-  view,
+/**
+ * One half of the figure. The whole thing is authored for x <= 200 and this
+ * is rendered twice — once as-is and once mirrored — so the two sides can
+ * never drift apart. Both copies carry the same `data-muscle-id` and the same
+ * handlers, and highlighting is keyed on the id, so hovering either side
+ * lights up the muscle on both.
+ */
+function Half({
+  art,
   statusByMuscle,
   highlightedMuscleId,
   onMuscleClick,
   onMuscleHover,
   onMuscleFocus,
-}: FigureProps) {
-  const regions = view === "front" ? FRONT_REGIONS : BACK_REGIONS;
-  const silhouette = view === "front" ? SILHOUETTE_FRONT : SILHOUETTE_BACK;
-  const detailLines = view === "front" ? DETAIL_LINES_FRONT : DETAIL_LINES_BACK;
-
+}: { art: ViewArt } & Omit<FigureProps, "view">) {
   return (
-    <svg
-      viewBox={VIEW_BOX}
-      className="h-auto w-full max-w-[300px]"
-      role="group"
-      aria-label={`${view} body map`}
-    >
-      {/* Background silhouette — non-interactive anatomical guide */}
-      <g fill={SILHOUETTE_FILL} stroke={SILHOUETTE_STROKE} strokeWidth={OUTLINE_WIDTH} pointerEvents="none">
-        {shapeToSvg(silhouette.legLeft, {})}
-        <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.legLeft, {})}</g>
-        {shapeToSvg(silhouette.footLeft, {})}
-        <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.footLeft, {})}</g>
-        {shapeToSvg(silhouette.armLeft, {})}
-        <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.armLeft, {})}</g>
-        {shapeToSvg(silhouette.handLeft, {})}
-        <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.handLeft, {})}</g>
-        {shapeToSvg(silhouette.torso, {})}
-        {shapeToSvg(silhouette.neck, {})}
-        {shapeToSvg(silhouette.head, {})}
-        {shapeToSvg(silhouette.hair, {})}
+    <>
+      <g fill={BODY_FILL} fillOpacity={BODY_FILL_OPACITY} pointerEvents="none">
+        {art.base.map((d, i) => (
+          <path key={`base-${i}`} d={d} />
+        ))}
       </g>
 
-      {/* Addressable muscle regions */}
-      <g stroke={OUTLINE_COLOR} strokeLinejoin="round">
-        {regions.map((region) => (
-          <MuscleRegionShapes
+      <g
+        fill={BODY_FILL}
+        fillOpacity={BODY_FILL_OPACITY}
+        stroke={STROKE}
+        strokeWidth={STROKE_WIDTH}
+        strokeLinejoin="round"
+        pointerEvents="none"
+      >
+        {art.silhouette.map((d, i) => (
+          <path key={`sil-${i}`} d={d} />
+        ))}
+      </g>
+
+      <g strokeLinejoin="round">
+        {art.regions.map((region) => (
+          <MuscleShapes
             key={region.id}
             region={region}
             status={statusByMuscle[region.id]}
@@ -166,11 +158,61 @@ export function Figure({
         ))}
       </g>
 
-      {/* Decorative detail lines (ab segmentation, spine hint, ...) */}
-      <g fill="none" stroke={SILHOUETTE_STROKE} strokeWidth={0.9} strokeLinecap="round" pointerEvents="none">
-        {detailLines.map((d, i) => (
-          <path key={i} d={d} />
+      <g
+        fill="none"
+        stroke={STROKE}
+        strokeWidth={OUTLINE_WIDTH}
+        strokeLinejoin="round"
+        pointerEvents="none"
+      >
+        {art.outline.map((d, i) => (
+          <path key={`out-${i}`} d={d} />
         ))}
+      </g>
+
+      <g
+        fill="none"
+        stroke={DETAIL_STROKE}
+        strokeWidth={1}
+        strokeLinecap="round"
+        pointerEvents="none"
+      >
+        {art.details.map((d, i) => (
+          <path key={`det-${i}`} d={d} />
+        ))}
+      </g>
+    </>
+  );
+}
+
+export function Figure({ view, ...rest }: FigureProps) {
+  const art = view === "front" ? FRONT_ART : BACK_ART;
+
+  return (
+    <svg
+      viewBox={VIEW_BOX}
+      className="h-auto w-full max-w-[300px]"
+      role="group"
+      aria-label={`${view} body map`}
+    >
+      {/* Head, hair and neck are already symmetric, so they are drawn once
+          (before the mirrored halves, which then overlap them at the jaw and
+          shoulders) rather than as two halves with a seam down the face. */}
+      <g
+        fill={BODY_FILL}
+        fillOpacity={BODY_FILL_OPACITY}
+        stroke={STROKE}
+        strokeWidth={STROKE_WIDTH}
+        strokeLinejoin="round"
+        pointerEvents="none"
+      >
+        {art.centre.map((d, i) => (
+          <path key={`centre-${i}`} d={d} />
+        ))}
+      </g>
+      <Half art={art} {...rest} />
+      <g transform={MIRROR_TRANSFORM}>
+        <Half art={art} {...rest} />
       </g>
     </svg>
   );

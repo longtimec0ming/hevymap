@@ -18,7 +18,9 @@ export function Legend({ className }: { className?: string }) {
           <span
             className="inline-block h-3 w-3 rounded-sm border border-zinc-600"
             style={{
-              background: sets === 0 ? "#1c2128" : volumeToColor(sets, SAMPLE_BAND),
+              // "No data" muscles keep the figure's neutral body fill rather
+              // than disappearing, so the swatch has to match it.
+              background: sets === 0 ? "oklch(0.9 0 0 / 0.88)" : volumeToColor(sets, SAMPLE_BAND),
             }}
             aria-hidden
           />
