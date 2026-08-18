@@ -1,12 +1,27 @@
-// Hand-authored anatomical line-art for the front/back body map figures.
+// Hand-authored anatomical artwork for the front/back body map figures.
 //
-// APPROACH — the figure IS a tessellation of muscle outlines. Rather than
-// floating coloured blobs over a silhouette, every body part is defined as a
-// *grid*: a stack of cross-sections (rows) each holding the same number of
-// points (rails) running from one edge of the part to the other. A muscle is
-// then a rectangular block of that grid, and because neighbouring blocks are
-// generated from the *same* rail/section curves, they share edges exactly —
-// no gaps, no overlaps, and the union of all blocks fills the body outline.
+// APPROACH — every body part is defined as a *grid*: a stack of cross-sections
+// (rows) each holding the same number of points (rails) running from one edge
+// of the part to the other. A muscle is a rectangular block of that grid, so
+// muscles are laid out by construction — they stay in their anatomical lanes,
+// never overlap, and together they cover the whole figure.
+//
+// v3 draws each block as an *island* (`block()`, inset from its grid cell and
+// re-sampled with rounded ends) rather than as an edge-sharing tile, so the
+// dark body base shows through as a groove between muscles. That separation is
+// the difference between a shaded body and a suit of armour plating.
+//
+// v3 also adds:
+//   * FIBRE STRIATIONS. Because a muscle is a block of grid cells, any line
+//     drawn in *index space* (row/rail coordinates, fractional allowed) is by
+//     construction inside the muscle. So striations need no clip paths at all:
+//     `fibre(grid, [i0,j0], [i1,j1])` bilinearly samples the grid and emits a
+//     smooth open curve that follows the fascicle direction of that muscle.
+//     Every region's striations are joined into ONE path string, so the extra
+//     cost is exactly one <path> per muscle.
+//   * A PEC FAN. The chest is its own converging grid (rails run from the
+//     sternum out to a narrow insertion strip on the humerus), so upper/mid/
+//     lower chest are three wedges of one fan rather than three stacked bars.
 //
 // Everything is authored for the LEFT half only (x <= 200) and mirrored at
 // render time with `translate(400,0) scale(-1,1)`, so the figure can never
@@ -16,12 +31,13 @@
 //
 // All curves are cubic beziers derived from Catmull-Rom interpolation of the
 // grid points, so shapes stay organic and a reversed traversal of an edge
-// produces byte-identical geometry to the forward one (that identity is what
-// guarantees the tessellation).
+// produces byte-identical geometry to the forward one, so the body-part
+// outlines and the muscle blocks inside them always agree.
 //
-// Proportions: viewBox 0 0 400 900, centreline x = 200, ~7.3 head-heights.
-// Landmarks — hair 16, crown 24, chin 140, shoulder line 170, nipple 224,
-// navel 344, groin 432, knee 616, ankle 810, sole 858.
+// Proportions: viewBox 0 0 400 900, centreline x = 200, ~7.3 head-heights,
+// athletic build (shoulders ~3.3 heads wide, waist pinched at row 6).
+// Landmarks — hair 12, crown 24, chin 141, shoulder line 172, nipple 226,
+// navel 344, groin 430, knee 616, ankle 810, sole 858.
 
 import type { SubMuscleId } from "@/data/taxonomy";
 
@@ -33,16 +49,20 @@ export const MIRROR_TRANSFORM = `translate(${FIGURE_WIDTH},0) scale(-1,1)`;
 type Pt = readonly [number, number];
 type Section = readonly Pt[];
 type Grid = readonly Section[];
+/** A point in grid index space: [row, rail], fractions allowed. */
+type Ix = readonly [number, number];
 
 /** A muscle: one or more closed paths sharing a single taxonomy id. */
 export interface MuscleRegion {
   id: SubMuscleId;
   shapes: string[];
+  /** Fibre striations, all subpaths joined into one path string. */
+  fibres: string;
 }
 
 /** Everything needed to draw one view's left half. */
 export interface ViewArt {
-  /** Solid neutral under-layer (fill only) — insurance against hairline seams. */
+  /** Solid dark under-layer (fill only) — insurance against hairline seams. */
   base: string[];
   /** Non-interactive anatomy: hands, feet, knees, tibialis, serratus... */
   silhouette: string[];
@@ -55,9 +75,12 @@ export interface ViewArt {
   centre: string[];
   /** The 26 addressable muscles present in this view. */
   regions: MuscleRegion[];
-  /** Outer contour of each body part, stroked a touch heavier. */
+  /** Outer contour of each body part, stroked as a faint rim UNDER the
+   * muscles so it never draws a line across one. */
   outline: string[];
-  /** Thin decorative strokes (toes, clavicle, achilles). */
+  /** Hair, filled a shade darker than the face. */
+  hair: string[];
+  /** Thin decorative strokes (toes, clavicle, achilles, tibialis fibres). */
   details: string[];
 }
 
@@ -116,6 +139,81 @@ function cell(grid: Grid, i0: number, i1: number, j0: number, j1: number): strin
 /** The full outer boundary of a grid. */
 function full(grid: Grid): string {
   return cell(grid, 0, grid.length - 1, 0, grid[0].length - 1);
+}
+
+const mix = (a: number, b: number, t: number) => a + (b - a) * t;
+
+/** Bilinear sample of a grid at fractional [row, rail]. */
+function gridPoint(grid: Grid, i: number, j: number): Pt {
+  const rows = grid.length;
+  const rails = grid[0].length;
+  const i0 = Math.max(0, Math.min(rows - 1, Math.floor(i)));
+  const i1 = Math.min(rows - 1, i0 + 1);
+  const j0 = Math.max(0, Math.min(rails - 1, Math.floor(j)));
+  const j1 = Math.min(rails - 1, j0 + 1);
+  const ti = i - i0;
+  const tj = j - j0;
+  const top = [
+    mix(grid[i0][j0][0], grid[i0][j1][0], tj),
+    mix(grid[i0][j0][1], grid[i0][j1][1], tj),
+  ];
+  const bot = [
+    mix(grid[i1][j0][0], grid[i1][j1][0], tj),
+    mix(grid[i1][j0][1], grid[i1][j1][1], tj),
+  ];
+  return [mix(top[0], bot[0], ti), mix(top[1], bot[1], ti)];
+}
+
+/**
+ * A muscle *island*: the same rows/rails block as `cell`, but inset by `m`
+ * (in index units) on every side and re-sampled through the grid, so the
+ * shape has rounded ends and neighbouring muscles are separated by a thin
+ * groove of dark body rather than sharing a hard seam. That separation is
+ * what stops the figure reading as armour plating; the grid still guarantees
+ * the muscles stay in their anatomical lanes and never overlap.
+ */
+function block(
+  grid: Grid,
+  i0: number,
+  i1: number,
+  j0: number,
+  j1: number,
+  m = 0.1,
+): string {
+  const samples = 6;
+  const mi = Math.min(m, (i1 - i0) / 3);
+  const mj = Math.min(m, (j1 - j0) / 3);
+  const a = i0 + mi;
+  const b = i1 - mi;
+  const c = j0 + mj;
+  const d = j1 - mj;
+  const pts: Pt[] = [];
+  const at = (i: number, j: number) => pts.push(gridPoint(grid, i, j));
+  for (let k = 0; k < samples; k++) at(a, mix(c, d, k / (samples - 1)));
+  for (let k = 1; k < samples; k++) at(mix(a, b, k / (samples - 1)), d);
+  for (let k = 1; k < samples; k++) at(b, mix(d, c, k / (samples - 1)));
+  for (let k = 1; k < samples - 1; k++) at(mix(b, a, k / (samples - 1)), c);
+  return loop(pts);
+}
+
+/**
+ * One fibre striation: an open curve from index-space point `a` to `b`,
+ * sampled through the grid so it bends with the muscle. Because both ends
+ * live inside the muscle's own index block, the stroke can never escape the
+ * shape — no clip path needed.
+ */
+function fibre(grid: Grid, a: Ix, b: Ix, samples = 6): string {
+  const pts: Pt[] = [];
+  for (let k = 0; k < samples; k++) {
+    const t = k / (samples - 1);
+    pts.push(gridPoint(grid, mix(a[0], b[0], t), mix(a[1], b[1], t)));
+  }
+  return `M${round(pts[0][0])},${round(pts[0][1])} ${edge(pts, 0, pts.length - 1)}`;
+}
+
+/** Several striations on one grid, joined into a single path string. */
+function fibres(grid: Grid, lines: ReadonlyArray<readonly [Ix, Ix]>): string {
+  return lines.map(([a, b]) => fibre(grid, a, b)).join(" ");
 }
 
 /** A smooth closed Catmull-Rom loop through `pts` (neighbours wrap around). */
@@ -192,69 +290,80 @@ function web(a: Pt, b: Pt, depth = 7): string {
 
 /** Shared inguinal line: bottom row of the torso, top row of the thigh. */
 const GROIN: Section = [
-  [200, 428],
-  [188, 422],
-  [170, 413],
-  [146, 404],
-  [120, 396],
+  [200, 430],
+  [188, 424],
+  [168, 414],
+  [144, 404],
+  [118, 393],
 ];
 
-// Torso, front. Rails: 0 centreline, 1 rectus edge, 2 + 3 shaping, 4 outline.
+// Torso, front. Rails: 0 centreline, 1 rectus edge, 2 + 3 shaping, 4 flank.
 // Rows are deliberately diagonal: each runs from the midline down-and-out to
-// the flank, which is the direction pec and oblique fibres actually take, and
-// is what stops the chest bands reading as horizontal stripes.
+// the flank, which is the direction oblique fibres actually take. The waist
+// pinches at row 6 and the flank flares back out at rows 2-3, giving the
+// V-taper the reference figure has.
 const TORSO_FRONT: Grid = [
-  [[200, 158], [180, 160], [158, 166], [138, 176], [120, 188]],
-  [[200, 194], [176, 192], [152, 190], [132, 194], [114, 202]],
-  [[200, 230], [174, 226], [150, 218], [128, 210], [111, 214]],
-  [[200, 266], [176, 258], [150, 244], [128, 232], [112, 228]],
-  [[200, 294], [172, 290], [150, 277], [132, 262], [116, 248]],
-  [[200, 322], [171, 318], [150, 305], [134, 290], [121, 276]],
-  [[200, 350], [170, 346], [150, 333], [136, 318], [125, 304]],
-  [[200, 378], [170, 374], [151, 361], [138, 346], [127, 332]],
-  [[200, 404], [173, 399], [155, 387], [142, 371], [129, 354]],
+  [[200, 158], [178, 160], [156, 166], [134, 176], [114, 190]],
+  [[200, 196], [174, 194], [150, 192], [126, 196], [108, 206]],
+  [[200, 232], [172, 228], [148, 220], [124, 214], [105, 220]],
+  [[200, 268], [168, 259], [148, 248], [128, 238], [108, 236]],
+  [[200, 296], [166, 291], [150, 280], [134, 266], [116, 254]],
+  [[200, 324], [165, 319], [150, 308], [137, 292], [124, 276]],
+  [[200, 352], [165, 347], [150, 336], [139, 320], [130, 300]],
+  [[200, 380], [166, 375], [151, 364], [141, 348], [132, 326]],
+  [[200, 406], [170, 400], [154, 389], [143, 373], [128, 350]],
   GROIN,
 ];
 
-// Torso, back. Rails: 0 spine, 1 erector/trap edge, 2 mid, 3 scapula, 4 outline.
+// Torso, back. Rails: 0 spine, 1 erector/trap edge, 2 mid, 3 scapula, 4 flank.
 const TORSO_BACK: Grid = [
-  [[200, 148], [182, 151], [160, 158], [138, 168], [118, 179]],
-  [[200, 192], [178, 191], [156, 190], [130, 190], [110, 194]],
-  [[200, 232], [174, 229], [150, 222], [126, 214], [108, 212]],
-  [[200, 272], [172, 268], [150, 258], [126, 244], [110, 236]],
-  [[200, 310], [178, 307], [148, 294], [128, 276], [114, 262]],
-  [[200, 348], [186, 346], [146, 330], [130, 310], [118, 292]],
-  [[200, 380], [174, 377], [148, 361], [134, 340], [123, 320]],
-  [[200, 408], [172, 404], [152, 391], [144, 374], [126, 348]],
-  [[200, 440], [176, 437], [155, 427], [143, 410], [119, 382]],
-  [[200, 470], [180, 468], [160, 460], [140, 444], [116, 418]],
+  [[200, 148], [180, 151], [156, 158], [132, 168], [110, 180]],
+  [[200, 192], [176, 191], [152, 190], [124, 190], [102, 196]],
+  [[200, 232], [172, 229], [146, 222], [120, 214], [100, 216]],
+  [[200, 272], [170, 268], [146, 258], [120, 244], [102, 236]],
+  [[200, 310], [176, 307], [144, 294], [122, 276], [108, 260]],
+  [[200, 348], [184, 346], [142, 330], [126, 310], [114, 290]],
+  [[200, 380], [172, 377], [146, 361], [132, 340], [122, 318]],
+  [[200, 408], [170, 404], [150, 391], [142, 374], [126, 346]],
+  [[200, 442], [174, 439], [152, 428], [140, 410], [116, 380]],
+  [[200, 474], [178, 472], [157, 463], [136, 446], [112, 416]],
+];
+
+// Pectoral fan (front only). Rails run from the sternum (0) out to a narrow
+// insertion strip on the humerus (3), so the three chest bands are wedges of
+// ONE fan converging at the shoulder rather than three stacked bars. Rail 0
+// stops short of x=200 so the mirrored halves leave a sternum groove.
+const PEC: Grid = [
+  [[190, 170], [170, 169], [150, 178], [136, 205]],
+  [[190, 207], [170, 203], [150, 201], [135, 214]],
+  [[190, 243], [170, 236], [150, 226], [134, 224]],
+  [[190, 276], [168, 266], [148, 246], [134, 233]],
 ];
 
 // Deltoid cap. Rails: 0 medial (against the pec / trap), 1 mid, 2 lateral
 // outline. The last row is the V-shaped insertion partway down the arm.
+// Wider and rounder than v2 — the delt is what sells an athletic silhouette.
 const DELT: Grid = [
-  // Rail 1 sits well outboard: from the front (or back) the anterior (or
-  // posterior) head is most of what you see and the side head is the sliver
-  // that wraps round the outer edge.
-  [[124, 186], [102, 178], [84, 194]],
-  [[116, 210], [80, 210], [68, 226]],
-  [[114, 244], [80, 250], [69, 256]],
-  [[120, 282], [92, 306], [70, 280]],
+  [[142, 180], [98, 170], [92, 192]],
+  [[134, 208], [84, 196], [70, 220]],
+  [[130, 238], [80, 234], [67, 250]],
+  [[130, 266], [90, 286], [74, 268]],
 ];
 
-// Upper arm. Rails: 0 lateral edge -> 4 medial edge.
+// Upper arm. Rails: 0 lateral edge -> 4 medial edge. The belly (row 1) is
+// pushed outboard on both sides so the arm reads thick rather than tubular.
 const UPPER_ARM: Grid = [
-  [[74, 262], [88, 258], [102, 254], [112, 250], [122, 248]],
-  [[62, 320], [78, 322], [94, 324], [108, 322], [118, 316]],
-  [[62, 380], [74, 384], [86, 386], [98, 384], [108, 378]],
+  [[70, 268], [86, 264], [102, 260], [116, 256], [128, 254]],
+  [[58, 326], [76, 330], [94, 332], [110, 330], [124, 322]],
+  [[62, 386], [76, 390], [90, 392], [104, 390], [116, 382]],
 ];
 
 // Forearm. Row 0 is the elbow (shared with the upper arm's last row).
 const FOREARM: Grid = [
   UPPER_ARM[2],
-  [[54, 428], [66, 432], [78, 434], [90, 432], [100, 426]],
-  [[50, 466], [60, 470], [70, 472], [80, 470], [88, 464]],
-  [[48, 502], [55, 505], [62, 506], [69, 504], [74, 500]],
+  [[52, 432], [66, 438], [80, 440], [94, 436], [106, 428]],
+  [[48, 470], [60, 476], [72, 478], [84, 474], [94, 466]],
+  [[50, 504], [57, 508], [65, 509], [73, 506], [80, 500]],
 ];
 
 // Thigh. Row 0 is the groin line (shared with the torso). Rails: 0 lateral
@@ -264,10 +373,10 @@ const THIGH: Grid = [
   // Rails 2 and 3 pinch together high on the thigh and spread just above the
   // knee, so vastus medialis reads as a teardrop and the adductors as a wedge
   // that tapers out, instead of both being parallel stripes.
-  [[104, 462], [130, 470], [156, 474], [164, 470], [188, 462]],
-  [[106, 522], [128, 528], [158, 532], [174, 528], [186, 518]],
-  [[114, 572], [134, 578], [156, 580], [176, 574], [180, 566]],
-  [[124, 606], [144, 616], [154, 622], [170, 616], [174, 604]],
+  [[90, 466], [122, 473], [152, 477], [168, 472], [188, 463]],
+  [[92, 526], [120, 533], [152, 537], [172, 532], [187, 519]],
+  [[102, 576], [128, 583], [152, 585], [174, 578], [181, 567]],
+  [[120, 610], [142, 618], [154, 624], [168, 618], [174, 606]],
 ];
 
 // Lower leg. Row 0 is the knee line (shared with the thigh).
@@ -275,9 +384,9 @@ const SHANK: Grid = [
   THIGH[4],
   // The rows below the knee bow downward so the gastrocnemius bellies end in
   // a rounded arc rather than a straight "sock cuff" line across the calf.
-  [[128, 648], [140, 656], [152, 660], [164, 656], [173, 648]],
-  [[118, 696], [136, 720], [152, 730], [168, 718], [182, 694]],
-  [[134, 756], [145, 770], [156, 776], [166, 768], [174, 754]],
+  [[126, 646], [140, 654], [152, 658], [164, 654], [174, 646]],
+  [[104, 702], [130, 718], [152, 726], [174, 716], [192, 700]],
+  [[130, 760], [143, 772], [156, 778], [167, 770], [177, 756]],
   [[146, 806], [152, 810], [158, 810], [164, 808], [169, 802]],
 ];
 
@@ -286,63 +395,65 @@ const SHANK: Grid = [
 // ---------------------------------------------------------------------------
 
 // Head: rounded cranium tapering through the cheekbone into a squared jaw.
-// Head: cranium, cheekbone, jaw corner, then a squared chin.
 const HEAD = symmetric([
   [200, 26],
   [178, 29],
   [161, 48],
-  [158, 74],
-  [163, 94],
-  [169, 106],
-  [176, 121],
-  [188, 130],
-  [200, 133],
+  [158, 76],
+  [164, 96],
+  [170, 110],
+  [178, 124],
+  [190, 134],
+  [200, 137],
 ]);
 
-// Hair: a cap over the cranium closed off by a rounded hairline.
+// Hair: a short cropped cut — flat on top, tapering down over the temple and
+// finishing above the ear, with a shallow fringe across the forehead.
 const HAIR = symmetric([
-  [200, 12],
-  [173, 16],
-  [154, 40],
-  [152, 76],
-  [158, 76],
-  [161, 57],
-  [168, 48],
-  [180, 44],
-  [200, 43],
+  [200, 14],
+  [176, 18],
+  [160, 34],
+  [154, 56],
+  [153, 78],
+  [159, 80],
+  [162, 60],
+  [167, 50],
+  [178, 46],
+  [200, 45],
 ]);
 
 // Drawn before the head so only the outer rim of each ear shows.
-const EAR_PROFILE: Section = [[163, 82], [155, 85], [152, 95], [156, 104], [163, 101]];
+const EAR_PROFILE: Section = [[163, 84], [155, 87], [152, 97], [157, 106], [164, 103]];
 const EARS = [
   loop(EAR_PROFILE),
   loop(EAR_PROFILE.map(([x, y]) => [FIGURE_WIDTH - x, y] as Pt)),
 ];
 
+// Thick athletic neck running into the trap slope.
 const NECK = symmetric([
   [200, 118],
-  [187, 121],
-  [180, 134],
-  [177, 148],
-  [171, 160],
-  [163, 170],
-  [178, 175],
-  [200, 177],
+  [186, 122],
+  [178, 136],
+  [175, 150],
+  [168, 162],
+  [158, 172],
+  [176, 177],
+  [200, 179],
 ]);
 
 const HAND = (() => {
-  const wristOuter: Pt = [48, 502];
-  const wristInner: Pt = [74, 500];
-  const thumb = digit([44, 520], -54, 20, 7);
-  const index = digit([45, 552], -10, 22, 6.6);
-  const middle = digit([57, 555], 0, 25, 6.8);
-  const ring = digit([69, 553], 11, 22, 6.4);
-  const pinky = digit([80, 542], 26, 18, 5.6);
+  const wristOuter: Pt = [50, 504];
+  const wristInner: Pt = [80, 500];
+  const thumb = digit([46, 522], -54, 21, 7.4);
+  const index = digit([47, 554], -10, 23, 6.8);
+  const middle = digit([59, 557], 0, 26, 7);
+  const ring = digit([71, 555], 11, 23, 6.6);
+  const pinky = digit([83, 544], 26, 19, 5.8);
   return (
     `M${pt(wristOuter)} ` +
-    `${curve([45, 506], [42, 510], thumb.start)} ` +
+    `${curve([47, 508], [44, 512], thumb.start)} ` +
     `${thumb.path} ` +
-    `${curve([44, 530], [40, 542], index.start)} ` +
+    `${curve([46, 532], [42, 544], index.start)} ` +
     `${index.path} ` +
     `${web(index.end, middle.start, 3)} ` +
     `${middle.path} ` +
@@ -350,7 +461,7 @@ const HAND = (() => {
     `${ring.path} ` +
     `${web(ring.end, pinky.start, 3)} ` +
     `${pinky.path} ` +
-    `${curve([89, 538], [82, 514], wristInner)} Z`
+    `${curve([92, 540], [88, 514], wristInner)} Z`
   );
 })();
 
@@ -372,58 +483,159 @@ const FOOT_BACK =
 
 const FRONT_REGIONS: MuscleRegion[] = [
   // Legs first so the torso/arms layer over them where they meet.
-  { id: "quads_vasti", shapes: [cell(THIGH, 0, 4, 0, 1), cell(THIGH, 1, 4, 2, 3)] },
-  { id: "quads_rectus_femoris", shapes: [cell(THIGH, 0, 4, 1, 2)] },
-  { id: "adductors", shapes: [cell(THIGH, 0, 2, 3, 4)] },
+  {
+    id: "quads_vasti",
+    shapes: [block(THIGH, 0.15, 4, 0, 1, 0.13), block(THIGH, 1.1, 4, 2, 3, 0.13)],
+    fibres: fibres(THIGH, [
+      [[0.45, 0.35], [3.8, 0.62]],
+      [[0.45, 0.75], [3.8, 0.85]],
+      [[1.45, 2.5], [3.8, 2.6]],
+    ]),
+  },
+  {
+    id: "quads_rectus_femoris",
+    shapes: [block(THIGH, 0.15, 4, 1, 2, 0.13)],
+    fibres: fibres(THIGH, [
+      [[0.3, 1.3], [3.85, 1.42]],
+      [[0.3, 1.7], [3.85, 1.6]],
+    ]),
+  },
+  {
+    id: "adductors",
+    shapes: [block(THIGH, 0.15, 2.2, 3, 4, 0.13)],
+    fibres: fibres(THIGH, [
+      [[0.25, 3.85], [1.85, 3.3]],
+      [[0.6, 3.9], [1.85, 3.62]],
+    ]),
+  },
 
-  // Torso.
-  { id: "upper_chest", shapes: [cell(TORSO_FRONT, 0, 1, 0, 4)] },
-  { id: "mid_chest", shapes: [cell(TORSO_FRONT, 1, 2, 0, 4)] },
-  { id: "lower_chest", shapes: [cell(TORSO_FRONT, 2, 3, 0, 4)] },
+  // Chest: three wedges of one fan, fibres converging on the humerus.
+  {
+    id: "upper_chest",
+    shapes: [block(PEC, 0.04, 1, 0, 2.95, 0.08)],
+    fibres: fibres(PEC, [
+      [[0.28, 0.12], [0.62, 2.85]],
+      [[0.68, 0.12], [0.82, 2.85]],
+    ]),
+  },
+  {
+    id: "mid_chest",
+    shapes: [block(PEC, 1, 2, 0, 2.95, 0.08)],
+    fibres: fibres(PEC, [
+      [[1.3, 0.12], [1.42, 2.85]],
+      [[1.68, 0.12], [1.62, 2.85]],
+    ]),
+  },
+  {
+    id: "lower_chest",
+    shapes: [block(PEC, 2, 2.96, 0, 2.95, 0.08)],
+    fibres: fibres(PEC, [
+      [[2.3, 0.12], [2.4, 2.85]],
+      [[2.7, 0.12], [2.62, 2.85]],
+    ]),
+  },
   {
     id: "rectus_abdominis",
     shapes: [
-      cell(TORSO_FRONT, 3, 4, 0, 1),
-      cell(TORSO_FRONT, 4, 5, 0, 1),
-      cell(TORSO_FRONT, 5, 6, 0, 1),
-      cell(TORSO_FRONT, 6, 7, 0, 1),
+      block(TORSO_FRONT, 3.1, 4.4, 0, 1, 0.07),
+      block(TORSO_FRONT, 4.4, 5.55, 0, 1, 0.07),
+      block(TORSO_FRONT, 5.55, 6.7, 0, 1, 0.07),
+      block(TORSO_FRONT, 6.7, 7.95, 0, 1, 0.07),
     ],
+    // Horizontal tendinous bands, one per pair of abs.
+    fibres: fibres(TORSO_FRONT, [
+      [[3.5, 0.12], [3.5, 0.88]],
+      [[4.5, 0.12], [4.5, 0.88]],
+      [[5.5, 0.12], [5.5, 0.88]],
+      [[6.5, 0.12], [6.5, 0.88]],
+    ]),
   },
-  { id: "obliques", shapes: [cell(TORSO_FRONT, 4, 8, 1, 4)] },
+  {
+    id: "obliques",
+    shapes: [block(TORSO_FRONT, 3.9, 8, 1, 3, 0.1)],
+    // External oblique fibres run down-and-in toward the pubis.
+    fibres: fibres(TORSO_FRONT, [
+      [[4.25, 3.8], [5.9, 1.25]],
+      [[5.15, 3.8], [6.8, 1.25]],
+      [[6.05, 3.8], [7.7, 1.25]],
+    ]),
+  },
 
   // Arms, then the deltoid cap on top of the arm's shoulder end.
-  { id: "biceps", shapes: [cell(UPPER_ARM, 0, 2, 1, 2), cell(UPPER_ARM, 0, 2, 2, 3)] },
+  {
+    id: "biceps",
+    shapes: [block(UPPER_ARM, 0.22, 1.92, 1, 3.1, 0.1)],
+    fibres: fibres(UPPER_ARM, [
+      [[0.15, 1.5], [1.85, 1.5]],
+      [[0.15, 2.5], [1.85, 2.5]],
+    ]),
+  },
   {
     id: "brachialis_brachioradialis",
-    shapes: [cell(UPPER_ARM, 0, 2, 0, 1), cell(FOREARM, 0, 2, 0, 1)],
+    shapes: [block(UPPER_ARM, 0.9, 2, 0, 1.05, 0.1), block(FOREARM, 0, 1.8, 0, 1, 0.1)],
+    fibres:
+      fibres(UPPER_ARM, [[[0.2, 0.5], [1.85, 0.5]]]) +
+      " " +
+      fibres(FOREARM, [[[0.2, 0.45], [1.85, 0.55]]]),
   },
-  { id: "forearms", shapes: [cell(FOREARM, 0, 3, 1, 4), cell(FOREARM, 2, 3, 0, 1)] },
-  { id: "front_delt", shapes: [cell(DELT, 0, 3, 0, 1)] },
-  { id: "side_delt", shapes: [cell(DELT, 0, 3, 1, 2)] },
+  {
+    id: "forearms",
+    shapes: [block(FOREARM, 0.12, 2.95, 1, 4, 0.09), block(FOREARM, 1.9, 2.95, 0, 1, 0.09)],
+    fibres: fibres(FOREARM, [
+      [[0.35, 1.6], [2.8, 1.85]],
+      [[0.35, 2.6], [2.8, 2.55]],
+    ]),
+  },
+  {
+    id: "front_delt",
+    shapes: [block(DELT, 0.05, 2.95, 0, 1, 0.13)],
+    // Radiating from the clavicle down to the V insertion.
+    fibres: fibres(DELT, [
+      [[0.2, 0.2], [2.85, 0.55]],
+      [[0.2, 0.55], [2.85, 0.68]],
+      [[0.2, 0.85], [2.85, 0.8]],
+    ]),
+  },
+  {
+    id: "side_delt",
+    shapes: [block(DELT, 0.05, 2.95, 1, 2, 0.13)],
+    fibres: fibres(DELT, [
+      [[0.2, 1.25], [2.85, 1.42]],
+      [[0.2, 1.65], [2.85, 1.58]],
+    ]),
+  },
 ];
 
 const FRONT_SILHOUETTE: string[] = [
-  // Lower leg is entirely posterior-muscle territory, so it reads as outline:
-  // patella, the gastrocnemius edges either side, tibialis anterior between.
-  cell(SHANK, 0, 4, 0, 1),
-  cell(SHANK, 0, 1, 1, 4),
-  cell(SHANK, 1, 4, 1, 3),
-  cell(SHANK, 1, 4, 3, 4),
+  // Lower leg: peroneals on the outside, tibialis anterior beside the shin,
+  // the tibia itself flat between them, then the ankle.
+  block(SHANK, 0.8, 3.5, 0.1, 1.15, 0.14),
+  block(SHANK, 0.8, 3.2, 1.2, 2.15, 0.14),
+  block(SHANK, 0.8, 3.5, 2.85, 3.9, 0.14),
+  block(SHANK, 0, 0.75, 0.6, 3.4, 0.14),
   // Sartorius / inner-knee strip below the adductors.
-  cell(THIGH, 2, 4, 3, 4),
-  // Serratus under the pec, lower abdomen, hip.
-  cell(TORSO_FRONT, 3, 4, 1, 4),
-  cell(TORSO_FRONT, 7, 9, 0, 1),
-  cell(TORSO_FRONT, 8, 9, 1, 4),
+  block(THIGH, 2, 4, 3, 4),
+  // Serratus + flank under the pec, lower abdomen, hip.
+  block(TORSO_FRONT, 2.05, 3.45, 3.1, 3.95, 0.12),
+  block(TORSO_FRONT, 7.95, 9, 0, 3, 0.1),
   // Triceps edge showing on the medial side of the arm.
-  cell(UPPER_ARM, 0, 2, 3, 4),
+  block(UPPER_ARM, 0.25, 1.95, 3.1, 4, 0.1),
   HAND,
   FOOT_FRONT,
 ];
 
 const FRONT_DETAILS: string[] = [
+  // Brow, cheekbone and jaw, so the head is not a featureless blob.
+  "M186,84 C178,80 170,80 164,84",
+  "M172,106 C176,112 180,116 184,118",
   // Clavicle.
-  "M196,168 C180,162 160,162 146,170",
+  "M194,166 C178,160 158,161 142,170",
+  // Tibialis anterior striations (non-interactive, but the front shin should
+  // not read as a blank plank).
+  fibres(SHANK, [
+    [[1.25, 1.35], [3.05, 1.7]],
+    [[1.25, 1.7], [3.05, 1.85]],
+  ]),
   // Instep and the four toe clefts.
   "M151,812 C145,822 141,832 140,842",
   "M133,838 C134,845 135,850 136,853",
@@ -437,41 +649,139 @@ const FRONT_DETAILS: string[] = [
 // ---------------------------------------------------------------------------
 
 const BACK_REGIONS: MuscleRegion[] = [
-  { id: "hamstrings", shapes: [cell(THIGH, 0, 4, 0, 1), cell(THIGH, 0, 4, 1, 3)] },
-  { id: "gastrocnemius", shapes: [cell(SHANK, 1, 2, 0, 2), cell(SHANK, 1, 2, 2, 4)] },
-  { id: "soleus", shapes: [cell(SHANK, 2, 3, 0, 2), cell(SHANK, 2, 3, 2, 4)] },
+  {
+    id: "hamstrings",
+    shapes: [block(THIGH, 0.1, 4, 0, 1, 0.13), block(THIGH, 0.1, 4, 1, 3, 0.13)],
+    fibres: fibres(THIGH, [
+      [[0.35, 0.5], [3.85, 0.6]],
+      [[0.3, 1.5], [3.85, 1.5]],
+      [[0.3, 2.5], [3.85, 2.5]],
+    ]),
+  },
+  {
+    id: "gastrocnemius",
+    shapes: [block(SHANK, 1.1, 2.4, 0.2, 3.8, 0.13)],
+    // Two heads, each converging toward the achilles below.
+    fibres: fibres(SHANK, [
+      [[1.15, 0.55], [1.9, 1.5]],
+      [[1.15, 1.4], [1.9, 1.8]],
+      [[1.15, 3.45], [1.9, 2.5]],
+      [[1.15, 2.6], [1.9, 2.2]],
+    ]),
+  },
+  {
+    id: "soleus",
+    shapes: [block(SHANK, 2.45, 3.45, 0.4, 3.6, 0.12)],
+    fibres: fibres(SHANK, [
+      [[2.15, 0.6], [2.85, 1.4]],
+      [[2.15, 3.4], [2.85, 2.6]],
+    ]),
+  },
 
-  { id: "glute_max", shapes: [cell(TORSO_BACK, 7, 9, 0, 3)] },
-  { id: "glute_med", shapes: [cell(TORSO_BACK, 7, 8, 3, 4)] },
+  {
+    id: "glute_max",
+    shapes: [block(TORSO_BACK, 7.05, 9, 0, 3, 0.09)],
+    // Fibres run down-and-out from the sacrum to the femur.
+    fibres: fibres(TORSO_BACK, [
+      [[7.2, 0.25], [8.8, 2.4]],
+      [[7.6, 0.25], [8.85, 1.6]],
+      [[7.25, 1.2], [8.5, 2.75]],
+    ]),
+  },
+  {
+    id: "glute_med",
+    shapes: [block(TORSO_BACK, 7.05, 8.1, 3, 4, 0.11)],
+    fibres: fibres(TORSO_BACK, [[[7.2, 3.85], [7.9, 3.2]]]),
+  },
 
-  { id: "lats", shapes: [cell(TORSO_BACK, 2, 6, 2, 4), cell(TORSO_BACK, 3, 6, 1, 2)] },
-  { id: "upper_traps", shapes: [cell(TORSO_BACK, 0, 1, 0, 3)] },
-  { id: "mid_traps_rhomboids", shapes: [cell(TORSO_BACK, 1, 3, 0, 2)] },
-  { id: "lower_traps", shapes: [cell(TORSO_BACK, 3, 5, 0, 1)] },
-  { id: "spinal_erectors", shapes: [cell(TORSO_BACK, 5, 7, 0, 1)] },
+  {
+    id: "lats",
+    shapes: [block(TORSO_BACK, 1.9, 6.35, 1.5, 4, 0.09), block(TORSO_BACK, 3.3, 6.35, 1, 1.6, 0.09)],
+    // The whole sheet sweeps up-and-out into the armpit.
+    fibres: fibres(TORSO_BACK, [
+      [[5.8, 1.3], [2.4, 3.7]],
+      [[5.85, 2.1], [3.1, 3.75]],
+      [[4.6, 1.3], [2.35, 3.1]],
+    ]),
+  },
+  {
+    id: "upper_traps",
+    shapes: [block(TORSO_BACK, 0, 1.05, 0, 3, 0.09)],
+    fibres: fibres(TORSO_BACK, [
+      [[0.3, 0.15], [0.85, 2.75]],
+      [[0.6, 0.15], [0.95, 1.9]],
+    ]),
+  },
+  {
+    id: "mid_traps_rhomboids",
+    shapes: [block(TORSO_BACK, 1.05, 3.2, 0, 1.5, 0.1)],
+    fibres: fibres(TORSO_BACK, [
+      [[1.4, 0.15], [1.25, 1.85]],
+      [[2.1, 0.15], [1.95, 1.85]],
+      [[2.75, 0.15], [2.6, 1.85]],
+    ]),
+  },
+  {
+    id: "lower_traps",
+    shapes: [block(TORSO_BACK, 3.2, 5.1, 0, 1, 0.1)],
+    fibres: fibres(TORSO_BACK, [
+      [[4.8, 0.15], [3.25, 0.9]],
+      [[4.85, 0.55], [3.6, 0.92]],
+    ]),
+  },
+  {
+    id: "spinal_erectors",
+    shapes: [block(TORSO_BACK, 5.15, 7, 0, 1, 0.1)],
+    fibres: fibres(TORSO_BACK, [
+      [[5.2, 0.35], [6.85, 0.35]],
+      [[5.2, 0.7], [6.85, 0.72]],
+    ]),
+  },
 
   {
     id: "triceps_lat_med",
-    shapes: [cell(UPPER_ARM, 0, 2, 0, 1), cell(UPPER_ARM, 0, 2, 1, 2)],
+    shapes: [block(UPPER_ARM, 0.2, 1.95, 0, 1, 0.1), block(UPPER_ARM, 0.2, 1.95, 1, 2, 0.1)],
+    fibres: fibres(UPPER_ARM, [
+      [[0.2, 0.5], [1.85, 0.75]],
+      [[0.2, 1.5], [1.85, 1.55]],
+    ]),
   },
-  { id: "triceps_long", shapes: [cell(UPPER_ARM, 0, 2, 2, 4)] },
-  { id: "rear_delt", shapes: [cell(DELT, 0, 3, 0, 1)] },
-  { id: "side_delt", shapes: [cell(DELT, 0, 3, 1, 2)] },
+  {
+    id: "triceps_long",
+    shapes: [block(UPPER_ARM, 0.15, 1.95, 2, 4, 0.1)],
+    fibres: fibres(UPPER_ARM, [
+      [[0.2, 2.5], [1.85, 2.4]],
+      [[0.2, 3.5], [1.85, 3.3]],
+    ]),
+  },
+  {
+    id: "rear_delt",
+    shapes: [block(DELT, 0.05, 2.95, 0, 1, 0.13)],
+    fibres: fibres(DELT, [
+      [[0.2, 0.2], [2.85, 0.55]],
+      [[0.2, 0.55], [2.85, 0.68]],
+      [[0.2, 0.85], [2.85, 0.8]],
+    ]),
+  },
+  {
+    id: "side_delt",
+    shapes: [block(DELT, 0.05, 2.95, 1, 2, 0.13)],
+    fibres: fibres(DELT, [
+      [[0.2, 1.25], [2.85, 1.42]],
+      [[0.2, 1.65], [2.85, 1.58]],
+    ]),
+  },
 ];
 
 const BACK_SILHOUETTE: string[] = [
   // Forearm (anterior muscle group) reads as outline from behind.
-  cell(FOREARM, 0, 3, 0, 1),
-  cell(FOREARM, 0, 3, 1, 3),
-  cell(FOREARM, 0, 3, 3, 4),
+  block(FOREARM, 0.12, 2.95, 0, 1, 0.09),
+  block(FOREARM, 0.12, 2.95, 1, 3, 0.09),
+  block(FOREARM, 0.12, 2.95, 3, 4, 0.09),
   // Over-the-shoulder trap edge, infraspinatus / teres, lumbar sheet, hip.
-  cell(TORSO_BACK, 0, 1, 3, 4),
-  cell(TORSO_BACK, 1, 2, 2, 4),
-  cell(TORSO_BACK, 6, 7, 1, 4),
-  cell(TORSO_BACK, 8, 9, 3, 4),
+  block(TORSO_BACK, 6.3, 7, 1.6, 4, 0.14),
   // Popliteal fossa and achilles.
-  cell(SHANK, 0, 1, 0, 4),
-  cell(SHANK, 3, 4, 0, 4),
+
   HAND,
   FOOT_BACK,
 ];
@@ -488,41 +798,26 @@ const BACK_DETAILS: string[] = [
 // ---------------------------------------------------------------------------
 
 const BASE = [full(THIGH), full(SHANK), full(UPPER_ARM), full(FOREARM), HAND];
-const CENTRE = [...EARS, HEAD, HAIR, NECK];
-const OUTLINE = [full(UPPER_ARM), full(FOREARM), full(THIGH), full(SHANK), full(DELT)];
+const CENTRE = [...EARS, HEAD, NECK];
+const HAIR_ART = [HAIR];
+const OUTLINE = [full(UPPER_ARM), full(FOREARM), full(THIGH), full(SHANK)];
 
 export const FRONT_ART: ViewArt = {
   base: [...BASE, full(TORSO_FRONT), FOOT_FRONT],
   centre: CENTRE,
+  hair: HAIR_ART,
   silhouette: FRONT_SILHOUETTE,
   regions: FRONT_REGIONS,
-  outline: [
-    ...OUTLINE,
-    full(TORSO_FRONT),
-    // Group boundaries, so pec mass / ab column / quad group read as units
-    // rather than as a run of equal-weight internal divisions.
-    cell(TORSO_FRONT, 0, 3, 0, 4),
-    cell(TORSO_FRONT, 3, 7, 0, 1),
-    cell(THIGH, 0, 4, 0, 3),
-    FOOT_FRONT,
-    HAND,
-  ],
+  outline: [...OUTLINE, full(TORSO_FRONT), FOOT_FRONT, HAND],
   details: FRONT_DETAILS,
 };
 
 export const BACK_ART: ViewArt = {
   base: [...BASE, full(TORSO_BACK), FOOT_BACK],
   centre: CENTRE,
+  hair: HAIR_ART,
   silhouette: BACK_SILHOUETTE,
   regions: BACK_REGIONS,
-  outline: [
-    ...OUTLINE,
-    full(TORSO_BACK),
-    cell(TORSO_BACK, 0, 3, 0, 2),
-    cell(TORSO_BACK, 7, 9, 0, 4),
-    cell(THIGH, 0, 4, 0, 3),
-    FOOT_BACK,
-    HAND,
-  ],
+  outline: [...OUTLINE, full(TORSO_BACK), FOOT_BACK, HAND],
   details: BACK_DETAILS,
 };

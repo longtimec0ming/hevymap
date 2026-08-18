@@ -56,22 +56,27 @@ export function volumeToColor(sets: number, band: TargetBand): string {
   if (sets < min) {
     const t = clamp(sets / min, 0, 1);
     const hue = lerp(COLD_HUE, ACCENT_HUE, t);
-    const saturation = lerp(22, 75, t);
-    const lightness = lerp(32, 46, t);
+    const saturation = lerp(24, 80, t);
+    const lightness = lerp(34, 50, t);
     return hsl(hue, saturation, lightness);
   }
 
   if (sets <= max) {
     const t = max > min ? clamp((sets - min) / (max - min), 0, 1) : 1;
-    const lightness = lerp(46, 54, t);
-    return hsl(ACCENT_HUE, 82, lightness);
+    const lightness = lerp(52, 58, t);
+    return hsl(ACCENT_HUE, 88, lightness);
   }
 
   const overshoot = max > 0 ? clamp((sets - max) / max, 0, OVERSHOOT_SATURATES_AT) / OVERSHOOT_SATURATES_AT : 1;
   const hue = lerp(ACCENT_HUE, HOT_HUE, overshoot);
-  const lightness = lerp(54, 40, overshoot);
-  return hsl(hue, 88, lightness);
+  const lightness = lerp(58, 46, overshoot);
+  return hsl(hue, 92, lightness);
 }
+
+/** Fill used for a muscle with no volume in scope: a neutral dark muscle
+ * tone on the figure's dark body base. Shared by the figure and the legend
+ * so the "No data" swatch always matches what the body map draws. */
+export const NO_VOLUME_FILL = "oklch(0.38 0.014 265)";
 
 export interface MuscleStatus {
   sets: number;
@@ -97,7 +102,7 @@ export function getMuscleStatus(sets: number, tonnageKg: number, band: TargetBan
 /** Legend stops (as fractions of the target band) used to render the
  * color-scale legend that ships with the component. */
 export const LEGEND_STOPS: ReadonlyArray<{ label: string; color: string }> = [
-  { label: "No data", color: "transparent" },
+  { label: "No data", color: NO_VOLUME_FILL },
   { label: "Below target", color: volumeToColor(0.5, [1, 2]) },
   { label: "In target", color: volumeToColor(1.5, [1, 2]) },
   { label: "Above target", color: volumeToColor(4, [1, 2]) },

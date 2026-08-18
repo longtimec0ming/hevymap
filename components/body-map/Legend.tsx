@@ -1,4 +1,4 @@
-import { volumeToColor } from "./color-scale";
+import { NO_VOLUME_FILL, volumeToColor } from "./color-scale";
 
 // Representative stops sampled from the ramp itself (rather than duplicated
 // constants) so the legend can never drift out of sync with volumeToColor.
@@ -18,9 +18,9 @@ export function Legend({ className }: { className?: string }) {
           <span
             className="inline-block h-3 w-3 rounded-sm border border-zinc-600"
             style={{
-              // "No data" muscles keep the figure's neutral body fill rather
+              // "No data" muscles keep the figure's neutral muscle tone rather
               // than disappearing, so the swatch has to match it.
-              background: sets === 0 ? "oklch(0.9 0 0 / 0.88)" : volumeToColor(sets, SAMPLE_BAND),
+              background: sets === 0 ? NO_VOLUME_FILL : volumeToColor(sets, SAMPLE_BAND),
             }}
             aria-hidden
           />
