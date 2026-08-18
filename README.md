@@ -67,7 +67,7 @@ npm run typecheck   # tsc --noEmit
 
 ## Features
 
-- **Dashboard** — body heat map for the current period, with a timeframe selector (rolling 7 days, calendar week, calendar month, custom range, or all-time), summary stats, and a neglect radar for under-trained muscles.
+- **Dashboard** — a sidebar-driven analytics overview: stat tiles (workouts, hard sets, volume, avg volume/workout, hours trained, current streak, most-trained sub-muscle, longest workout) for the selected period with vs-previous-period deltas; the body heat map for the current period (rolling 7 days, calendar week, calendar month, custom range, or all-time) with a neglect radar for under-trained muscles; and a row of chart cards (hours trained, volume progression, sets by muscle group, workouts, PRs over time, a 12-month consistency heatmap) each with its own independent range (ALL/1Y/6M/3M/1M) and week/month bucket toggle. Per-muscle sparklines are tucked behind a collapsible toggle.
 - **History** — trend lines and week-over-week comparisons, with the 26 sub-muscles grouped under their 6 coarse regions.
 - **Workouts** — your full history from Hevy, each workout and exercise expandable into its own body map.
 - **Exercises** — a searchable mapping browser showing how every exercise splits across sub-muscles, confidence badges, and an editor for defining your own splits (needed for custom exercises, and to override any mapping you disagree with).
