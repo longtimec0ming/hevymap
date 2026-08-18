@@ -16,9 +16,17 @@ import { DEFAULT_PERIOD_SCOPE, type PeriodScope } from "./period";
 const DB_NAME = "hevymap";
 const DB_VERSION = 1;
 
+export type DataSource = "api" | "csv";
+
 interface SyncMeta {
   key: "lastSyncedAt";
   lastSyncedAt: string | null;
+  /** How the cached data got here: the Hevy API (server key or connected
+   * cookie key) or a one-off CSV upload. CSV-sourced caches never run
+   * background incremental sync (see lib/sync.ts) — there's no API key to
+   * sync with, and the workouts came from a file, not an account. Undefined
+   * on rows written before this field existed; treated as "api". */
+  dataSource?: DataSource;
 }
 
 interface HevyMapDB extends DBSchema {
@@ -114,17 +122,25 @@ export interface SyncState {
   /** ISO 8601 timestamp of the last successful sync, or null if this is a
    * fresh cache that has never synced (a full import is needed). */
   lastSyncedAt: string | null;
+  /** null before the first import; "api" or "csv" after. */
+  dataSource: DataSource | null;
 }
 
 export async function getSyncState(): Promise<SyncState> {
   const db = await getDB();
   const row = await db.get("meta", "lastSyncedAt");
-  return { lastSyncedAt: row?.lastSyncedAt ?? null };
+  return {
+    lastSyncedAt: row?.lastSyncedAt ?? null,
+    dataSource: row?.lastSyncedAt ? (row.dataSource ?? "api") : null,
+  };
 }
 
-export async function setLastSyncedAt(iso: string): Promise<void> {
+/** Records a successful sync. `dataSource` defaults to "api" (the Hevy API
+ * import/sync path); CSV imports pass "csv" explicitly — see
+ * lib/sync.ts's importCsvWorkouts. */
+export async function setLastSyncedAt(iso: string, dataSource: DataSource = "api"): Promise<void> {
   const db = await getDB();
-  await db.put("meta", { key: "lastSyncedAt", lastSyncedAt: iso });
+  await db.put("meta", { key: "lastSyncedAt", lastSyncedAt: iso, dataSource });
 }
 
 /** Wipes all cached workouts, templates, and sync state — used by

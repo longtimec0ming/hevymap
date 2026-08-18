@@ -43,7 +43,7 @@ A and B are independent. C depends on A's taxonomy and B's storage interfaces (a
 - `npm run lint`, `npm run typecheck`
 
 ## Environment
-- `.env.local`: `HEVY_API_KEY` (required), `ACCESS_PASSWORD` (optional — gate disabled when unset)
+- `.env.local`: `HEVY_API_KEY` (optional — if unset, users can connect their own key in-app instead, or import a CSV export), `ACCESS_PASSWORD` (optional — gate disabled when unset), `HEVYMAP_SECRET` (optional — encrypts the in-app-connected API key cookie; falls back to `ACCESS_PASSWORD` if set, then to a random per-process secret otherwise)
 - Hevy API base: `https://api.hevyapp.com/v1/`, auth header `api-key`. Key endpoints: `workouts` (paginated), `workouts/count`, `workouts/events?since=`, `exercise_templates` (includes user's custom exercises).
 - Verify endpoint details against Hevy's current API docs before implementing the client; do not guess response shapes — fetch a real sample first.
 

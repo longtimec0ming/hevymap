@@ -26,7 +26,7 @@ export interface WorkoutDataState {
 export function useWorkoutData(): WorkoutDataState {
   const [workouts, setWorkouts] = useState<HevyWorkout[]>([]);
   const [templates, setTemplates] = useState<HevyExerciseTemplate[]>([]);
-  const [syncState, setSyncState] = useState<SyncState>({ lastSyncedAt: null });
+  const [syncState, setSyncState] = useState<SyncState>({ lastSyncedAt: null, dataSource: null });
   const [loaded, setLoaded] = useState(false);
 
   const refresh = useCallback(async () => {

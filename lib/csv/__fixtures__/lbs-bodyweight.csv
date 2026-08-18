@@ -1,0 +1,7 @@
+title,start_time,end_time,description,exercise_title,superset_id,exercise_notes,set_index,set_type,weight_lbs,reps,distance_miles,duration_seconds,rpe
+Back Day,"19 Aug 2026, 18:30","19 Aug 2026, 19:20",,Pull Up (Assisted),,,0,normal,,8,,0,7
+Back Day,"19 Aug 2026, 18:30","19 Aug 2026, 19:20",,Pull Up (Assisted),,,1,normal,,7,,0,8
+Back Day,"19 Aug 2026, 18:30","19 Aug 2026, 19:20",,Pull Up (Assisted),,,2,normal,,6,,0,9
+Back Day,"19 Aug 2026, 18:30","19 Aug 2026, 19:20",,Barbell Row,,,0,normal,135,10,,0,7.5
+Back Day,"19 Aug 2026, 18:30","19 Aug 2026, 19:20",,Barbell Row,,,1,normal,155,8,,0,8.5
+Back Day,"19 Aug 2026, 18:30","19 Aug 2026, 19:20",,Treadmill,,,0,normal,,,1.5,900,

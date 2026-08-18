@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   HevyApiError,
+  NoApiKeyError,
   getAllExerciseTemplates,
   getAllWorkouts,
   getWorkoutsCount,
@@ -160,6 +161,20 @@ describe("lib/hevy", () => {
       name: "HevyApiError",
       status: 401,
     });
+  });
+
+  it("throws NoApiKeyError on a 401 with error: no_api_key", async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse({ error: "no_api_key" }, 401));
+
+    await expect(getWorkoutsCount()).rejects.toBeInstanceOf(NoApiKeyError);
+  });
+
+  it("throws plain HevyApiError (not NoApiKeyError) on a 401 with a different body", async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse({ error: "Unauthorized" }, 401));
+
+    const error = await getWorkoutsCount().catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(HevyApiError);
+    expect(error).not.toBeInstanceOf(NoApiKeyError);
   });
 
   it("throws HevyApiError on a network failure", async () => {

@@ -107,12 +107,18 @@ describe("lib/storage (IndexedDB, via fake-indexeddb)", () => {
     expect(all.find((t) => t.id === "t1")?.title).toBe("Renamed");
   });
 
-  it("sync state defaults to null and round-trips through setLastSyncedAt", async () => {
-    expect(await getSyncState()).toEqual({ lastSyncedAt: null });
+  it("sync state defaults to null and round-trips through setLastSyncedAt, defaulting dataSource to 'api'", async () => {
+    expect(await getSyncState()).toEqual({ lastSyncedAt: null, dataSource: null });
 
     await setLastSyncedAt("2026-08-18T00:00:00Z");
 
-    expect(await getSyncState()).toEqual({ lastSyncedAt: "2026-08-18T00:00:00Z" });
+    expect(await getSyncState()).toEqual({ lastSyncedAt: "2026-08-18T00:00:00Z", dataSource: "api" });
+  });
+
+  it("setLastSyncedAt records an explicit dataSource (CSV import case)", async () => {
+    await setLastSyncedAt("2026-08-18T00:00:00Z", "csv");
+
+    expect(await getSyncState()).toEqual({ lastSyncedAt: "2026-08-18T00:00:00Z", dataSource: "csv" });
   });
 
   it("clearAll wipes workouts, templates, and sync state", async () => {
@@ -124,7 +130,7 @@ describe("lib/storage (IndexedDB, via fake-indexeddb)", () => {
 
     expect(await getAllWorkouts()).toEqual([]);
     expect(await getAllExerciseTemplates()).toEqual([]);
-    expect(await getSyncState()).toEqual({ lastSyncedAt: null });
+    expect(await getSyncState()).toEqual({ lastSyncedAt: null, dataSource: null });
   });
 });
 

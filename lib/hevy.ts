@@ -142,6 +142,23 @@ export class HevyApiError extends Error {
   }
 }
 
+/** Thrown when the server proxy has no Hevy API key at all (neither
+ * HEVY_API_KEY nor a connected cookie key — see
+ * app/api/hevy/[...path]/route.ts and lib/hevy-key.ts). Callers (the import
+ * screen, background sync) can catch this specifically to route the user
+ * back to the "Connect your data" screen, rather than showing a generic
+ * network-error message. */
+export class NoApiKeyError extends HevyApiError {
+  constructor(body: unknown) {
+    super("No Hevy API key is connected.", 401, body);
+    this.name = "NoApiKeyError";
+  }
+}
+
+function isNoApiKeyBody(body: unknown): boolean {
+  return typeof body === "object" && body !== null && (body as { error?: unknown }).error === "no_api_key";
+}
+
 // ---------------------------------------------------------------------------
 // Low-level fetch helper
 // ---------------------------------------------------------------------------
@@ -178,6 +195,9 @@ async function hevyFetch<T>(path: string, params?: Record<string, string | numbe
   }
 
   if (!response.ok) {
+    if (response.status === 401 && isNoApiKeyBody(body)) {
+      throw new NoApiKeyError(body);
+    }
     throw new HevyApiError(`Hevy API request to ${path} failed with status ${response.status}`, response.status, body);
   }
 

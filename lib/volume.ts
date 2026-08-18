@@ -86,7 +86,15 @@ export function resolveExerciseMapping(exercise: ExerciseIdentity, context: Reso
   }
 
   const repoMap = context.repoMap ?? DEFAULT_REPO_MAP;
-  const repoEntry = repoMap.find((entry) => entry.hevy_id === exercise.id);
+  // CSV-imported exercises (see lib/csv/parse-hevy-csv.ts) carry a
+  // deterministic pseudo-id (`csv:<slug>`), not a real Hevy
+  // exercise_template_id, so an id match against the repo map never hits.
+  // Fall back to a case-insensitive exact name match so CSV rows still
+  // resolve to a real mapping instead of always falling through to
+  // inference/fallback.
+  const repoEntry =
+    repoMap.find((entry) => entry.hevy_id === exercise.id) ??
+    repoMap.find((entry) => entry.name.toLowerCase() === exercise.name.toLowerCase());
   if (repoEntry) {
     assertValid(repoEntry.contributions, exercise.id);
     return { contributions: repoEntry.contributions as ContributionMap, source: "repo_map" };

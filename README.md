@@ -5,7 +5,7 @@
 
 Sub-muscle volume tracker for [Hevy](https://hevy.com), open source.
 
-Hevy tracks muscle groups coarsely ("chest", "shoulders"). HevyMap pulls your workouts via the Hevy API and allocates every set to 26 fine-grained sub-muscles (front/side/rear delts, upper/mid/lower chest, triceps heads, and more), visualized on an interactive anatomical body heat map, with weekly volume tracked against evidence-based targets.
+Hevy tracks muscle groups coarsely ("chest", "shoulders"). HevyMap pulls in your workouts — via the Hevy API or a free CSV export, your choice — and allocates every set to 26 fine-grained sub-muscles (front/side/rear delts, upper/mid/lower chest, triceps heads, and more), visualized on an interactive anatomical body heat map, with weekly volume tracked against evidence-based targets.
 
 Each deployment is your own, private copy: your data lives in Hevy and in your browser. There's no shared hosted app, no accounts, and no database.
 
@@ -15,19 +15,22 @@ _Coming soon — a screenshot/GIF of the dashboard body map will go here once ca
 
 ## Requirements
 
-- A **Hevy Pro** account. The Hevy API requires Pro, and HevyMap can't fetch your workouts without it.
-- A Hevy API key. In the Hevy app, look under **Settings → Developer** (or the developer settings at [hevy.com](https://hevy.com)) for an option to generate one. Exact wording may vary by app version — if you can't find it, check Hevy's own help docs.
+You need Hevy workout data to get in, but **not** Hevy Pro. Two ways to connect, chosen on first run:
+
+- **A Hevy API key** — requires Hevy Pro. Get one from the Hevy app under **Settings → Developer** (or the developer settings at [hevy.com](https://hevy.com); exact wording may vary by app version — check Hevy's own help docs if you can't find it). You can either set this once in the deployment's environment (`HEVY_API_KEY`), or paste it into the app itself the first time you open it — no redeploy needed.
+- **A Hevy CSV export** — free, no Pro required. In the Hevy app: **Settings → Export data**. Upload the file on first run; it's parsed entirely in your browser and never leaves your device.
 
 ## Run it
 
 ### A. Deploy your own copy on Vercel (recommended)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/longtimec0ming/hevymap&env=HEVY_API_KEY,ACCESS_PASSWORD&envDescription=HEVY_API_KEY%20is%20required%20(from%20Hevy%20Pro%20%E2%86%92%20Settings%20%E2%86%92%20Developer).%20ACCESS_PASSWORD%20is%20optional%20%E2%80%94%20leave%20it%20blank%20to%20deploy%20without%20a%20password%20gate.)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/longtimec0ming/hevymap&env=HEVY_API_KEY,ACCESS_PASSWORD,HEVYMAP_SECRET&envDescription=All%20optional.%20HEVY_API_KEY%20pre-connects%20a%20Hevy%20Pro%20API%20key%20(you%20can%20also%20paste%20one%20in-app%2C%20or%20import%20a%20free%20CSV%20export%2C%20instead).%20ACCESS_PASSWORD%20gates%20the%20app%20behind%20a%20password.%20HEVYMAP_SECRET%20keeps%20an%20in-app-connected%20key%20across%20restarts.)
 
-This forks the repo into your own GitHub account and prompts for both env vars during setup. It's a private instance of the app on your own Vercel account — nobody else can see your data unless you set `ACCESS_PASSWORD` and share it.
+This forks the repo into your own GitHub account and prompts for the env vars during setup — all optional, leave any of them blank. It's a private instance of the app on your own Vercel account — nobody else can see your data unless you set `ACCESS_PASSWORD` and share it.
 
-- **`HEVY_API_KEY`** (required) — your key from Hevy Pro.
+- **`HEVY_API_KEY`** (optional) — your key from Hevy Pro, if you'd rather set it once here than paste it into the app. Leave blank to connect in-app instead (via a pasted key or a CSV upload).
 - **`ACCESS_PASSWORD`** (optional) — if your deployment is reachable on the open internet (which any default Vercel URL is), set this so random visitors can't load your workout data. Leave it blank only if you're comfortable with the URL being unprotected.
+- **`HEVYMAP_SECRET`** (optional) — see [Bring your own API key](#bring-your-own-api-key) below. Only matters if you're connecting a key in-app rather than setting `HEVY_API_KEY`.
 
 ### B. Run it locally
 
@@ -35,18 +38,25 @@ This forks the repo into your own GitHub account and prompts for both env vars d
 git clone https://github.com/longtimec0ming/hevymap.git
 cd hevymap
 npm install
-cp .env.example .env.local   # then fill in HEVY_API_KEY
+cp .env.example .env.local   # optional: fill in HEVY_API_KEY, or connect in-app instead
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000`. On first run, either connect your Hevy API key (in the app, if `HEVY_API_KEY` isn't set) or upload a Hevy CSV export.
 
 ### Environment variables
 
 | Variable | Required | Purpose |
 |---|---|---|
-| `HEVY_API_KEY` | yes | Server-side only, used by the Hevy API proxy. Never exposed to the client. |
+| `HEVY_API_KEY` | no | Server-side only, used by the Hevy API proxy. Never exposed to the client. If unset, you can connect a key in-app instead, or use a CSV import. |
 | `ACCESS_PASSWORD` | no | If set, gates the whole app behind a password form — set this for any deployment reachable by others. Unset = no gate. |
+| `HEVYMAP_SECRET` | no | Encrypts the cookie used to store a key connected in-app (see below). Falls back to `ACCESS_PASSWORD` if that's set, then to a random per-process secret. Only relevant if `HEVY_API_KEY` is unset. |
+
+### Bring your own API key
+
+If `HEVY_API_KEY` isn't set, the first-run screen lets you paste your own Hevy API key instead. It's validated against the real Hevy API, then stored as an **encrypted, httpOnly cookie** — never in `localStorage`/IndexedDB, never sent to client-side JavaScript, never logged. Encryption uses AES-256-GCM, keyed from (in order) `ACCESS_PASSWORD`, then `HEVYMAP_SECRET`, then — if neither is set — a random secret generated once when the server process starts.
+
+That last case has a real tradeoff: **without `ACCESS_PASSWORD` or `HEVYMAP_SECRET` set, a restart or redeploy invalidates the encryption key, so any in-app-connected API key is silently disconnected** and you'll need to reconnect (or re-upload your CSV, or set `HEVY_API_KEY`) next time. Set `HEVYMAP_SECRET` on any real deployment to avoid this. Settings has a "Disconnect" action to clear the cookie deliberately.
 
 ### Commands
 
@@ -60,8 +70,10 @@ npm run typecheck   # tsc --noEmit
 
 ## Privacy & security
 
-- Your Hevy API key is read only by the server-side proxy route and is never sent to the browser, logged, or stored anywhere but your own deployment's environment variables.
-- Your workout data is cached in your browser's IndexedDB. It isn't sent to any third-party server or database — HevyMap doesn't run one.
+- A server-configured `HEVY_API_KEY` is read only by the server-side proxy route and is never sent to the browser, logged, or stored anywhere but your own deployment's environment variables.
+- A key connected in-app is validated server-side, then stored as an encrypted, httpOnly cookie — never in `localStorage`/IndexedDB, never sent to client-side JavaScript, never logged. See [Bring your own API key](#bring-your-own-api-key).
+- A CSV export is parsed entirely in your browser (File API) — it's never uploaded anywhere.
+- Your workout data (from either source) is cached in your browser's IndexedDB. It isn't sent to any third-party server or database — HevyMap doesn't run one.
 - No accounts, no sign-up, no telemetry or analytics.
 - Because each deployment is single-user, set `ACCESS_PASSWORD` on any copy reachable from the open internet (this is the default for a Vercel deploy).
 
@@ -71,7 +83,7 @@ npm run typecheck   # tsc --noEmit
 - **History** — trend lines and week-over-week comparisons, with the 26 sub-muscles grouped under their 6 coarse regions.
 - **Workouts** — your full history from Hevy, each workout and exercise expandable into its own body map.
 - **Exercises** — a searchable mapping browser showing how every exercise splits across sub-muscles, confidence badges, and an editor for defining your own splits (needed for custom exercises, and to override any mapping you disagree with).
-- **Settings** — kg/lbs units, warm-up-set toggle, per-muscle weekly targets, override export/import, and a force re-sync button.
+- **Settings** — kg/lbs units, warm-up-set toggle, per-muscle weekly targets, override export/import, and (depending on your data source) a force re-sync button, or a re-upload CSV / switch-to-API-key affordance.
 
 ## How the muscle mapping works
 
@@ -93,6 +105,8 @@ Out of scope for v1, but plausible future directions:
 - Bodyweight exercises count sets normally, but tonnage only reflects logged *added* weight, not bodyweight itself.
 - Custom Hevy exercises (yours, not the standard bank) always need a mapping defined manually — there's no way to ship one in the repo since their IDs are per-account.
 - Some standard-exercise mappings are still `low`-confidence best-effort guesses. These are flagged in the UI and in `muscle-map.json`; contributions to firm them up are welcome.
+- CSV imports don't carry Hevy's own exercise IDs (the file has names, not IDs), and can't sync incrementally — re-upload a fresh export to bring in new workouts. CSV exercise names are matched to `muscle-map.json` by exact name (case-insensitive); anything that doesn't match falls to inference/fallback and is badged "estimated", same as an unmapped API exercise.
+- Without `ACCESS_PASSWORD` or `HEVYMAP_SECRET` set, an in-app-connected API key is lost on server restart/redeploy (see [Bring your own API key](#bring-your-own-api-key)).
 
 ## Contributing / architecture
 

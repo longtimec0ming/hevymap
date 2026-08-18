@@ -8,6 +8,7 @@ import {
   getAllWorkouts as fetchAllWorkouts,
   syncWorkoutEvents,
 } from "./hevy";
+import type { HevyWorkout } from "./hevy";
 import {
   clearAll,
   deleteWorkouts,
@@ -47,12 +48,16 @@ export interface IncrementalSyncResult {
 
 /** Incremental sync via /workouts/events since the last sync timestamp.
  * Also refreshes exercise templates (cheap, covers newly-created custom
- * exercises). No-op (returns null) if there has never been a full import. */
+ * exercises). No-op (returns null) if there has never been a full import,
+ * or if the cache's data came from a CSV upload — there's no Hevy API key
+ * to sync with in that case, and workouts came from a file, not an
+ * account. See components/import/import-screen.tsx's CSV upload path and
+ * lib/storage.ts's DataSource. */
 export async function runIncrementalSync(
   onProgress?: (fetched: number) => void,
 ): Promise<IncrementalSyncResult | null> {
-  const { lastSyncedAt } = await getSyncState();
-  if (!lastSyncedAt) return null;
+  const { lastSyncedAt, dataSource } = await getSyncState();
+  if (!lastSyncedAt || dataSource === "csv") return null;
 
   const templates = await fetchAllExerciseTemplates();
   await putExerciseTemplates(templates);
@@ -65,8 +70,29 @@ export async function runIncrementalSync(
   return { updatedCount: result.updated.length, deletedCount: result.deletedIds.length };
 }
 
-/** Wipes the local cache and re-runs a full import from scratch. */
+/** Wipes the local cache and re-runs a full import from scratch. Only valid
+ * for an API-sourced cache — CSV users re-upload a file instead (see
+ * importCsvWorkouts). */
 export async function forceFullResync(onProgress?: (progress: ImportProgress) => void): Promise<void> {
   await clearAll();
   await runFullImport(onProgress);
+}
+
+/** Writes CSV-parsed workouts (lib/csv/parse-hevy-csv.ts) into the cache as
+ * a first-run "import", exactly like runFullImport does for the API path,
+ * but marks the cache's dataSource as "csv" so runIncrementalSync no-ops
+ * (there's no API key to sync with) and settings can offer "Re-upload CSV"
+ * instead of "Force full re-sync". Does not touch exercise templates —
+ * CSV rows have no template ids; lib/volume.ts's resolver falls back to a
+ * name match against the repo map for these exercises instead. */
+export async function importCsvWorkouts(workouts: HevyWorkout[]): Promise<void> {
+  await putWorkouts(workouts);
+  await setLastSyncedAt(new Date().toISOString(), "csv");
+}
+
+/** Wipes the local cache and re-imports from a freshly parsed CSV
+ * ("Re-upload CSV" in settings). */
+export async function reimportCsvWorkouts(workouts: HevyWorkout[]): Promise<void> {
+  await clearAll();
+  await importCsvWorkouts(workouts);
 }

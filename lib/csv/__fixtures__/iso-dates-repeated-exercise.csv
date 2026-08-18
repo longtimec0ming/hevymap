@@ -1,0 +1,6 @@
+title,start_time,end_time,description,exercise_title,superset_id,exercise_notes,set_index,set_type,weight_kg,reps,distance_km,duration_seconds,rpe
+Full Body,2026-07-04T09:00:00.000Z,2026-07-04T10:15:00.000Z,,Squat (Barbell),,,0,warmup,20,10,,0,
+Full Body,2026-07-04T09:00:00.000Z,2026-07-04T10:15:00.000Z,,Squat (Barbell),,,1,normal,100,5,,0,8
+Full Body,2026-07-04T09:00:00.000Z,2026-07-04T10:15:00.000Z,,Leg Press (Machine),,,0,normal,120,12,,0,7
+Full Body,2026-07-04T09:00:00.000Z,2026-07-04T10:15:00.000Z,,Squat (Barbell),,,0,normal,100,5,,0,8.5
+Full Body,2026-07-04T09:00:00.000Z,2026-07-04T10:15:00.000Z,,Squat (Barbell),,,1,normal,100,5,,0,9

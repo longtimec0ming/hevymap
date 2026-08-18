@@ -4,6 +4,7 @@
 // convention.
 
 import { NextRequest } from "next/server";
+import { getHevyKeyFromRequest } from "@/lib/hevy-key";
 
 const HEVY_API_BASE = "https://api.hevyapp.com/v1";
 
@@ -13,12 +14,13 @@ const HEVY_API_BASE = "https://api.hevyapp.com/v1";
 const FORWARDED_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"] as const;
 
 async function forward(request: NextRequest, path: string[]): Promise<Response> {
-  const apiKey = process.env.HEVY_API_KEY;
+  // Resolution order: server-configured HEVY_API_KEY -> the user's own key
+  // (pasted via /api/hevy-key, stored as an encrypted cookie) -> no key at
+  // all. lib/hevy.ts's client recognizes the "no_api_key" error and routes
+  // the user back to the connect screen.
+  const apiKey = process.env.HEVY_API_KEY ?? getHevyKeyFromRequest(request);
   if (!apiKey) {
-    return Response.json(
-      { error: "HEVY_API_KEY is not configured on the server." },
-      { status: 500 },
-    );
+    return Response.json({ error: "no_api_key" }, { status: 401 });
   }
 
   const targetUrl = `${HEVY_API_BASE}/${path.join("/")}${request.nextUrl.search}`;

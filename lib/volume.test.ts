@@ -102,6 +102,20 @@ describe("resolveExerciseMapping — precedence", () => {
     expect(result.contributions).toEqual({ mid_chest: 1.0 });
   });
 
+  it("falls back to a case-insensitive name match against the repo map when the id doesn't match (CSV import case)", () => {
+    const repoMap: MuscleMap = [
+      { hevy_id: "05293BCA", name: "Incline Bench Press (Barbell)", contributions: { upper_chest: 1.0 }, confidence: "high" },
+    ];
+
+    const result = resolveExerciseMapping(
+      { id: "csv:incline-bench-press-barbell", name: "incline bench press (barbell)" },
+      { repoMap },
+    );
+
+    expect(result.source).toBe("repo_map");
+    expect(result.contributions).toEqual({ upper_chest: 1.0 });
+  });
+
   it("falls back to inference rules when there is no override or repo map entry", () => {
     const result = resolveExerciseMapping({ id: "tpl-unknown", name: "Lateral Raise (Dumbbell)" }, { repoMap: [] });
 
