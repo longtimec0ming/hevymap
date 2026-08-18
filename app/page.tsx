@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ConsistencyHeatmapCard } from "@/components/dashboard/consistency-heatmap-card";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 import { HoursTrainedCard } from "@/components/dashboard/hours-trained-card";
+import { MuscleDetailPanel } from "@/components/dashboard/muscle-detail-panel";
 import { NeglectRadar } from "@/components/dashboard/neglect-radar";
 import { PeriodSelector } from "@/components/dashboard/period-selector";
 import { PrsOverTimeCard } from "@/components/dashboard/prs-over-time-card";
@@ -40,6 +41,7 @@ export default function DashboardPage() {
   const data = useWorkoutData();
   const [prefs, updatePrefs] = usePrefs();
   const [highlighted, setHighlighted] = useState<SubMuscleId | null>(null);
+  const [panelMuscleId, setPanelMuscleId] = useState<SubMuscleId | null>(null);
   const [sparklinesExpanded, setSparklinesExpandedState] = useState(false);
 
   useEffect(() => {
@@ -152,12 +154,31 @@ export default function DashboardPage() {
             targetBands={comparisonTargetBands}
             highlightedMuscleId={highlighted}
             onMuscleHover={setHighlighted}
-            onMuscleClick={setHighlighted}
+            onMuscleClick={(muscleId) => {
+              setHighlighted(muscleId);
+              setPanelMuscleId(muscleId);
+            }}
             units={prefs.units}
           />
           {comparisonNote && <p className="text-center text-xs text-muted-foreground">{comparisonNote}</p>}
         </div>
-        <NeglectRadar volumeByMuscle={comparisonVolume} targetBands={comparisonTargetBands} />
+        <div className="space-y-4">
+          <NeglectRadar volumeByMuscle={comparisonVolume} targetBands={comparisonTargetBands} />
+          {panelMuscleId && (
+            <MuscleDetailPanel
+              muscleId={panelMuscleId}
+              workoutsInPeriod={workoutsInPeriod}
+              templatesById={data.templatesById}
+              includeWarmups={prefs.includeWarmups}
+              onClose={() => setPanelMuscleId(null)}
+            />
+          )}
+          <RecentWorkoutsCard
+            workouts={data.workouts}
+            templatesById={data.templatesById}
+            includeWarmups={prefs.includeWarmups}
+          />
+        </div>
       </div>
 
       <div>
@@ -166,9 +187,18 @@ export default function DashboardPage() {
           <div className="lg:col-span-2">
             <ConsistencyHeatmapCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} />
           </div>
-          <RecentWorkoutsCard
+          <div className="lg:col-span-2">
+            <SetsBySubMuscleCard
+              workouts={data.workouts}
+              templatesById={data.templatesById}
+              weekStartsOn={prefs.weekStartsOn}
+              includeWarmups={prefs.includeWarmups}
+            />
+          </div>
+          <SetsByGroupCard
             workouts={data.workouts}
             templatesById={data.templatesById}
+            weekStartsOn={prefs.weekStartsOn}
             includeWarmups={prefs.includeWarmups}
           />
           <HoursTrainedCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} />
@@ -178,18 +208,6 @@ export default function DashboardPage() {
             weekStartsOn={prefs.weekStartsOn}
             includeWarmups={prefs.includeWarmups}
             units={prefs.units}
-          />
-          <SetsByGroupCard
-            workouts={data.workouts}
-            templatesById={data.templatesById}
-            weekStartsOn={prefs.weekStartsOn}
-            includeWarmups={prefs.includeWarmups}
-          />
-          <SetsBySubMuscleCard
-            workouts={data.workouts}
-            templatesById={data.templatesById}
-            weekStartsOn={prefs.weekStartsOn}
-            includeWarmups={prefs.includeWarmups}
           />
           <WorkoutsPerWeekCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} />
           <PrsOverTimeCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} includeWarmups={prefs.includeWarmups} />

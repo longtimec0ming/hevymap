@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,11 +17,22 @@ function weekLabel(point: WeeklyVolumePoint): string {
   return point.weekStart.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
-function TrendCard({ label, data }: { label: string; data: { week: string; sets: number }[] }) {
+function TrendCard({ label, data, href }: { label: string; data: { week: string; sets: number }[]; href?: string }) {
   return (
     <Card className="border-border/70">
       <CardContent className="px-4 py-3">
-        <p className="mb-1 text-sm font-medium">{label}</p>
+        <p className="group/label mb-1 flex items-center gap-1 text-sm font-medium">
+          {label}
+          {href && (
+            <Link
+              href={href}
+              className="opacity-0 transition-opacity group-hover/label:opacity-100"
+              aria-label={`Find exercises that train ${label}`}
+            >
+              <ArrowUpRight className="size-3.5 text-muted-foreground" />
+            </Link>
+          )}
+        </p>
         <div className="h-28 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{ top: 4, right: 8, bottom: 0, left: -20 }}>
@@ -93,7 +106,8 @@ export function TrendGrid({ series }: TrendGridProps) {
                 week: weekLabel(series[i]),
                 sets: weekGroups.find((g) => g.region === selectedRegion)?.children.find((c) => c.id === child.id)?.volume.sets ?? 0,
               }));
-              return <TrendCard key={child.id} label={child.displayName} data={data} />;
+              const href = `/exercises?muscle=${child.id}&group=${encodeURIComponent(selectedRegion)}`;
+              return <TrendCard key={child.id} label={child.displayName} data={data} href={href} />;
             })}
       </div>
     </div>

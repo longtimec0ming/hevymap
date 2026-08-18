@@ -1,4 +1,5 @@
 import { AlertTriangle } from "lucide-react";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { TAXONOMY_BY_ID, type SubMuscleId } from "@/data/taxonomy";
 import type { TargetBand } from "@/lib/targets";
@@ -30,14 +31,22 @@ export function NeglectRadar({ volumeByMuscle, targetBands }: NeglectRadarProps)
           <p className="text-sm text-muted-foreground">Everything is within target this week. Nice work.</p>
         ) : (
           <ul className="space-y-1.5">
-            {neglected.slice(0, 8).map((row) => (
-              <li key={row.id} className="flex items-center justify-between text-sm">
-                <span>{TAXONOMY_BY_ID[row.id].displayName}</span>
-                <span className="tabular-nums text-muted-foreground">
-                  {row.sets.toFixed(1)} sets — {row.deficit.toFixed(1)} below target
-                </span>
-              </li>
-            ))}
+            {neglected.slice(0, 8).map((row) => {
+              const region = TAXONOMY_BY_ID[row.id].region;
+              return (
+                <li key={row.id}>
+                  <Link
+                    href={`/exercises?muscle=${row.id}&group=${encodeURIComponent(region)}`}
+                    className="flex items-center justify-between rounded-md px-1.5 py-1 -mx-1.5 text-sm transition-colors hover:bg-muted"
+                  >
+                    <span>{TAXONOMY_BY_ID[row.id].displayName}</span>
+                    <span className="tabular-nums text-muted-foreground">
+                      {row.sets.toFixed(1)} sets — {row.deficit.toFixed(1)} below target
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         )}
       </CardContent>

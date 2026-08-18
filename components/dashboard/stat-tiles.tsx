@@ -47,15 +47,15 @@ function formatMinutes(minutes: number): string {
 
 function Delta({ pct }: { pct: number | null }) {
   if (pct === null) {
-    return <span className="text-xs text-muted-foreground">new</span>;
+    return <span className="text-[10px] text-muted-foreground">new</span>;
   }
   if (Math.abs(pct) < 0.5) {
-    return <span className="text-xs tabular-nums text-muted-foreground">flat</span>;
+    return <span className="text-[10px] tabular-nums text-muted-foreground">flat</span>;
   }
   const Icon = pct > 0 ? ArrowUp : ArrowDown;
   return (
-    <span className="inline-flex items-center gap-0.5 text-xs tabular-nums text-muted-foreground">
-      <Icon className="size-3" strokeWidth={2} />
+    <span className="inline-flex items-center gap-0.5 text-[10px] tabular-nums text-muted-foreground">
+      <Icon className="size-2.5" strokeWidth={2} />
       {Math.abs(pct).toFixed(0)}%
     </span>
   );
@@ -73,19 +73,19 @@ function Tile({
   deltaPct?: number | null;
 }) {
   return (
-    <Card className="border-border/70">
-      <CardContent className="flex items-start gap-3 px-4 py-3.5">
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
-          <Icon className="size-4" strokeWidth={1.75} />
-        </div>
-        <div className="min-w-0">
-          <p className={cn("truncate text-xl font-semibold tabular-nums tracking-tight")}>{value}</p>
-          <p className="truncate text-xs text-muted-foreground">{label}</p>
-          {deltaPct !== undefined && (
-            <div className="mt-0.5">
-              <Delta pct={deltaPct} />
-            </div>
-          )}
+    <Card size="sm" className="border-border/70 py-1.5">
+      <CardContent className="flex items-center gap-2 px-2.5">
+        <Icon className="size-3.5 shrink-0 text-brand" strokeWidth={1.75} />
+        <div className="min-w-0 leading-tight">
+          <p className={cn("truncate text-sm font-semibold tabular-nums tracking-tight")}>
+            {value} <span className="text-[10px] font-normal text-muted-foreground">{label}</span>
+            {deltaPct !== undefined && (
+              <>
+                {" "}
+                <Delta pct={deltaPct} />
+              </>
+            )}
+          </p>
         </div>
       </CardContent>
     </Card>
@@ -117,7 +117,7 @@ export function StatTiles({
   const prevHours = hasPrevious ? workoutDurationStats(previousWorkoutsInPeriod!).totalHours : 0;
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
       <Tile
         icon={Dumbbell}
         label="Workouts"
