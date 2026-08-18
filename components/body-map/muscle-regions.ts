@@ -73,7 +73,7 @@ export interface ViewArt {
    * head very much does not.
    */
   centre: string[];
-  /** The 26 addressable muscles present in this view. */
+  /** Every taxonomy sub-muscle whose `bodySide` includes this view. */
   regions: MuscleRegion[];
   /** Outer contour of each body part, stroked as a faint rim UNDER the
    * muscles so it never draws a line across one. */
@@ -165,34 +165,54 @@ function gridPoint(grid: Grid, i: number, j: number): Pt {
 }
 
 /**
+ * A rail bound for `block`: either a fixed rail index, or `[top, bottom]` to
+ * taper the edge linearly from the block's first row to its last. Tapering is
+ * what keeps the flat sheet muscles (rhomboids, lower traps, erectors, the
+ * lower lat) from reading as rectangles.
+ */
+type Bound = number | readonly [number, number];
+const bound = (b: Bound, t: number) => (typeof b === "number" ? b : mix(b[0], b[1], t));
+
+/**
  * A muscle *island*: the same rows/rails block as `cell`, but inset by `m`
- * (in index units) on every side and re-sampled through the grid, so the
- * shape has rounded ends and neighbouring muscles are separated by a thin
- * groove of dark body rather than sharing a hard seam. That separation is
- * what stops the figure reading as armour plating; the grid still guarantees
- * the muscles stay in their anatomical lanes and never overlap.
+ * (rows) and `mj` (rails, either one value or `[j0 side, j1 side]`) in index
+ * units and re-sampled through the grid, so the shape has rounded ends and
+ * neighbouring muscles are separated by a thin groove of dark body rather
+ * than sharing a hard seam. That separation is what stops the figure reading
+ * as armour plating; the grid still guarantees the muscles stay in their
+ * anatomical lanes and never overlap. An asymmetric `mj` is how the abs get a
+ * narrow linea alba on the midline and a wide groove on the flank side.
  */
 function block(
   grid: Grid,
   i0: number,
   i1: number,
-  j0: number,
-  j1: number,
+  j0: Bound,
+  j1: Bound,
   m = 0.1,
+  mj: number | readonly [number, number] = m,
 ): string {
   const samples = 6;
   const mi = Math.min(m, (i1 - i0) / 3);
-  const mj = Math.min(m, (j1 - j0) / 3);
+  const [mj0, mj1] = typeof mj === "number" ? [mj, mj] : mj;
   const a = i0 + mi;
   const b = i1 - mi;
-  const c = j0 + mj;
-  const d = j1 - mj;
+  /** Inset rail bounds at row-fraction `t` (0 = first row, 1 = last). */
+  const lo = (t: number) => bound(j0, t) + mj0;
+  const hi = (t: number) => bound(j1, t) - mj1;
+  const row = (t: number) => mix(a, b, t);
   const pts: Pt[] = [];
   const at = (i: number, j: number) => pts.push(gridPoint(grid, i, j));
-  for (let k = 0; k < samples; k++) at(a, mix(c, d, k / (samples - 1)));
-  for (let k = 1; k < samples; k++) at(mix(a, b, k / (samples - 1)), d);
-  for (let k = 1; k < samples; k++) at(b, mix(d, c, k / (samples - 1)));
-  for (let k = 1; k < samples - 1; k++) at(mix(b, a, k / (samples - 1)), c);
+  for (let k = 0; k < samples; k++) at(a, mix(lo(0), hi(0), k / (samples - 1)));
+  for (let k = 1; k < samples; k++) {
+    const t = k / (samples - 1);
+    at(row(t), hi(t));
+  }
+  for (let k = 1; k < samples; k++) at(b, mix(hi(1), lo(1), k / (samples - 1)));
+  for (let k = 1; k < samples - 1; k++) {
+    const t = 1 - k / (samples - 1);
+    at(row(t), lo(t));
+  }
   return loop(pts);
 }
 
@@ -338,6 +358,36 @@ const PEC: Grid = [
   [[190, 207], [170, 203], [150, 201], [135, 214]],
   [[190, 243], [170, 236], [150, 226], [134, 224]],
   [[190, 276], [168, 266], [148, 246], [134, 233]],
+];
+
+// Sternocleidomastoid (front neck). Rows run down the strip from the mastoid
+// (behind the ear) to the sternal notch; rails cross it. Authored to sit
+// inside the neck silhouette's left half, so the mirrored pair frames the
+// throat the way the SCM heads actually do.
+const SCM: Grid = [
+  [[190, 138], [178, 141]],
+  [[194, 156], [182, 158]],
+  [[198, 172], [188, 171]],
+];
+
+// Posterior neck column (back view): the strip beside the spine between the
+// skull base and the top of the traps.
+const NECK_BACK: Grid = [
+  [[198, 120], [184, 126]],
+  [[198, 138], [179, 141]],
+  [[198, 154], [176, 154]],
+];
+
+// Upper trap, front view: the slope from the side of the neck out to the
+// acromion. Row 0 is its upper (posterior) edge, row 1 the lower edge that
+// follows the clavicle; rails run along the slope, which is also the fibre
+// direction.
+// It has to thread a narrow lane: medially it must clear the SCM strip,
+// laterally it must stop short of the deltoid, and it must stay below the
+// neck's shoulder flare or it floats over the background.
+const TRAP_FRONT: Grid = [
+  [[178, 146], [170, 154], [161, 162], [152, 171]],
+  [[180, 158], [173, 166], [164, 175], [155, 186]],
 ];
 
 // Deltoid cap. Rails: 0 medial (against the pec / trap), 1 mid, 2 lateral
@@ -508,6 +558,16 @@ const FRONT_REGIONS: MuscleRegion[] = [
       [[0.6, 3.9], [1.85, 3.62]],
     ]),
   },
+  {
+    // Just lateral to the tibia, between the peroneal group and the shin
+    // ridge (both of which stay silhouette).
+    id: "tibialis_anterior",
+    shapes: [block(SHANK, 0.8, 3.2, 1.2, 2.15, 0.14)],
+    fibres: fibres(SHANK, [
+      [[1.05, 1.35], [3.0, 1.7]],
+      [[1.05, 1.7], [3.0, 1.85]],
+    ]),
+  },
 
   // Chest: three wedges of one fan, fibres converging on the humerus.
   {
@@ -535,19 +595,32 @@ const FRONT_REGIONS: MuscleRegion[] = [
     ]),
   },
   {
+    id: "serratus_anterior",
+    shapes: [block(TORSO_FRONT, 2.05, 3.5, 3.05, 3.95, 0.1)],
+    // The finger-like slips reaching forward onto the ribs.
+    fibres: fibres(TORSO_FRONT, [
+      [[2.4, 3.85], [2.55, 3.2]],
+      [[2.8, 3.85], [2.95, 3.2]],
+      [[3.2, 3.85], [3.35, 3.2]],
+    ]),
+  },
+  {
+    // Four pairs, each rounded and slightly narrower than the one above, with
+    // a deliberately thin midline inset so the linea alba reads as a crease
+    // rather than a gutter. The grooves between the blocks are the tendinous
+    // intersections, so no extra banding is drawn over them.
     id: "rectus_abdominis",
     shapes: [
-      block(TORSO_FRONT, 3.1, 4.4, 0, 1, 0.07),
-      block(TORSO_FRONT, 4.4, 5.55, 0, 1, 0.07),
-      block(TORSO_FRONT, 5.55, 6.7, 0, 1, 0.07),
-      block(TORSO_FRONT, 6.7, 7.95, 0, 1, 0.07),
+      block(TORSO_FRONT, 3.05, 4.35, 0, 1.02, 0.11, [0.05, 0.16]),
+      block(TORSO_FRONT, 4.35, 5.5, 0, 1.0, 0.11, [0.05, 0.16]),
+      block(TORSO_FRONT, 5.5, 6.62, 0, 0.96, 0.11, [0.05, 0.17]),
+      block(TORSO_FRONT, 6.62, 7.95, 0, 0.88, 0.12, [0.05, 0.18]),
     ],
-    // Horizontal tendinous bands, one per pair of abs.
     fibres: fibres(TORSO_FRONT, [
-      [[3.5, 0.12], [3.5, 0.88]],
-      [[4.5, 0.12], [4.5, 0.88]],
-      [[5.5, 0.12], [5.5, 0.88]],
-      [[6.5, 0.12], [6.5, 0.88]],
+      [[3.35, 0.55], [4.05, 0.55]],
+      [[4.6, 0.54], [5.25, 0.54]],
+      [[5.75, 0.52], [6.35, 0.52]],
+      [[6.9, 0.48], [7.65, 0.48]],
     ]),
   },
   {
@@ -558,6 +631,16 @@ const FRONT_REGIONS: MuscleRegion[] = [
       [[4.25, 3.8], [5.9, 1.25]],
       [[5.15, 3.8], [6.8, 1.25]],
       [[6.05, 3.8], [7.7, 1.25]],
+    ]),
+  },
+  {
+    // Iliopsoas / TFL at the hip crease: deliberately modest, wedged between
+    // the lower abs, the obliques and the top of rectus femoris.
+    id: "hip_flexors",
+    shapes: [block(TORSO_FRONT, 8.0, 8.95, [1.35, 1.6], [2.95, 2.75], 0.14, 0.16)],
+    fibres: fibres(TORSO_FRONT, [
+      [[8.15, 2.9], [8.7, 2.0]],
+      [[8.35, 3.0], [8.8, 2.4]],
     ]),
   },
 
@@ -587,8 +670,23 @@ const FRONT_REGIONS: MuscleRegion[] = [
     ]),
   },
   {
+    // Sternocleidomastoid strips either side of the throat.
+    id: "neck",
+    shapes: [block(SCM, 0, 2, 0, 1, 0.12)],
+    fibres: fibres(SCM, [[[0.3, 0.5], [1.7, 0.5]]]),
+  },
+  {
+    // Front view of the trap: the neck-to-shoulder slope above the clavicle.
+    id: "upper_traps",
+    shapes: [block(TRAP_FRONT, 0, 1, 0, 3, 0.12)],
+    fibres: fibres(TRAP_FRONT, [[[0.5, 0.25], [0.5, 2.75]]]),
+  },
+  {
+    // Drawn after the pec and the trap, and extended a little past the
+    // deltoid grid's medial rail, so the delt rounds *over* the pec insertion
+    // instead of meeting it at a hard vertical seam.
     id: "front_delt",
-    shapes: [block(DELT, 0.05, 2.95, 0, 1, 0.13)],
+    shapes: [block(DELT, 0.05, 2.95, -0.16, 1, 0.13, [0.2, 0.13])],
     // Radiating from the clavicle down to the V insertion.
     fibres: fibres(DELT, [
       [[0.2, 0.2], [2.85, 0.55]],
@@ -607,17 +705,16 @@ const FRONT_REGIONS: MuscleRegion[] = [
 ];
 
 const FRONT_SILHOUETTE: string[] = [
-  // Lower leg: peroneals on the outside, tibialis anterior beside the shin,
-  // the tibia itself flat between them, then the ankle.
+  // Lower leg: peroneals on the outside and the medial shin edge stay
+  // silhouette; tibialis anterior between them is now an addressable region.
   block(SHANK, 0.8, 3.5, 0.1, 1.15, 0.14),
-  block(SHANK, 0.8, 3.2, 1.2, 2.15, 0.14),
   block(SHANK, 0.8, 3.5, 2.85, 3.9, 0.14),
   block(SHANK, 0, 0.75, 0.6, 3.4, 0.14),
   // Sartorius / inner-knee strip below the adductors.
   block(THIGH, 2, 4, 3, 4),
-  // Serratus + flank under the pec, lower abdomen, hip.
-  block(TORSO_FRONT, 2.05, 3.45, 3.1, 3.95, 0.12),
-  block(TORSO_FRONT, 7.95, 9, 0, 3, 0.1),
+  // Pubic region and the outer hip, either side of the hip flexors.
+  block(TORSO_FRONT, 7.95, 9, 0, 1.1, 0.1),
+  block(TORSO_FRONT, 8, 9, 3.15, 4, 0.1),
   // Triceps edge showing on the medial side of the arm.
   block(UPPER_ARM, 0.25, 1.95, 3.1, 4, 0.1),
   HAND,
@@ -630,12 +727,6 @@ const FRONT_DETAILS: string[] = [
   "M172,106 C176,112 180,116 184,118",
   // Clavicle.
   "M194,166 C178,160 158,161 142,170",
-  // Tibialis anterior striations (non-interactive, but the front shin should
-  // not read as a blank plank).
-  fibres(SHANK, [
-    [[1.25, 1.35], [3.05, 1.7]],
-    [[1.25, 1.7], [3.05, 1.85]],
-  ]),
   // Instep and the four toe clefts.
   "M151,812 C145,822 141,832 140,842",
   "M133,838 C134,845 135,850 136,853",
@@ -695,17 +786,31 @@ const BACK_REGIONS: MuscleRegion[] = [
   },
 
   {
-    // TODO(taxonomy v2): lats was split into lats_upper/lats_lower; this
-    // shape still draws the whole lat sheet under lats_upper until the
-    // body-map artwork is redrawn with a separate lats_lower shape.
+    // The thoracic sweep: from the armpit down and in toward the spine at
+    // mid-back, under the teres/infraspinatus group.
     id: "lats_upper",
-    shapes: [block(TORSO_BACK, 1.9, 6.35, 1.5, 4, 0.09), block(TORSO_BACK, 3.3, 6.35, 1, 1.6, 0.09)],
-    // The whole sheet sweeps up-and-out into the armpit.
+    shapes: [block(TORSO_BACK, 2.45, 4.35, [1.5, 1.3], 4, 0.09)],
     fibres: fibres(TORSO_BACK, [
-      [[5.8, 1.3], [2.4, 3.7]],
-      [[5.85, 2.1], [3.1, 3.75]],
-      [[4.6, 1.3], [2.35, 3.1]],
+      [[4.15, 1.5], [2.65, 3.6]],
+      [[4.2, 2.2], [3.1, 3.75]],
+      [[4.15, 2.9], [3.55, 3.8]],
     ]),
+  },
+  {
+    // The lumbar sheet: wide at the bottom of the ribcage, tapering to the
+    // iliac crest / thoracolumbar fascia.
+    id: "lats_lower",
+    shapes: [block(TORSO_BACK, 4.35, 6.5, [1.32, 1.25], [4, 3.05], 0.09)],
+    fibres: fibres(TORSO_BACK, [
+      [[6.2, 1.25], [4.6, 3.3]],
+      [[6.25, 1.9], [5.1, 3.5]],
+      [[5.35, 1.3], [4.5, 2.5]],
+    ]),
+  },
+  {
+    id: "neck",
+    shapes: [block(NECK_BACK, 0, 2, 0, 1, 0.12)],
+    fibres: fibres(NECK_BACK, [[[0.3, 0.5], [1.7, 0.5]]]),
   },
   {
     id: "upper_traps",
@@ -716,28 +821,44 @@ const BACK_REGIONS: MuscleRegion[] = [
     ]),
   },
   {
+    // Infraspinatus / teres on the scapula, below the rear delt and lateral
+    // to the rhomboids.
+    id: "rotator_cuff",
+    // Kept medial of rail ~2.6: past that the deltoid, which is drawn last,
+    // covers the scapula entirely.
+    shapes: [block(TORSO_BACK, 1.25, 2.4, [1.72, 1.58], [2.6, 2.45], 0.14, 0.15)],
+    fibres: fibres(TORSO_BACK, [
+      [[2.2, 1.9], [1.5, 2.45]],
+      [[2.3, 2.15], [1.75, 2.5]],
+    ]),
+  },
+  {
+    // Tapered toward the bottom of the scapula rather than a plain rectangle.
     id: "mid_traps_rhomboids",
-    shapes: [block(TORSO_BACK, 1.05, 3.2, 0, 1.5, 0.1)],
+    shapes: [block(TORSO_BACK, 1.05, 3.25, 0, [1.55, 1.05], 0.1)],
     fibres: fibres(TORSO_BACK, [
-      [[1.4, 0.15], [1.25, 1.85]],
-      [[2.1, 0.15], [1.95, 1.85]],
-      [[2.75, 0.15], [2.6, 1.85]],
+      [[1.4, 0.15], [1.25, 1.8]],
+      [[2.1, 0.15], [1.95, 1.7]],
+      [[2.8, 0.15], [2.65, 1.5]],
     ]),
   },
   {
+    // Narrows as it runs down to its thoracic origin — the lower trap is a
+    // triangle, not a bar.
     id: "lower_traps",
-    shapes: [block(TORSO_BACK, 3.2, 5.1, 0, 1, 0.1)],
+    shapes: [block(TORSO_BACK, 3.25, 5.15, 0, [1.05, 1.0], 0.1)],
     fibres: fibres(TORSO_BACK, [
-      [[4.8, 0.15], [3.25, 0.9]],
-      [[4.85, 0.55], [3.6, 0.92]],
+      [[4.85, 0.15], [3.4, 0.9]],
+      [[4.9, 0.4], [3.75, 0.92]],
     ]),
   },
   {
+    // Thin at the thoracolumbar junction, thickest over the lumbar spine.
     id: "spinal_erectors",
-    shapes: [block(TORSO_BACK, 5.15, 7, 0, 1, 0.1)],
+    shapes: [block(TORSO_BACK, 5.15, 7, 0, [1.22, 1.1], 0.1)],
     fibres: fibres(TORSO_BACK, [
-      [[5.2, 0.35], [6.85, 0.35]],
-      [[5.2, 0.7], [6.85, 0.72]],
+      [[5.25, 0.3], [6.85, 0.4]],
+      [[5.3, 0.5], [6.85, 0.8]],
     ]),
   },
 
@@ -781,10 +902,8 @@ const BACK_SILHOUETTE: string[] = [
   block(FOREARM, 0.12, 2.95, 0, 1, 0.09),
   block(FOREARM, 0.12, 2.95, 1, 3, 0.09),
   block(FOREARM, 0.12, 2.95, 3, 4, 0.09),
-  // Over-the-shoulder trap edge, infraspinatus / teres, lumbar sheet, hip.
-  block(TORSO_BACK, 6.3, 7, 1.6, 4, 0.14),
-  // Popliteal fossa and achilles.
-
+  // Thoracolumbar fascia / flank strip between the lower lat and the glutes.
+  block(TORSO_BACK, 6.55, 7.05, [1.2, 1.35], 4, 0.13),
   HAND,
   FOOT_BACK,
 ];
