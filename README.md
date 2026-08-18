@@ -31,7 +31,7 @@ You need Hevy workout data to get in, but **not** Hevy Pro. Two ways to connect,
 This forks the repo into your own GitHub account and prompts for the env vars during setup — all optional, leave any of them blank. It's a private instance of the app on your own Vercel account — nobody else can see your data unless you set `ACCESS_PASSWORD` and share it.
 
 - **`HEVY_API_KEY`** (optional) — your key from Hevy Pro, if you'd rather set it once here than paste it into the app. Leave blank to connect in-app instead (via a pasted key or a CSV upload).
-- **`ACCESS_PASSWORD`** (optional) — if your deployment is reachable on the open internet (which any default Vercel URL is), set this so random visitors can't load your workout data. Leave it blank only if you're comfortable with the URL being unprotected.
+- **`ACCESS_PASSWORD`** (optional) — if your deployment is reachable on the open internet (which any default Vercel URL is), set this so random visitors can't load your workout data. Use a long passphrase: there's no built-in rate limiting on login attempts (if you want one, Vercel's Firewall can add a rate-limit rule on `/api/auth`). Leave it blank only if you're comfortable with the URL being unprotected.
 - **`HEVYMAP_SECRET`** (optional) — see [Bring your own API key](#bring-your-own-api-key) below. Only matters if you're connecting a key in-app rather than setting `HEVY_API_KEY`.
 
 ### B. Run it locally
