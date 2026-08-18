@@ -114,7 +114,7 @@ describe("inference tables — every entry validates", () => {
   });
 
   it("every COARSE_GROUP_TO_REGION value is a real taxonomy region", () => {
-    const KNOWN_REGIONS = new Set(["Shoulders", "Chest", "Back", "Arms", "Core", "Legs"]);
+    const KNOWN_REGIONS = new Set(["Shoulders", "Chest", "Back", "Traps", "Arms", "Core", "Legs"]);
     for (const [group, region] of Object.entries(COARSE_GROUP_TO_REGION)) {
       expect(KNOWN_REGIONS.has(region), `"${group}" maps to unknown region "${region}"`).toBe(true);
     }

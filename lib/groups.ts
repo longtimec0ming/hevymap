@@ -1,6 +1,6 @@
-// Groups the 26 canonical sub-muscles under their coarse `region` (see
+// Groups the 32 canonical sub-muscles under their coarse `region` (see
 // data/taxonomy.ts) for the two-level hierarchy used in History and
-// Workouts (History/Workouts pages must not list all 26 sub-muscles flat).
+// Workouts (History/Workouts pages must not list all 32 sub-muscles flat).
 // Single shared helper so both pages group identically instead of
 // duplicating the logic.
 
@@ -27,7 +27,7 @@ function emptyMuscleVolume(): MuscleVolume {
 }
 
 /** Region display order, derived from each region's first appearance in
- * TAXONOMY (Shoulders, Chest, Back, Arms, Core, Legs) rather than
+ * TAXONOMY (Shoulders, Chest, Back, Traps, Arms, Core, Legs) rather than
  * hardcoded, so it can't drift from the taxonomy's own ordering. */
 function regionOrder(): string[] {
   const seen = new Set<string>();

@@ -8,7 +8,7 @@ Open-source (MIT) sub-muscle volume tracker for Hevy users. Next.js App Router +
 ## Hard invariants (never violate)
 1. `HEVY_API_KEY` is server-side only. It appears exclusively in `app/api/hevy/[...path]/route.ts`. Never in client code, never logged, never in the repo.
 2. Every `muscle-map.json` entry's contributions sum to 1.0 ± 0.001. The CI test that enforces this must always pass.
-3. Only the 26 canonical sub-muscle IDs from `data/taxonomy.ts` may appear as contribution keys. Coarse groups ("chest", "shoulders") are forbidden in data.
+3. Only the 32 canonical sub-muscle IDs from `data/taxonomy.ts` may appear as contribution keys. Coarse groups ("chest", "shoulders") are forbidden in data.
 4. All weights stored/computed in kg; convert to lbs only at display time via `lib/units.ts`.
 5. Resolution order for exercise mappings: user override → repo map → inference rules → coarse fallback. Estimated mappings must be visibly badged in the UI.
 

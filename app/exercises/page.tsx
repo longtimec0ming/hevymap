@@ -1,11 +1,11 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { X } from "lucide-react";
+import { ExternalLink, SquarePlay, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { BodyMap } from "@/components/body-map";
@@ -62,6 +62,18 @@ function equipmentFromName(name: string): string | undefined {
   const match = /\(([^()]+)\)\s*$/.exec(name);
   if (!match) return undefined;
   return match[1].trim().toLowerCase().replace(/\s+/g, "_");
+}
+
+/** CSV-imported exercises carry a deterministic pseudo-id (`csv:<slug>`, see
+ * lib/volume.ts), not a real Hevy exercise_template_id, so linking to
+ * hevy.com/exercise/<id> for those would 404. */
+function hevyExerciseUrl(identity: ExerciseIdentity): string | undefined {
+  if (identity.id.startsWith("csv:")) return undefined;
+  return `https://hevy.com/exercise/${identity.id}`;
+}
+
+function youtubeSearchUrl(name: string): string {
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(`${name} form`)}`;
 }
 
 function contributionsToVolume(contributions: ContributionMap) {
@@ -496,6 +508,28 @@ function ExercisesPageInner() {
                 {confidence} confidence
               </Badge>
             )}
+            <div className="ml-auto flex items-center gap-1">
+              {hevyExerciseUrl(selected.identity) && (
+                <a
+                  href={hevyExerciseUrl(selected.identity)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonVariants({ variant: "ghost", size: "xs" })}
+                >
+                  <ExternalLink className="size-3.5" />
+                  View on Hevy
+                </a>
+              )}
+              <a
+                href={youtubeSearchUrl(selected.identity.name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonVariants({ variant: "ghost", size: "xs" })}
+              >
+                <SquarePlay className="size-3.5" />
+                Search YouTube
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">

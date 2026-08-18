@@ -261,12 +261,12 @@ describe("accumulateExerciseVolume", () => {
 
     const exercise = makeExercise({ sets: [bodyweightSet, weightedSet] });
 
-    accumulateExerciseVolume(accumulator, exercise, { contributions: { lats: 1.0 }, source: "repo_map" });
+    accumulateExerciseVolume(accumulator, exercise, { contributions: { lats_upper: 1.0 }, source: "repo_map" });
 
     // Both sets count toward hard-set volume...
-    expect(accumulator.lats.sets).toBeCloseTo(2, 6);
+    expect(accumulator.lats_upper.sets).toBeCloseTo(2, 6);
     // ...but tonnage only reflects the logged added weight (10kg * 6 reps).
-    expect(accumulator.lats.tonnageKg).toBeCloseTo(60, 6);
+    expect(accumulator.lats_upper.tonnageKg).toBeCloseTo(60, 6);
   });
 
   it("treats a set with null reps as contributing zero tonnage but a full hard set", () => {

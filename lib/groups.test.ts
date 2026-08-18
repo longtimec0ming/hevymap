@@ -10,18 +10,18 @@ function emptyVolume(): VolumeByMuscle {
 }
 
 describe("groupVolumeByRegion", () => {
-  it("groups all 26 sub-muscles into 6 regions in taxonomy order", () => {
+  it("groups all 32 sub-muscles into 7 regions in taxonomy order", () => {
     const groups = groupVolumeByRegion(emptyVolume());
 
-    expect(groups.map((g) => g.region)).toEqual(["Shoulders", "Chest", "Back", "Arms", "Core", "Legs"]);
+    expect(groups.map((g) => g.region)).toEqual(["Shoulders", "Chest", "Back", "Traps", "Arms", "Core", "Legs"]);
     const totalChildren = groups.reduce((sum, g) => sum + g.children.length, 0);
     expect(totalChildren).toBe(SUB_MUSCLE_IDS.length);
   });
 
-  it("Shoulders contains exactly front/side/rear delt", () => {
+  it("Shoulders contains exactly front/side/rear delt + rotator cuff", () => {
     const groups = groupVolumeByRegion(emptyVolume());
     const shoulders = groups.find((g) => g.region === "Shoulders")!;
-    expect(shoulders.children.map((c) => c.id)).toEqual(["front_delt", "side_delt", "rear_delt"]);
+    expect(shoulders.children.map((c) => c.id)).toEqual(["front_delt", "side_delt", "rear_delt", "rotator_cuff"]);
   });
 
   it("group total is the sum of its children's sets and tonnage", () => {
@@ -44,13 +44,13 @@ describe("groupVolumeByRegion", () => {
 
   it("every child volume is carried through unchanged", () => {
     const volume = emptyVolume();
-    volume.lats = { sets: 8, tonnageKg: 1200 };
+    volume.lats_upper = { sets: 8, tonnageKg: 1200 };
 
     const groups = groupVolumeByRegion(volume);
     const back = groups.find((g) => g.region === "Back")!;
-    const lats = back.children.find((c) => c.id === "lats")!;
+    const lats = back.children.find((c) => c.id === "lats_upper")!;
 
     expect(lats.volume).toEqual({ sets: 8, tonnageKg: 1200 });
-    expect(lats.displayName).toBe("Lats");
+    expect(lats.displayName).toBe("Upper Lats");
   });
 });

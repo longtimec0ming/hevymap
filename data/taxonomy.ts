@@ -1,6 +1,13 @@
 // Canonical sub-muscle taxonomy for HevyMap. Single source of truth — see PLAN.md §4.
 // Every contribution key anywhere in the codebase (muscle-map.json, inference rules,
-// overrides) must be one of the 26 IDs defined here. Coarse groups are forbidden.
+// overrides) must be one of the 32 IDs defined here. Coarse groups are forbidden.
+//
+// v2 (2026-08-18): 26 -> 32 sub-muscles. Added neck, hip_flexors,
+// tibialis_anterior, rotator_cuff, serratus_anterior. Split lats into
+// lats_upper/lats_lower. Regrouped upper_traps/mid_traps_rhomboids/
+// lower_traps (+ the new neck) out of Back into their own Traps region.
+// Renamed glute_med's displayName to "Glute Med / Abductors" (id unchanged).
+// Region order: Shoulders, Chest, Back, Traps, Arms, Core, Legs.
 
 // ---------------------------------------------------------------------------
 // defaultWeeklyTargetSets — how these numbers were derived (2026-08-18)
@@ -71,6 +78,13 @@ export const TAXONOMY: readonly SubMuscle[] = [
     bodySide: "back",
     defaultWeeklyTargetSets: [4, 7],
   },
+  {
+    id: "rotator_cuff",
+    displayName: "Rotator Cuff",
+    region: "Shoulders",
+    bodySide: "back",
+    defaultWeeklyTargetSets: [1, 3],
+  },
 
   // Chest
   {
@@ -94,35 +108,28 @@ export const TAXONOMY: readonly SubMuscle[] = [
     bodySide: "front",
     defaultWeeklyTargetSets: [1, 2],
   },
+  {
+    id: "serratus_anterior",
+    displayName: "Serratus Anterior",
+    region: "Chest",
+    bodySide: "front",
+    defaultWeeklyTargetSets: [1, 2],
+  },
 
   // Back
   {
-    id: "lats",
-    displayName: "Lats",
-    region: "Back",
-    bodySide: "back",
-    defaultWeeklyTargetSets: [5, 9],
-  },
-  {
-    id: "upper_traps",
-    displayName: "Upper Traps",
-    region: "Back",
-    bodySide: "back",
-    defaultWeeklyTargetSets: [2, 4],
-  },
-  {
-    id: "mid_traps_rhomboids",
-    displayName: "Mid Traps / Rhomboids",
+    id: "lats_upper",
+    displayName: "Upper Lats",
     region: "Back",
     bodySide: "back",
     defaultWeeklyTargetSets: [3, 6],
   },
   {
-    id: "lower_traps",
-    displayName: "Lower Traps",
+    id: "lats_lower",
+    displayName: "Lower Lats",
     region: "Back",
     bodySide: "back",
-    defaultWeeklyTargetSets: [1, 3],
+    defaultWeeklyTargetSets: [3, 6],
   },
   {
     id: "spinal_erectors",
@@ -130,6 +137,36 @@ export const TAXONOMY: readonly SubMuscle[] = [
     region: "Back",
     bodySide: "back",
     defaultWeeklyTargetSets: [3, 5],
+  },
+
+  // Traps
+  {
+    id: "upper_traps",
+    displayName: "Upper Traps",
+    region: "Traps",
+    bodySide: "both",
+    defaultWeeklyTargetSets: [2, 4],
+  },
+  {
+    id: "mid_traps_rhomboids",
+    displayName: "Mid Traps / Rhomboids",
+    region: "Traps",
+    bodySide: "back",
+    defaultWeeklyTargetSets: [3, 6],
+  },
+  {
+    id: "lower_traps",
+    displayName: "Lower Traps",
+    region: "Traps",
+    bodySide: "back",
+    defaultWeeklyTargetSets: [1, 3],
+  },
+  {
+    id: "neck",
+    displayName: "Neck",
+    region: "Traps",
+    bodySide: "both",
+    defaultWeeklyTargetSets: [1, 3],
   },
 
   // Arms
@@ -184,6 +221,13 @@ export const TAXONOMY: readonly SubMuscle[] = [
     bodySide: "front",
     defaultWeeklyTargetSets: [3, 5],
   },
+  {
+    id: "hip_flexors",
+    displayName: "Hip Flexors",
+    region: "Core",
+    bodySide: "front",
+    defaultWeeklyTargetSets: [1, 3],
+  },
 
   // Legs
   {
@@ -216,7 +260,7 @@ export const TAXONOMY: readonly SubMuscle[] = [
   },
   {
     id: "glute_med",
-    displayName: "Glute Med",
+    displayName: "Glute Med / Abductors",
     region: "Legs",
     bodySide: "back",
     defaultWeeklyTargetSets: [1, 3],
@@ -240,6 +284,13 @@ export const TAXONOMY: readonly SubMuscle[] = [
     displayName: "Soleus",
     region: "Legs",
     bodySide: "back",
+    defaultWeeklyTargetSets: [1, 2],
+  },
+  {
+    id: "tibialis_anterior",
+    displayName: "Tibialis Anterior",
+    region: "Legs",
+    bodySide: "front",
     defaultWeeklyTargetSets: [1, 2],
   },
 ] as const;

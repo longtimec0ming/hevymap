@@ -38,7 +38,7 @@ const ITEMS: ExerciseFilterItem[] = [
   item({
     id: "4",
     name: "Some Custom Machine Row",
-    contributions: { lats: 0.16, mid_traps_rhomboids: 0.14, rear_delt: 0.1, biceps: 0.6 },
+    contributions: { lats_upper: 0.16, mid_traps_rhomboids: 0.14, rear_delt: 0.1, biceps: 0.6 },
     source: "fallback",
     confidence: undefined,
     equipment: "machine",
@@ -77,7 +77,7 @@ describe("filterAndSortExercises", () => {
   });
 
   it("multi-muscle OR: matches if ANY selected muscle clears the threshold", () => {
-    const result = filterAndSortExercises(ITEMS, { muscleIds: ["upper_chest", "lats"], threshold: 0.15 });
+    const result = filterAndSortExercises(ITEMS, { muscleIds: ["upper_chest", "lats_upper"], threshold: 0.15 });
     expect(result.map((r) => r.id).sort()).toEqual(["1", "4"]);
   });
 

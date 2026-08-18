@@ -56,16 +56,19 @@ hevymap/
 - `ACCESS_PASSWORD` (optional): if set, `middleware.ts` gates every route behind a password form; successful login sets an httpOnly, secure, sameSite cookie. If unset (typical local use), no gate.
 - README must include: (1) a "Deploy to Vercel" button that forks the repo and prompts for both env vars; (2) local quickstart: clone → `.env.local` → `npm run dev`; (3) where to get a Hevy API key (Hevy Pro, hevy.com developer settings).
 
-## 4. Muscle taxonomy (26 sub-muscles, locked)
+## 4. Muscle taxonomy (v2, 32 sub-muscles, locked)
 
 IDs are snake_case and canonical across the codebase.
 
-**Shoulders:** `front_delt`, `side_delt`, `rear_delt`
-**Chest:** `upper_chest`, `mid_chest`, `lower_chest`
-**Back:** `lats`, `upper_traps`, `mid_traps_rhomboids`, `lower_traps`, `spinal_erectors`
+**Shoulders:** `front_delt`, `side_delt`, `rear_delt`, `rotator_cuff`
+**Chest:** `upper_chest`, `mid_chest`, `lower_chest`, `serratus_anterior`
+**Back:** `lats_upper`, `lats_lower`, `spinal_erectors`
+**Traps:** `upper_traps`, `mid_traps_rhomboids`, `lower_traps`, `neck`
 **Arms:** `biceps`, `brachialis_brachioradialis`, `triceps_long`, `triceps_lat_med`, `forearms`
-**Core:** `rectus_abdominis`, `obliques`
-**Legs:** `quads_rectus_femoris`, `quads_vasti`, `hamstrings`, `glute_max`, `glute_med`, `adductors`, `gastrocnemius`, `soleus`
+**Core:** `rectus_abdominis`, `obliques`, `hip_flexors`
+**Legs:** `quads_rectus_femoris`, `quads_vasti`, `hamstrings`, `glute_max`, `glute_med` (displayed as "Glute Med / Abductors"), `adductors`, `gastrocnemius`, `soleus`, `tibialis_anterior`
+
+v1's 26-muscle taxonomy split `lats` into `lats_upper`/`lats_lower`, pulled `upper_traps`/`mid_traps_rhomboids`/`lower_traps` out of Back into their own **Traps** region (alongside the new `neck`), and added `hip_flexors`, `tibialis_anterior`, `rotator_cuff`, and `serratus_anterior`. Region display order: Shoulders, Chest, Back, Traps, Arms, Core, Legs.
 
 Each taxonomy entry: `{ id, displayName, region, bodySide: "front" | "back" | "both", defaultWeeklyTargetSets: [min, max] }`. Default targets seeded from hypertrophy literature (10–20 hard sets/week for major movers; smaller ranges for small muscles like forearms/soleus). All targets user-editable in settings.
 
@@ -122,7 +125,7 @@ Rules:
 
 ## 9. Body map (hero component)
 
-Custom-built SVG anatomical figure, front + back views, each of the 26 sub-muscles as separately addressable paths (`data-muscle-id`). No third-party anatomy libraries with restrictive licenses — the SVG is an original asset of the repo.
+Custom-built SVG anatomical figure, front + back views, each of the 32 sub-muscles as separately addressable paths (`data-muscle-id`). No third-party anatomy libraries with restrictive licenses — the SVG is an original asset of the repo.
 
 **Scope selector — the body map renders at every level:**
 1. **Time range:** rolling 7 days / calendar week / month / custom range / all-time — heatmap colored by volume vs (pro-rated) targets.

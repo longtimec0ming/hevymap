@@ -34,15 +34,46 @@ Each entry in `data/muscle-map.json` is one Hevy exercise template:
   Do not edit an existing entry's `hevy_id`.
 - `name` — the exercise's display name, matching Hevy's.
 - `contributions` — a map of sub-muscle ID → fraction of a hard set that
-  exercise allocates to that muscle. Keys **must** be one of the 26 canonical
+  exercise allocates to that muscle. Keys **must** be one of the 32 canonical
   sub-muscle IDs in `data/taxonomy.ts` (`front_delt`, `side_delt`,
-  `rear_delt`, `upper_chest`, `mid_chest`, `lower_chest`, `lats`,
-  `upper_traps`, `mid_traps_rhomboids`, `lower_traps`, `spinal_erectors`,
-  `biceps`, `brachialis_brachioradialis`, `triceps_long`, `triceps_lat_med`,
-  `forearms`, `rectus_abdominis`, `obliques`, `quads_rectus_femoris`,
-  `quads_vasti`, `hamstrings`, `glute_max`, `glute_med`, `adductors`,
-  `gastrocnemius`, `soleus`). Coarse groups like `"chest"` or `"triceps"` are
+  `rear_delt`, `rotator_cuff`, `upper_chest`, `mid_chest`, `lower_chest`,
+  `serratus_anterior`, `lats_upper`, `lats_lower`, `spinal_erectors`,
+  `upper_traps`, `mid_traps_rhomboids`, `lower_traps`, `neck`, `biceps`,
+  `brachialis_brachioradialis`, `triceps_long`, `triceps_lat_med`,
+  `forearms`, `rectus_abdominis`, `obliques`, `hip_flexors`,
+  `quads_rectus_femoris`, `quads_vasti`, `hamstrings`, `glute_max`,
+  `glute_med`, `adductors`, `gastrocnemius`, `soleus`,
+  `tibialis_anterior`). Coarse groups like `"chest"` or `"triceps"` are
   **not valid keys** — always resolve to the sub-muscle level.
+
+  Taxonomy v2 (2026-08-18) split the old `lats` into `lats_upper`/
+  `lats_lower` and added `neck`, `hip_flexors`, `tibialis_anterior`,
+  `rotator_cuff`, and `serratus_anterior`. A few deliberate folds remain —
+  these aren't oversights, they're the line the taxonomy draws between
+  "distinct enough to track separately" and "not worth the extra body-map
+  region": `glute_med` covers hip abduction generally (displayed as "Glute
+  Med / Abductors" — clamshells, cable/machine abduction, lateral band
+  walks, fire hydrants all map here, not to a separate `abductors` id), and
+  there's still no separate teres major/minor or infraspinatus/
+  supraspinatus split within `rotator_cuff` — external/internal rotation
+  work, Cuban presses, and band pull-aparts all map to the one id.
+
+  **Splitting a `lats` contribution.** Any exercise that pulls through the
+  lats needs to decide how much goes to `lats_upper` vs `lats_lower`, by
+  movement pattern:
+  - Vertical pulls (pulldowns, pull-ups, chin-ups) with a wide or pronated
+    grip: 60% upper / 40% lower.
+  - Vertical pulls with a neutral or underhand grip: 45% upper / 55% lower.
+  - Rows with the elbows flared, pulled high, or to face level: 60% upper /
+    40% lower.
+  - Low rows (seated cable row, underhand/neutral-grip rows, T-bar,
+    Meadows, one-arm DB row): 40% upper / 60% lower.
+  - Straight-arm pulldowns and pullovers: 30% upper / 70% lower.
+  - Deadlifts, rack pulls, and carries (the lats brace isometrically, not
+    through a pulling ROM): 50/50.
+  - Anything that doesn't fit one of the above: 50/50, and mark the
+    confidence one notch lower than you otherwise would (the split itself
+    is a guess, not just the numbers).
 - `confidence` — `"high"`, `"medium"`, or `"low"` (see below).
 - `notes` — optional. Use it to record assumptions (grip width, angle,
   stance) that materially change the split, so reviewers and future

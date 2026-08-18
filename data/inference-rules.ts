@@ -108,22 +108,75 @@ const KEYWORD_RULES: KeywordRule[] = [
   },
 
   // --- Back ---
+  // Lats split by movement per CONTRIBUTING.md's lats-split rules: vertical
+  // pulls default 55/45 upper/lower unless the grip narrows the split
+  // further; wide/pronated grip biases upper lats harder, neutral/underhand
+  // biases lower lats.
+  {
+    id: "pulldown-pullup-wide",
+    include: [/(pulldown|pull.?up|chin.?up)/, /(wide|pronated)/],
+    contributions: { lats_upper: 0.33, lats_lower: 0.22, mid_traps_rhomboids: 0.2, biceps: 0.15, rear_delt: 0.1 },
+  },
+  {
+    id: "pulldown-pullup-narrow",
+    include: [/(pulldown|pull.?up|chin.?up)/, /(neutral|underhand|reverse.?grip)/],
+    contributions: { lats_upper: 0.25, lats_lower: 0.3, mid_traps_rhomboids: 0.2, biceps: 0.15, rear_delt: 0.1 },
+  },
+  {
+    id: "straight-arm-pulldown",
+    include: [/(straight.?arm\s*pulldown|pullover)/],
+    contributions: { lats_upper: 0.17, lats_lower: 0.38, mid_chest: 0.15, triceps_long: 0.15, rear_delt: 0.15 },
+  },
   {
     id: "pulldown-pullup",
     include: [/(pulldown|pull.?up|chin.?up)/],
-    contributions: { lats: 0.55, mid_traps_rhomboids: 0.2, biceps: 0.15, rear_delt: 0.1 },
+    contributions: { lats_upper: 0.3, lats_lower: 0.25, mid_traps_rhomboids: 0.2, biceps: 0.15, rear_delt: 0.1 },
+  },
+  {
+    id: "row-high-flared",
+    include: [/row/, /(high\s*row|flared|face.?level)/],
+    exclude: [/upright/],
+    contributions: { lats_upper: 0.24, lats_lower: 0.16, mid_traps_rhomboids: 0.3, rear_delt: 0.15, biceps: 0.15 },
+  },
+  {
+    id: "row-low",
+    include: [/row/, /(low\s*row|seated\s*cable|underhand|neutral|t.?bar|meadows|one.?arm)/],
+    exclude: [/upright/],
+    contributions: { lats_upper: 0.16, lats_lower: 0.24, mid_traps_rhomboids: 0.3, rear_delt: 0.15, biceps: 0.15 },
   },
   {
     id: "row",
     include: [/row/],
     exclude: [/upright/],
-    contributions: { lats: 0.4, mid_traps_rhomboids: 0.3, rear_delt: 0.15, biceps: 0.15 },
+    contributions: { lats_upper: 0.16, lats_lower: 0.24, mid_traps_rhomboids: 0.3, rear_delt: 0.15, biceps: 0.15 },
   },
   {
     id: "deadlift",
     include: [/deadlift/],
     exclude: [/stiff.?leg/, /romanian/, /rdl/],
-    contributions: { spinal_erectors: 0.35, glute_max: 0.3, hamstrings: 0.25, lats: 0.1 },
+    // Lats brace isometrically across a deadlift, so the small lats share
+    // splits evenly (rule 1: deadlifts/rack pulls/carries -> 50/50).
+    contributions: { spinal_erectors: 0.35, glute_max: 0.3, hamstrings: 0.25, lats_upper: 0.05, lats_lower: 0.05 },
+  },
+  {
+    id: "external-internal-rotation",
+    include: [/(external|internal)\s*rotation/],
+    contributions: { rotator_cuff: 0.8, rear_delt: 0.2 },
+  },
+  {
+    id: "rotator-cuff",
+    include: [/rotator/],
+    contributions: { rotator_cuff: 0.75, rear_delt: 0.25 },
+  },
+  {
+    id: "serratus",
+    include: [/(serratus|protraction|scapular\s*push)/],
+    contributions: { serratus_anterior: 0.5, mid_chest: 0.2, front_delt: 0.15, obliques: 0.15 },
+  },
+  {
+    id: "neck",
+    include: [/neck/],
+    contributions: { neck: 0.85, upper_traps: 0.15 },
   },
   {
     id: "good-morning",
@@ -188,12 +241,17 @@ const KEYWORD_RULES: KeywordRule[] = [
   {
     id: "plank-abwheel",
     include: [/(plank|ab\s*wheel|ab\s*rollout)/],
-    contributions: { rectus_abdominis: 0.6, obliques: 0.4 },
+    contributions: { rectus_abdominis: 0.55, obliques: 0.3, serratus_anterior: 0.15 },
+  },
+  {
+    id: "leg-raise",
+    include: [/(leg\s*raise|knee\s*raise|hip\s*flexor|toes.?to.?bar|l.?sit|mountain\s*climber|flutter\s*kick|scissor\s*kick|high\s*knee)/],
+    contributions: { hip_flexors: 0.55, rectus_abdominis: 0.45 },
   },
   {
     id: "crunch-situp",
-    include: [/(crunch|sit.?up|leg\s*raise)/],
-    contributions: { rectus_abdominis: 1.0 },
+    include: [/(crunch|sit.?up)/],
+    contributions: { rectus_abdominis: 0.85, hip_flexors: 0.15 },
   },
 
   // --- Legs ---
@@ -239,6 +297,16 @@ const KEYWORD_RULES: KeywordRule[] = [
     contributions: { adductors: 1.0 },
   },
   {
+    id: "abduction",
+    include: [/(abduction|clamshell|lateral\s*band\s*walk|fire\s*hydrant)/],
+    contributions: { glute_med: 0.7, glute_max: 0.3 },
+  },
+  {
+    id: "tibialis",
+    include: [/(tib(ialis)?\s*raise|dorsiflexion)/],
+    contributions: { tibialis_anterior: 0.95, gastrocnemius: 0.05 },
+  },
+  {
     id: "calf-raise-seated",
     include: [/seated/, /calf/],
     contributions: { soleus: 0.75, gastrocnemius: 0.25 },
@@ -268,9 +336,10 @@ export const COARSE_GROUP_CONTRIBUTIONS: Record<string, ContributionMap> = {
   biceps: { biceps: 0.75, brachialis_brachioradialis: 0.25 },
   triceps: { triceps_lat_med: 0.55, triceps_long: 0.45 },
   forearms: { forearms: 1.0 },
-  lats: { lats: 0.8, mid_traps_rhomboids: 0.2 },
-  upper_back: { mid_traps_rhomboids: 0.5, lats: 0.3, rear_delt: 0.2 },
-  traps: { upper_traps: 0.7, mid_traps_rhomboids: 0.3 },
+  lats: { lats_upper: 0.44, lats_lower: 0.36, mid_traps_rhomboids: 0.2 },
+  upper_back: { mid_traps_rhomboids: 0.5, lats_upper: 0.15, lats_lower: 0.15, rear_delt: 0.2 },
+  traps: { upper_traps: 0.6, mid_traps_rhomboids: 0.3, lower_traps: 0.1 },
+  neck: { neck: 0.85, upper_traps: 0.15 },
   lower_back: { spinal_erectors: 1.0 },
   abdominals: { rectus_abdominis: 0.6, obliques: 0.4 },
   quadriceps: { quads_vasti: 0.6, quads_rectus_femoris: 0.4 },
@@ -292,7 +361,8 @@ export const COARSE_GROUP_TO_REGION: Record<string, string> = {
   forearms: "Arms",
   lats: "Back",
   upper_back: "Back",
-  traps: "Back",
+  traps: "Traps",
+  neck: "Traps",
   lower_back: "Back",
   abdominals: "Core",
   quadriceps: "Legs",

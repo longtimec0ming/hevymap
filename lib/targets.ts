@@ -11,12 +11,29 @@ export type TargetOverrides = Partial<Record<SubMuscleId, TargetBand>>;
 
 const TARGETS_KEY = "hevymap:target-overrides";
 
+/** Taxonomy v2 (2026-08-18) split `lats` into `lats_upper`/`lats_lower`. A
+ * target override saved before that split still keys on the removed `lats`
+ * id, so every read copies its band onto both new ids (unless the user has
+ * already set one explicitly, which wins). Read-time only, like
+ * lib/overrides.ts's equivalent migration — no write-back. */
+function migrateLatsSplit(overrides: TargetOverrides): TargetOverrides {
+  const legacy = (overrides as Partial<Record<string, TargetBand>>)["lats"];
+  if (legacy === undefined) return overrides;
+  const rest = { ...(overrides as Record<string, TargetBand>) };
+  delete rest["lats"];
+  return {
+    lats_upper: legacy,
+    lats_lower: legacy,
+    ...rest,
+  } as TargetOverrides;
+}
+
 export function getTargetOverrides(): TargetOverrides {
   if (typeof window === "undefined") return {};
   const raw = window.localStorage.getItem(TARGETS_KEY);
   if (!raw) return {};
   try {
-    return JSON.parse(raw) as TargetOverrides;
+    return migrateLatsSplit(JSON.parse(raw) as TargetOverrides);
   } catch {
     return {};
   }

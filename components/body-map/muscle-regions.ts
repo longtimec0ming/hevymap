@@ -695,7 +695,10 @@ const BACK_REGIONS: MuscleRegion[] = [
   },
 
   {
-    id: "lats",
+    // TODO(taxonomy v2): lats was split into lats_upper/lats_lower; this
+    // shape still draws the whole lat sheet under lats_upper until the
+    // body-map artwork is redrawn with a separate lats_lower shape.
+    id: "lats_upper",
     shapes: [block(TORSO_BACK, 1.9, 6.35, 1.5, 4, 0.09), block(TORSO_BACK, 3.3, 6.35, 1, 1.6, 0.09)],
     // The whole sheet sweeps up-and-out into the armpit.
     fibres: fibres(TORSO_BACK, [

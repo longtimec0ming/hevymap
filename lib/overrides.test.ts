@@ -114,4 +114,30 @@ describe("lib/overrides", () => {
     clearOverrides();
     expect(getOverrides()).toEqual({});
   });
+
+  it("getOverrides migrates a legacy `lats` key into lats_upper/lats_lower 50/50", () => {
+    window.localStorage.setItem(
+      "hevymap:overrides",
+      JSON.stringify({ "custom-lat": { lats: 0.8, biceps: 0.2 } }),
+    );
+
+    expect(getOverrides()).toEqual({ "custom-lat": { lats_upper: 0.4, lats_lower: 0.4, biceps: 0.2 } });
+  });
+
+  it("getOverrides merges a legacy `lats` share into any existing lats_upper/lats_lower values", () => {
+    window.localStorage.setItem(
+      "hevymap:overrides",
+      JSON.stringify({ "custom-lat": { lats: 0.4, lats_upper: 0.1, lats_lower: 0.1, biceps: 0.4 } }),
+    );
+
+    expect(getOverrides()).toEqual({
+      "custom-lat": { lats_upper: 0.3, lats_lower: 0.3, biceps: 0.4 },
+    });
+  });
+
+  it("importOverrides migrates a legacy `lats` key before validating", () => {
+    importOverrides(JSON.stringify({ "custom-lat": { lats: 1.0 } }));
+
+    expect(getOverride("custom-lat")).toEqual({ lats_upper: 0.5, lats_lower: 0.5 });
+  });
 });

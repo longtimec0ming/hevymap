@@ -93,7 +93,7 @@ describe("totalSets / totalTonnageKg", () => {
   it("sums across all sub-muscles", () => {
     const volume = emptyVolume();
     volume.front_delt = { sets: 4, tonnageKg: 400 };
-    volume.lats = { sets: 6, tonnageKg: 900 };
+    volume.lats_upper = { sets: 6, tonnageKg: 900 };
     expect(totalSets(volume)).toBeCloseTo(10, 5);
     expect(totalTonnageKg(volume)).toBeCloseTo(1300, 5);
   });
@@ -103,9 +103,9 @@ describe("mostTrainedMuscle", () => {
   it("picks the sub-muscle with the most sets", () => {
     const volume = emptyVolume();
     volume.front_delt = { sets: 4, tonnageKg: 0 };
-    volume.lats = { sets: 9, tonnageKg: 0 };
+    volume.lats_upper = { sets: 9, tonnageKg: 0 };
     const result = mostTrainedMuscle(volume);
-    expect(result?.id).toBe("lats");
+    expect(result?.id).toBe("lats_upper");
     expect(result?.sets).toBe(9);
   });
 
@@ -244,15 +244,15 @@ describe("consistencyCalendar", () => {
 });
 
 describe("subMuscleIdsForRegion", () => {
-  it("returns exactly the 3 Shoulders sub-muscles for that region", () => {
-    expect(subMuscleIdsForRegion("Shoulders")).toEqual(["front_delt", "side_delt", "rear_delt"]);
+  it("returns exactly the 4 Shoulders sub-muscles for that region", () => {
+    expect(subMuscleIdsForRegion("Shoulders")).toEqual(["front_delt", "side_delt", "rear_delt", "rotator_cuff"]);
   });
 
-  it("returns all 26 sub-muscle ids for 'All'", () => {
+  it("returns all 32 sub-muscle ids for 'All'", () => {
     expect(subMuscleIdsForRegion("All")).toHaveLength(SUB_MUSCLE_IDS.length);
   });
 
-  it("falls back to all 26 for an unrecognized region", () => {
+  it("falls back to all 32 for an unrecognized region", () => {
     expect(subMuscleIdsForRegion("Nonexistent")).toHaveLength(SUB_MUSCLE_IDS.length);
   });
 });
@@ -265,7 +265,9 @@ describe("setsBySubMuscleSeries", () => {
     const workout = makeWorkout("1", "2026-08-03T10:00:00Z", "2026-08-03T11:00:00Z", [makeExercise()]);
     const series = setsBySubMuscleSeries([workout], undefined, { overrides }, {}, buckets, "Shoulders");
     for (const point of series) {
-      expect(Object.keys(point).sort()).toEqual(["front_delt", "label", "rear_delt", "side_delt"].sort());
+      expect(Object.keys(point).sort()).toEqual(
+        ["front_delt", "label", "rear_delt", "rotator_cuff", "side_delt"].sort(),
+      );
     }
   });
 

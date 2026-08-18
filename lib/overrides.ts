@@ -17,6 +17,35 @@ export type OverridesMap = Record<string, ContributionMap>;
 
 const OVERRIDES_KEY = "hevymap:overrides";
 
+/** Taxonomy v2 (2026-08-18) split `lats` into `lats_upper`/`lats_lower`.
+ * Overrides saved before that split still key on the removed `lats` id, so
+ * every read migrates it in place: `lats`'s fraction is split 50/50 into
+ * `lats_upper`/`lats_lower` and merged into any existing values for those
+ * ids (a saved override predating the split can't already have them). This
+ * is read-time only — it doesn't write anything back, so the migration
+ * re-runs (cheaply) on every read rather than depending on a one-time
+ * write actually landing in localStorage. */
+function migrateLatsSplit(overrides: OverridesMap): OverridesMap {
+  let changed = false;
+  const next: OverridesMap = {};
+  for (const [exerciseId, contributions] of Object.entries(overrides)) {
+    const legacy = (contributions as Record<string, number>)["lats"];
+    if (legacy === undefined) {
+      next[exerciseId] = contributions;
+      continue;
+    }
+    changed = true;
+    const migrated: ContributionMap = { ...contributions };
+    delete (migrated as Record<string, number>)["lats"];
+    // Rounded to 6dp so a plain 0.1 + 0.2-style override doesn't pick up
+    // binary-float dust (e.g. 0.30000000000000004) on every read.
+    migrated.lats_upper = Math.round(((migrated.lats_upper ?? 0) + legacy / 2) * 1e6) / 1e6;
+    migrated.lats_lower = Math.round(((migrated.lats_lower ?? 0) + legacy / 2) * 1e6) / 1e6;
+    next[exerciseId] = migrated;
+  }
+  return changed ? next : overrides;
+}
+
 export class InvalidOverrideError extends Error {
   constructor(message: string) {
     super(message);
@@ -41,7 +70,7 @@ export function getOverrides(): OverridesMap {
   const raw = window.localStorage.getItem(OVERRIDES_KEY);
   if (!raw) return {};
   try {
-    return JSON.parse(raw) as OverridesMap;
+    return migrateLatsSplit(JSON.parse(raw) as OverridesMap);
   } catch {
     return {};
   }
@@ -93,7 +122,7 @@ export function importOverrides(json: string, mode: "merge" | "replace" = "merge
     throw new Error("overrides JSON must be an object mapping exercise id -> contribution map");
   }
 
-  const incoming = parsed as OverridesMap;
+  const incoming = migrateLatsSplit(parsed as OverridesMap);
   for (const [exerciseId, contributions] of Object.entries(incoming)) {
     assertValidContributions(exerciseId, contributions);
   }
