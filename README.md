@@ -55,7 +55,7 @@ Tracking `CLAUDE.md`'s build order. Updated as each step lands.
 - [x] **Step 3 — Volume math:** `lib/volume.ts` fractional set/tonnage allocation math + exercise resolution (override → repo map → inference → coarse fallback), `data/inference-rules.ts` keyword/equipment heuristics, `lib/overrides.ts` localStorage overrides (export/import), tests
 - [x] **Step 4 — Muscle map seeding:** `data/muscle-map.json` seeded for all 451 standard Hevy exercises (the account's 11 custom exercises are excluded, per `is_custom`). Confidence: 220 high / 142 medium / 89 low — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) once available for how to propose corrections.
 - [ ] **Step 5 — Pages:** dashboard, workouts, history, exercises, settings
-- [ ] **Step 6 — Body map:** SVG anatomical figure (front + back, 26 addressable paths), heatmap + drill-down
+- [x] **Step 6 — Body map:** `components/body-map/` — hand-authored SVG anatomical figure (front + back, 26 addressable `data-muscle-id` regions), cold→accent→hot heatmap ramp with legend, hover tooltip (sets/tonnage/% of target), click + externally-controlled highlight, keyboard focus. Color/percent math unit-tested in `color-scale.test.ts`.
 - [ ] **Step 7 — Ship polish:** access-password middleware, README deploy button, CONTRIBUTING.md
 
 ## Docs
