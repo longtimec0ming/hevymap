@@ -54,7 +54,7 @@ Tracking `CLAUDE.md`'s build order. Updated as each step lands.
 - [x] **Step 2 — Platform:** Hevy API proxy route (`app/api/hevy/[...path]/route.ts`), `lib/hevy.ts` client (pagination, count, incremental sync via `workouts/events`), IndexedDB layer (`lib/storage.ts`) + prefs
 - [x] **Step 3 — Volume math:** `lib/volume.ts` fractional set/tonnage allocation math + exercise resolution (override → repo map → inference → coarse fallback), `data/inference-rules.ts` keyword/equipment heuristics, `lib/overrides.ts` localStorage overrides (export/import), tests
 - [x] **Step 4 — Muscle map seeding:** `data/muscle-map.json` seeded for all 451 standard Hevy exercises (the account's 11 custom exercises are excluded, per `is_custom`). Confidence: 220 high / 142 medium / 89 low — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) once available for how to propose corrections.
-- [ ] **Step 5 — Pages:** dashboard, workouts, history, exercises, settings
+- [x] **Step 5 — Pages:** shadcn/ui dark theme (custom tokens in `app/globals.css`, single amber `--brand` accent), dashboard/history/workouts/exercises/settings pages, first-run import screen, `components/body-map/index.tsx` integration contract (now implemented by build step 6)
 - [x] **Step 6 — Body map:** `components/body-map/` — hand-authored SVG anatomical figure (front + back, 26 addressable `data-muscle-id` regions), cold→accent→hot heatmap ramp with legend, hover tooltip (sets/tonnage/% of target), click + externally-controlled highlight, keyboard focus. Color/percent math unit-tested in `color-scale.test.ts`.
 - [ ] **Step 7 — Ship polish:** access-password middleware, README deploy button, CONTRIBUTING.md
 
