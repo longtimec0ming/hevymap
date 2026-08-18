@@ -51,7 +51,7 @@ _Deploy button coming once the app is feature-complete (build step 7)._
 Tracking `CLAUDE.md`'s build order. Updated as each step lands.
 
 - [x] **Step 1 — Data foundation:** `data/taxonomy.ts` (26 canonical sub-muscles), `muscle-map.json` schema + types, validation tests (sum-to-1.0, valid sub-muscle keys only)
-- [ ] **Step 2 — Platform:** Hevy API proxy route, `lib/hevy.ts` client (pagination, count, incremental sync), IndexedDB layer
+- [x] **Step 2 — Platform:** Hevy API proxy route (`app/api/hevy/[...path]/route.ts`), `lib/hevy.ts` client (pagination, count, incremental sync via `workouts/events`), IndexedDB layer (`lib/storage.ts`) + prefs
 - [ ] **Step 3 — Volume math:** `lib/volume.ts` fractional set/tonnage allocation + tests
 - [ ] **Step 4 — Muscle map seeding:** populate `data/muscle-map.json` for the full Hevy standard exercise bank
 - [ ] **Step 5 — Pages:** dashboard, workouts, history, exercises, settings
