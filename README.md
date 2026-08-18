@@ -98,19 +98,23 @@ Exercises resolve in this order: your own override (set in the mapping editor) �
 
 ## Roadmap
 
-Out of scope for v1, but plausible future directions:
+Planned next, roughly in order (PRs welcome on any of them):
 
-- Multi-user / shared deployments
-- Integrations with other fitness trackers (e.g. Garmin)
-- Scheduled summaries (Telegram/email)
-- Per-set RIR/intensity weighting
+- More PR types (weight, set-volume, rep PRs; all-time vs last-30-days) alongside the current estimated-1RM PRs
+- Volume zones per sub-muscle (below maintenance → productive → overreaching) scaled to your training age, and a single 0–100 stimulus score per muscle
+- Plateau detection per exercise, rolled up to the sub-muscles it trains
+- Shareable summary cards (weekly body map, streaks, PRs)
+- One-click "copy my training summary" for pasting into an AI assistant
+- Screenshots and a short demo GIF for this README
+
+Not planned: multi-user hosting, integrations beyond Hevy, or a backend database — HevyMap stays a single-user, self-deployed app.
 
 ## Limitations
 
-- Bodyweight exercises count sets normally, but tonnage only reflects logged *added* weight, not bodyweight itself.
-- Custom Hevy exercises (yours, not the standard bank) always need a mapping defined manually — there's no way to ship one in the repo since their IDs are per-account.
-- Some standard-exercise mappings are still `low`-confidence best-effort guesses. These are flagged in the UI and in `muscle-map.json`; contributions to firm them up are welcome.
-- CSV imports don't carry Hevy's own exercise IDs (the file has names, not IDs), and can't sync incrementally — re-upload a fresh export to bring in new workouts. CSV exercise names are matched to `muscle-map.json` by exact name (case-insensitive); anything that doesn't match falls to inference/fallback and is badged "estimated", same as an unmapped API exercise.
+- Tonnage for bodyweight exercises counts only logged *added* weight, not bodyweight; sets still count normally.
+- Custom Hevy exercises need a mapping defined by you (their IDs are per-account, so the repo can't ship one). Until then they're badged "estimated" using keyword rules.
+- Some standard-exercise mappings are `low` confidence best guesses. They're flagged in the UI and in `muscle-map.json`; mapping PRs are the best way to help.
+- CSV imports match exercises by name, not Hevy ID, and can't sync incrementally — re-upload a fresh export to bring in new workouts.
 - Without `ACCESS_PASSWORD` or `HEVYMAP_SECRET` set, an in-app-connected API key is lost on server restart/redeploy (see [Bring your own API key](#bring-your-own-api-key)).
 
 ## Contributing / architecture
