@@ -770,19 +770,28 @@ const BACK_REGIONS: MuscleRegion[] = [
   },
 
   {
+    // Lower/medial mass only — the upper-outer corner is ceded to glute_med
+    // (abductors), which anatomically sit above and lateral to glute max.
     id: "glute_max",
-    shapes: [block(TORSO_BACK, 7.05, 9, 0, 3, 0.09)],
+    shapes: [block(TORSO_BACK, 7.05, 9, 0, [1.55, 3], 0.09)],
     // Fibres run down-and-out from the sacrum to the femur.
     fibres: fibres(TORSO_BACK, [
       [[7.2, 0.25], [8.8, 2.4]],
       [[7.6, 0.25], [8.85, 1.6]],
-      [[7.25, 1.2], [8.5, 2.75]],
+      [[7.25, 1.2], [8.5, 2.55]],
     ]),
   },
   {
+    // Abductors (glute med/min + TFL) as a crescent fan on the upper-lateral
+    // hip: wide at the top near the iliac crest, narrowing toward the
+    // greater trochanter, clearly separate from glute max's lower mass.
     id: "glute_med",
-    shapes: [block(TORSO_BACK, 7.05, 8.1, 3, 4, 0.11)],
-    fibres: fibres(TORSO_BACK, [[[7.2, 3.85], [7.9, 3.2]]]),
+    shapes: [block(TORSO_BACK, 6.75, 8.4, [1.7, 3.1], 4, 0.13)],
+    fibres: fibres(TORSO_BACK, [
+      [[8.2, 3.35], [7.0, 2.2]],
+      [[8.2, 3.6], [6.95, 2.7]],
+      [[8.2, 3.8], [7.05, 3.2]],
+    ]),
   },
 
   {
@@ -826,7 +835,7 @@ const BACK_REGIONS: MuscleRegion[] = [
     id: "rotator_cuff",
     // Kept medial of rail ~2.6: past that the deltoid, which is drawn last,
     // covers the scapula entirely.
-    shapes: [block(TORSO_BACK, 1.25, 2.4, [1.72, 1.58], [2.6, 2.45], 0.14, 0.15)],
+    shapes: [block(TORSO_BACK, 1.25, 2.4, [1.72, 1.58], [2.6, 2.45], 0.08, 0.08)],
     fibres: fibres(TORSO_BACK, [
       [[2.2, 1.9], [1.5, 2.45]],
       [[2.3, 2.15], [1.75, 2.5]],

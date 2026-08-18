@@ -57,7 +57,9 @@ export function volumeToColor(sets: number, band: TargetBand): string {
     const t = clamp(sets / min, 0, 1);
     const hue = lerp(COLD_HUE, ACCENT_HUE, t);
     const saturation = lerp(24, 80, t);
-    const lightness = lerp(34, 50, t);
+    // Floor matches NO_VOLUME_FILL's perceived lightness so a muscle with a
+    // sliver of volume never reads as *less* present than one with none.
+    const lightness = lerp(44, 50, t);
     return hsl(hue, saturation, lightness);
   }
 
@@ -73,10 +75,12 @@ export function volumeToColor(sets: number, band: TargetBand): string {
   return hsl(hue, 92, lightness);
 }
 
-/** Fill used for a muscle with no volume in scope: a neutral dark muscle
- * tone on the figure's dark body base. Shared by the figure and the legend
- * so the "No data" swatch always matches what the body map draws. */
-export const NO_VOLUME_FILL = "oklch(0.38 0.014 265)";
+/** Fill used for a muscle with no volume in scope: a neutral, clearly-lit
+ * muscle tone on the figure's dark body base — light enough to read as its
+ * own resting muscle plate rather than fading into the base or the
+ * non-interactive silhouette fill. Shared by the figure and the legend so
+ * the "No data" swatch always matches what the body map draws. */
+export const NO_VOLUME_FILL = "oklch(0.46 0.02 265)";
 
 export interface MuscleStatus {
   sets: number;
