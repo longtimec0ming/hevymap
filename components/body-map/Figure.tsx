@@ -5,6 +5,8 @@ import type { SubMuscleId } from "@/data/taxonomy";
 import type { MuscleStatus } from "./color-scale";
 import {
   BACK_REGIONS,
+  DETAIL_LINES_BACK,
+  DETAIL_LINES_FRONT,
   FRONT_REGIONS,
   SILHOUETTE_BACK,
   SILHOUETTE_FRONT,
@@ -31,9 +33,6 @@ const SILHOUETTE_FILL = "#1c2128";
 const SILHOUETTE_STROKE = "#31363f";
 
 function shapeToSvg(shape: MuscleShape, extraProps: Record<string, unknown>) {
-  if (shape.kind === "ellipse") {
-    return <ellipse cx={shape.cx} cy={shape.cy} rx={shape.rx} ry={shape.ry} {...extraProps} />;
-  }
   return <path d={shape.d} {...extraProps} />;
 }
 
@@ -127,6 +126,7 @@ export function Figure({
 }: FigureProps) {
   const regions = view === "front" ? FRONT_REGIONS : BACK_REGIONS;
   const silhouette = view === "front" ? SILHOUETTE_FRONT : SILHOUETTE_BACK;
+  const detailLines = view === "front" ? DETAIL_LINES_FRONT : DETAIL_LINES_BACK;
 
   return (
     <svg
@@ -139,11 +139,16 @@ export function Figure({
       <g fill={SILHOUETTE_FILL} stroke={SILHOUETTE_STROKE} strokeWidth={OUTLINE_WIDTH} pointerEvents="none">
         {shapeToSvg(silhouette.legLeft, {})}
         <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.legLeft, {})}</g>
+        {shapeToSvg(silhouette.footLeft, {})}
+        <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.footLeft, {})}</g>
         {shapeToSvg(silhouette.armLeft, {})}
         <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.armLeft, {})}</g>
+        {shapeToSvg(silhouette.handLeft, {})}
+        <g transform="translate(300,0) scale(-1,1)">{shapeToSvg(silhouette.handLeft, {})}</g>
         {shapeToSvg(silhouette.torso, {})}
         {shapeToSvg(silhouette.neck, {})}
         {shapeToSvg(silhouette.head, {})}
+        {shapeToSvg(silhouette.hair, {})}
       </g>
 
       {/* Addressable muscle regions */}
@@ -158,6 +163,13 @@ export function Figure({
             onMuscleHover={onMuscleHover}
             onMuscleFocus={onMuscleFocus}
           />
+        ))}
+      </g>
+
+      {/* Decorative detail lines (ab segmentation, spine hint, ...) */}
+      <g fill="none" stroke={SILHOUETTE_STROKE} strokeWidth={0.9} strokeLinecap="round" pointerEvents="none">
+        {detailLines.map((d, i) => (
+          <path key={i} d={d} />
         ))}
       </g>
     </svg>
