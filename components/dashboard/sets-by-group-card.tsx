@@ -5,6 +5,7 @@ import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAx
 import { TAXONOMY } from "@/data/taxonomy";
 import type { HevyExerciseTemplate, HevyWorkout } from "@/lib/hevy";
 import { getOverrides } from "@/lib/overrides";
+import { REGION_COLORS } from "@/lib/region-colors";
 import { buildBuckets, chartRangeToDateRange, setsByRegionSeries } from "@/lib/stats";
 import { ChartCard, ChartEmptyState } from "./chart-card";
 import { ChartTooltip } from "./chart-tooltip";
@@ -15,10 +16,6 @@ export interface SetsByGroupCardProps {
   weekStartsOn: 0 | 1;
   includeWarmups: boolean;
 }
-
-// One accent hue with tints (PLAN.md §12): the theme's chart-1..5 ramp plus
-// the brand color itself cover the 6 coarse regions.
-const REGION_COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)", "var(--brand)"];
 
 function regionOrder(): string[] {
   const seen = new Set<string>();

@@ -18,7 +18,7 @@ import {
   subMonths,
   subYears,
 } from "date-fns";
-import { TAXONOMY_BY_ID, type SubMuscleId } from "../data/taxonomy";
+import { TAXONOMY, TAXONOMY_BY_ID, type SubMuscleId } from "../data/taxonomy";
 import type { ChartBucket, ChartRange } from "./dashboard-prefs";
 import { groupVolumeByRegion } from "./groups";
 import type { HevyExerciseTemplate, HevyWorkout } from "./hevy";
@@ -237,6 +237,69 @@ export function setsByRegionSeries(
     }
     return point;
   });
+}
+
+/** One point per bucket, with every sub-muscle id (optionally filtered to a
+ * single region's members) as a numeric key alongside `label`, mirroring
+ * SetsByRegionPoint's shape for the same Recharts stacked bar/area pattern
+ * (one <Bar>/<Area> per sub-muscle). */
+export type SetsBySubMuscleGroupPoint = { label: string } & Record<string, number | string>;
+
+/** Sub-muscle ids belonging to `region`, in taxonomy order — "All" (or an
+ * unrecognized region) returns every sub-muscle. Exported so the card and
+ * its group-filter pill row share one definition of "which ids does this
+ * filter select" instead of re-deriving it. */
+export function subMuscleIdsForRegion(region: string | "All"): SubMuscleId[] {
+  if (region === "All") return TAXONOMY.map((m) => m.id as SubMuscleId);
+  const members = TAXONOMY.filter((m) => m.region === region).map((m) => m.id as SubMuscleId);
+  return members.length > 0 ? members : TAXONOMY.map((m) => m.id as SubMuscleId);
+}
+
+/** Sets-by-sub-muscle series (PLAN.md §10's "Sets by muscle group" card,
+ * extended to sub-muscle granularity with a group filter). Same
+ * bucket-then-allocate shape as setsByRegionSeries, filtered down to
+ * `region`'s sub-muscles (or all 26 for "All"). */
+export function setsBySubMuscleSeries(
+  workouts: HevyWorkout[],
+  templatesById: ReadonlyMap<string, HevyExerciseTemplate> | undefined,
+  context: ResolveContext,
+  options: VolumeOptions,
+  buckets: Bucket[],
+  region: string | "All",
+): SetsBySubMuscleGroupPoint[] {
+  const ids = subMuscleIdsForRegion(region);
+  return buckets.map((bucket) => {
+    const inRange = filterWorkoutsInRange(workouts, bucket);
+    const volume = computeVolumeByMuscle(inRange, templatesById, context, options);
+    const point: SetsBySubMuscleGroupPoint = { label: bucket.label };
+    for (const id of ids) {
+      point[id] = volume[id].sets;
+    }
+    return point;
+  });
+}
+
+/** The region (of the 6 coarse regions) with the most total fractional sets
+ * across `workouts`, for defaulting the sub-muscle chart's group filter to
+ * "whatever's actually being trained" rather than always "All". Falls back
+ * to "All" when there's no volume at all to rank by. */
+export function regionWithMostVolume(
+  workouts: HevyWorkout[],
+  templatesById: ReadonlyMap<string, HevyExerciseTemplate> | undefined,
+  context: ResolveContext,
+  options: VolumeOptions,
+): string | "All" {
+  const volume = computeVolumeByMuscle(workouts, templatesById, context, options);
+  const groups = groupVolumeByRegion(volume);
+  let best: string | "All" = "All";
+  let bestSets = 0;
+  for (const group of groups) {
+    if (group.total.sets > bestSets) {
+      bestSets = group.total.sets;
+      best = group.region;
+    }
+  }
+  return best;
 }
 
 export interface PrCountPoint {

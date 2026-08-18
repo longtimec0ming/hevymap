@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { SUB_MUSCLE_IDS, type SubMuscleId } from "../data/taxonomy";
-import type { HevyWorkout } from "./hevy";
+import type { HevyExercise, HevySet, HevyWorkout } from "./hevy";
+import type { OverridesMap } from "./overrides";
 import {
   buildBuckets,
   chartRangeToDateRange,
@@ -10,6 +11,9 @@ import {
   mostTrainedMuscle,
   percentDelta,
   prsPerBucketSeries,
+  regionWithMostVolume,
+  setsBySubMuscleSeries,
+  subMuscleIdsForRegion,
   totalSets,
   totalTonnageKg,
   workoutDurationStats,
@@ -18,7 +22,33 @@ import {
 import type { PrEvent } from "./prs";
 import type { VolumeByMuscle } from "./volume";
 
-function makeWorkout(id: string, startTime: string, endTime = startTime): HevyWorkout {
+function makeSet(overrides: Partial<HevySet> = {}): HevySet {
+  return {
+    index: 0,
+    type: "normal",
+    weight_kg: 100,
+    reps: 10,
+    distance_meters: null,
+    duration_seconds: null,
+    rpe: null,
+    custom_metric: null,
+    ...overrides,
+  };
+}
+
+function makeExercise(overrides: Partial<HevyExercise> = {}): HevyExercise {
+  return {
+    index: 0,
+    title: "Test Exercise",
+    notes: "",
+    exercise_template_id: "tpl-1",
+    superset_id: null,
+    sets: [makeSet()],
+    ...overrides,
+  };
+}
+
+function makeWorkout(id: string, startTime: string, endTime = startTime, exercises: HevyExercise[] = []): HevyWorkout {
   return {
     id,
     title: "Workout",
@@ -28,7 +58,7 @@ function makeWorkout(id: string, startTime: string, endTime = startTime): HevyWo
     end_time: endTime,
     updated_at: startTime,
     created_at: startTime,
-    exercises: [],
+    exercises,
   };
 }
 
@@ -210,5 +240,57 @@ describe("consistencyCalendar", () => {
     const targetDay = new Date("2026-08-10T08:00:00Z").getDate();
     const hit = days.find((d) => d.date.getDate() === targetDay && d.date.getMonth() === 7);
     expect(hit?.count).toBe(2);
+  });
+});
+
+describe("subMuscleIdsForRegion", () => {
+  it("returns exactly the 3 Shoulders sub-muscles for that region", () => {
+    expect(subMuscleIdsForRegion("Shoulders")).toEqual(["front_delt", "side_delt", "rear_delt"]);
+  });
+
+  it("returns all 26 sub-muscle ids for 'All'", () => {
+    expect(subMuscleIdsForRegion("All")).toHaveLength(SUB_MUSCLE_IDS.length);
+  });
+
+  it("falls back to all 26 for an unrecognized region", () => {
+    expect(subMuscleIdsForRegion("Nonexistent")).toHaveLength(SUB_MUSCLE_IDS.length);
+  });
+});
+
+describe("setsBySubMuscleSeries", () => {
+  const overrides: OverridesMap = { "tpl-1": { front_delt: 0.6, mid_chest: 0.4 } };
+  const buckets = buildBuckets({ start: new Date("2026-08-01"), end: new Date("2026-08-16") }, "week", 1);
+
+  it("only includes keys for the filtered region's sub-muscles", () => {
+    const workout = makeWorkout("1", "2026-08-03T10:00:00Z", "2026-08-03T11:00:00Z", [makeExercise()]);
+    const series = setsBySubMuscleSeries([workout], undefined, { overrides }, {}, buckets, "Shoulders");
+    for (const point of series) {
+      expect(Object.keys(point).sort()).toEqual(["front_delt", "label", "rear_delt", "side_delt"].sort());
+    }
+  });
+
+  it("allocates fractional sets per sub-muscle within the filtered region", () => {
+    const workout = makeWorkout("1", "2026-08-03T10:00:00Z", "2026-08-03T11:00:00Z", [makeExercise()]);
+    const series = setsBySubMuscleSeries([workout], undefined, { overrides }, {}, buckets, "Shoulders");
+    const total = series.reduce((sum, p) => sum + Number(p.front_delt ?? 0), 0);
+    expect(total).toBeCloseTo(0.6, 5);
+  });
+
+  it("'All' includes every sub-muscle key", () => {
+    const workout = makeWorkout("1", "2026-08-03T10:00:00Z", "2026-08-03T11:00:00Z", [makeExercise()]);
+    const series = setsBySubMuscleSeries([workout], undefined, { overrides }, {}, buckets, "All");
+    expect(Object.keys(series[0]).length).toBe(SUB_MUSCLE_IDS.length + 1); // + label
+  });
+});
+
+describe("regionWithMostVolume", () => {
+  it("picks the region with the most total fractional sets", () => {
+    const overrides: OverridesMap = { "tpl-1": { front_delt: 1.0 } };
+    const workout = makeWorkout("1", "2026-08-03T10:00:00Z", "2026-08-03T11:00:00Z", [makeExercise()]);
+    expect(regionWithMostVolume([workout], undefined, { overrides }, {})).toBe("Shoulders");
+  });
+
+  it("falls back to 'All' when there's no volume at all", () => {
+    expect(regionWithMostVolume([], undefined, {}, {})).toBe("All");
   });
 });

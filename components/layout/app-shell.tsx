@@ -24,8 +24,8 @@ import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/history", label: "History", icon: History },
   { href: "/workouts", label: "Workouts", icon: Dumbbell },
+  { href: "/history", label: "History", icon: History },
   { href: "/exercises", label: "Exercises", icon: ListTree },
   { href: "/settings", label: "Settings", icon: Settings },
 ] as const;

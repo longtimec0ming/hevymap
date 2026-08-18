@@ -12,6 +12,7 @@ import { getOverrides } from "@/lib/overrides";
 import { getEffectiveTargetBands } from "@/lib/targets";
 import { computeExerciseVolume, computeVolumeByMuscle, type VolumeByMuscle } from "@/lib/volume";
 import { cn } from "@/lib/utils";
+import { MuscleDistributionBar } from "./muscle-distribution-bar";
 
 const REGIONS = ["Shoulders", "Chest", "Back", "Arms", "Core", "Legs"];
 
@@ -81,7 +82,7 @@ export function WorkoutCard({ workout, templatesById, includeWarmups, units }: W
         onClick={() => setExpanded((v) => !v)}
         className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left"
       >
-        <div>
+        <div className="min-w-0 flex-1">
           <p className="font-medium">{workout.title || "Workout"}</p>
           <p className="text-xs text-muted-foreground">
             {new Date(workout.start_time).toLocaleString(undefined, {
@@ -94,6 +95,7 @@ export function WorkoutCard({ workout, templatesById, includeWarmups, units }: W
             {" · "}
             {workout.exercises.length} exercises · {setCount} sets
           </p>
+          <MuscleDistributionBar volumeByMuscle={workoutVolume} className="mt-2 max-w-sm" />
         </div>
         <ChevronDown className={cn("size-4 shrink-0 text-muted-foreground transition-transform", expanded && "rotate-180")} />
       </button>

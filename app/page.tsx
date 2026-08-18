@@ -10,7 +10,9 @@ import { HoursTrainedCard } from "@/components/dashboard/hours-trained-card";
 import { NeglectRadar } from "@/components/dashboard/neglect-radar";
 import { PeriodSelector } from "@/components/dashboard/period-selector";
 import { PrsOverTimeCard } from "@/components/dashboard/prs-over-time-card";
+import { RecentWorkoutsCard } from "@/components/dashboard/recent-workouts-card";
 import { SetsByGroupCard } from "@/components/dashboard/sets-by-group-card";
+import { SetsBySubMuscleCard } from "@/components/dashboard/sets-by-sub-muscle-card";
 import { SparklineGrid } from "@/components/dashboard/sparkline-grid";
 import { StatTiles } from "@/components/dashboard/stat-tiles";
 import { VolumeProgressionCard } from "@/components/dashboard/volume-progression-card";
@@ -161,6 +163,14 @@ export default function DashboardPage() {
       <div>
         <h2 className="mb-3 text-sm font-semibold text-muted-foreground">Analytics</h2>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="lg:col-span-2">
+            <ConsistencyHeatmapCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} />
+          </div>
+          <RecentWorkoutsCard
+            workouts={data.workouts}
+            templatesById={data.templatesById}
+            includeWarmups={prefs.includeWarmups}
+          />
           <HoursTrainedCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} />
           <VolumeProgressionCard
             workouts={data.workouts}
@@ -175,9 +185,14 @@ export default function DashboardPage() {
             weekStartsOn={prefs.weekStartsOn}
             includeWarmups={prefs.includeWarmups}
           />
+          <SetsBySubMuscleCard
+            workouts={data.workouts}
+            templatesById={data.templatesById}
+            weekStartsOn={prefs.weekStartsOn}
+            includeWarmups={prefs.includeWarmups}
+          />
           <WorkoutsPerWeekCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} />
           <PrsOverTimeCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} includeWarmups={prefs.includeWarmups} />
-          <ConsistencyHeatmapCard workouts={data.workouts} weekStartsOn={prefs.weekStartsOn} />
         </div>
       </div>
 

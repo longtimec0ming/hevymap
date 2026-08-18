@@ -17,6 +17,7 @@ export type ChartId =
   | "hoursTrained"
   | "volumeProgression"
   | "setsByGroup"
+  | "setsBySubMuscle"
   | "workoutsPerWeek"
   | "prsOverTime";
 
@@ -24,12 +25,14 @@ const DEFAULT_CHART_PREFS: Record<ChartId, ChartPrefs> = {
   hoursTrained: { range: "6m", bucket: "week" },
   volumeProgression: { range: "6m", bucket: "week" },
   setsByGroup: { range: "3m", bucket: "week" },
+  setsBySubMuscle: { range: "3m", bucket: "week" },
   workoutsPerWeek: { range: "6m", bucket: "week" },
   prsOverTime: { range: "1y", bucket: "month" },
 };
 
 const KEY_PREFIX = "hevymap:dashboard-chart-prefs:";
 const SPARKLINES_EXPANDED_KEY = "hevymap:dashboard-sparklines-expanded";
+const SETS_BY_SUB_MUSCLE_GROUP_FILTER_KEY = "hevymap:dashboard-sets-by-sub-muscle-group-filter";
 
 export function getChartPrefs(id: ChartId): ChartPrefs {
   if (typeof window === "undefined") return DEFAULT_CHART_PREFS[id];
@@ -61,4 +64,18 @@ export function getSparklinesExpanded(): boolean {
 export function setSparklinesExpanded(expanded: boolean): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(SPARKLINES_EXPANDED_KEY, expanded ? "1" : "0");
+}
+
+/** The "Sets by sub-muscle" card's group filter ("All" or one of the 6
+ * coarse regions). Returns null when the user hasn't picked one yet — the
+ * card defaults an unset filter to whichever region has the most volume in
+ * range (lib/stats.ts's regionWithMostVolume) rather than always "All". */
+export function getSetsBySubMuscleGroupFilter(): string | null {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem(SETS_BY_SUB_MUSCLE_GROUP_FILTER_KEY);
+}
+
+export function setSetsBySubMuscleGroupFilter(region: string): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(SETS_BY_SUB_MUSCLE_GROUP_FILTER_KEY, region);
 }
