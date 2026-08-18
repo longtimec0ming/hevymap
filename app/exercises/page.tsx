@@ -10,6 +10,7 @@ import { SUB_MUSCLE_IDS, type SubMuscleId } from "@/data/taxonomy";
 import type { MuscleMap } from "@/data/types";
 import { getOverrides } from "@/lib/overrides";
 import { resolveExerciseMapping, type ContributionMap, type ExerciseIdentity, type ResolutionSource } from "@/lib/volume";
+import { usePrefs } from "@/lib/hooks/use-prefs";
 import { useWorkoutData } from "@/lib/hooks/use-workout-data";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 
@@ -38,6 +39,7 @@ function contributionsToVolume(contributions: ContributionMap) {
 
 export default function ExercisesPage() {
   const data = useWorkoutData();
+  const [prefs] = usePrefs();
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [liveContributions, setLiveContributions] = useState<ContributionMap | null>(null);
@@ -131,7 +133,7 @@ export default function ExercisesPage() {
                 </Badge>
               </div>
 
-              {previewVolume && <BodyMap volumeByMuscle={previewVolume} />}
+              {previewVolume && <BodyMap volumeByMuscle={previewVolume} units={prefs.units} />}
 
               <MappingEditor
                 key={selected.identity.id}

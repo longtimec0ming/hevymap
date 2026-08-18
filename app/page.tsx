@@ -51,6 +51,7 @@ export default function DashboardPage() {
         volumeByMuscle={currentWeek.volume}
         previousVolumeByMuscle={previousWeek.volume}
         sessionCount={sessionsThisWeek}
+        units={prefs.units}
       />
 
       <BodyMap
@@ -59,6 +60,7 @@ export default function DashboardPage() {
         highlightedMuscleId={highlighted}
         onMuscleHover={setHighlighted}
         onMuscleClick={setHighlighted}
+        units={prefs.units}
       />
 
       <NeglectRadar volumeByMuscle={currentWeek.volume} targetBands={targetBands} />

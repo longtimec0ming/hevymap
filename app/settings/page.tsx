@@ -29,11 +29,7 @@ export default function SettingsPage() {
             <div>
               <Label htmlFor="units">Units</Label>
               <p className="text-xs text-muted-foreground">
-                Display-only — weight is always stored in kg.{" "}
-                {/* TODO: lib/units.ts doesn't exist yet; the lbs display toggle is a
-                    no-op until unit conversion is implemented (out of scope for this
-                    build step). */}
-                lbs conversion is not implemented yet.
+                Display-only — weight is always stored in kg and converted for display.
               </p>
             </div>
             <Select

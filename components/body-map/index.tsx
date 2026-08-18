@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { SUB_MUSCLE_IDS, TAXONOMY_BY_ID, type SubMuscleId } from "@/data/taxonomy";
+import { formatWeight } from "@/lib/units";
 import type { VolumeByMuscle } from "@/lib/volume";
 import { getMuscleStatus, type MuscleStatus, type TargetBand } from "./color-scale";
 import { Figure } from "./Figure";
@@ -14,6 +15,7 @@ export interface BodyMapProps {
   highlightedMuscleId?: SubMuscleId | null;
   onMuscleClick?: (muscleId: SubMuscleId) => void;
   onMuscleHover?: (muscleId: SubMuscleId | null) => void;
+  units?: "kg" | "lbs";
   className?: string;
 }
 
@@ -21,10 +23,6 @@ interface TooltipState {
   muscleId: SubMuscleId;
   x: number;
   y: number;
-}
-
-function formatTonnage(kg: number): string {
-  return `${kg.toLocaleString(undefined, { maximumFractionDigits: 0 })} kg`;
 }
 
 function formatSets(sets: number): string {
@@ -38,6 +36,7 @@ export function BodyMap({
   highlightedMuscleId = null,
   onMuscleClick,
   onMuscleHover,
+  units = "kg",
   className,
 }: BodyMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -136,7 +135,7 @@ export function BodyMap({
         >
           <div className="font-medium">{activeTaxon.displayName}</div>
           <div className="mt-1 tabular-nums text-zinc-300">
-            {formatSets(activeStatus.sets)} sets · {formatTonnage(activeStatus.tonnageKg)}
+            {formatSets(activeStatus.sets)} sets · {formatWeight(activeStatus.tonnageKg, units)}
           </div>
           <div className="tabular-nums text-zinc-300">{activeStatus.percentOfTarget}% of target</div>
         </div>

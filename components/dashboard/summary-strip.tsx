@@ -1,11 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { TAXONOMY_BY_ID, type SubMuscleId } from "@/data/taxonomy";
+import { formatWeight } from "@/lib/units";
 import type { VolumeByMuscle } from "@/lib/volume";
 
 export interface SummaryStripProps {
   volumeByMuscle: VolumeByMuscle;
   previousVolumeByMuscle: VolumeByMuscle;
   sessionCount: number;
+  units?: "kg" | "lbs";
 }
 
 function totals(volume: VolumeByMuscle) {
@@ -42,7 +44,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function SummaryStrip({ volumeByMuscle, previousVolumeByMuscle, sessionCount }: SummaryStripProps) {
+export function SummaryStrip({ volumeByMuscle, previousVolumeByMuscle, sessionCount, units = "kg" }: SummaryStripProps) {
   const { sets, tonnageKg } = totals(volumeByMuscle);
   const mover = biggestMover(volumeByMuscle, previousVolumeByMuscle);
 
@@ -50,7 +52,7 @@ export function SummaryStrip({ volumeByMuscle, previousVolumeByMuscle, sessionCo
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       <Stat label="Hard sets" value={sets.toFixed(1)} />
       <Stat label="Sessions" value={String(sessionCount)} />
-      <Stat label="Tonnage" value={`${Math.round(tonnageKg).toLocaleString()} kg`} />
+      <Stat label="Tonnage" value={formatWeight(tonnageKg, units)} />
       <Stat
         label="Biggest mover"
         value={

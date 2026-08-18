@@ -34,6 +34,7 @@ export default function WorkoutsPage() {
               workout={workout}
               templatesById={data.templatesById}
               includeWarmups={prefs.includeWarmups}
+              units={prefs.units}
             />
           ))}
         </div>

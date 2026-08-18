@@ -15,9 +15,10 @@ export interface WorkoutCardProps {
   workout: HevyWorkout;
   templatesById: ReadonlyMap<string, HevyExerciseTemplate>;
   includeWarmups: boolean;
+  units: "kg" | "lbs";
 }
 
-export function WorkoutCard({ workout, templatesById, includeWarmups }: WorkoutCardProps) {
+export function WorkoutCard({ workout, templatesById, includeWarmups, units }: WorkoutCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [selectedExerciseIndex, setSelectedExerciseIndex] = useState<number | null>(null);
 
@@ -57,6 +58,7 @@ export function WorkoutCard({ workout, templatesById, includeWarmups }: WorkoutC
           <BodyMap
             volumeByMuscle={computeVolumeByMuscle([workout], templatesById, { overrides }, { includeWarmups })}
             targetBands={targetBands}
+            units={units}
           />
 
           <ul className="divide-y divide-border/60">
@@ -83,6 +85,7 @@ export function WorkoutCard({ workout, templatesById, includeWarmups }: WorkoutC
                       <BodyMap
                         volumeByMuscle={computeExerciseVolume(exercise, template, { overrides }, { includeWarmups })}
                         targetBands={targetBands}
+                        units={units}
                       />
                     </div>
                   )}

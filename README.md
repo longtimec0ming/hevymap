@@ -44,7 +44,12 @@ npm run typecheck        # tsc --noEmit
 
 ## Deploy to Vercel
 
-_Deploy button coming once the app is feature-complete (build step 7)._
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/longtimec0ming/hevymap&env=HEVY_API_KEY,ACCESS_PASSWORD&envDescription=HEVY_API_KEY%20is%20required%20(from%20Hevy%20Pro%20%E2%86%92%20Settings%20%E2%86%92%20Developer).%20ACCESS_PASSWORD%20is%20optional%20%E2%80%94%20leave%20it%20blank%20to%20deploy%20without%20a%20password%20gate.)
+
+Forks the repo into your own GitHub account and prompts for both env vars
+during setup. Leave `ACCESS_PASSWORD` blank if you don't want the app gated
+behind a password (see [Environment variables](#environment-variables)
+above).
 
 ## Build status
 
@@ -56,14 +61,42 @@ Tracking `CLAUDE.md`'s build order. Updated as each step lands.
 - [x] **Step 4 — Muscle map seeding:** `data/muscle-map.json` seeded for all 451 standard Hevy exercises (the account's 11 custom exercises are excluded, per `is_custom`). Confidence: 220 high / 142 medium / 89 low — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) once available for how to propose corrections.
 - [x] **Step 5 — Pages:** shadcn/ui dark theme (custom tokens in `app/globals.css`, single amber `--brand` accent), dashboard/history/workouts/exercises/settings pages, first-run import screen, `components/body-map/index.tsx` integration contract (now implemented by build step 6)
 - [x] **Step 6 — Body map:** `components/body-map/` — hand-authored SVG anatomical figure (front + back, 26 addressable `data-muscle-id` regions), cold→accent→hot heatmap ramp with legend, hover tooltip (sets/tonnage/% of target), click + externally-controlled highlight, keyboard focus. Color/percent math unit-tested in `color-scale.test.ts`.
-- [ ] **Step 7 — Ship polish:** access-password middleware, README deploy button, CONTRIBUTING.md
+- [x] **Step 7 — Ship polish:** access-password gate (`proxy.ts` — see note below — plus `app/login/page.tsx` and `app/api/auth/route.ts`), `lib/units.ts` kg↔lbs display conversion (wired into the settings toggle, dashboard tonnage, body-map tooltips, workout body maps), GitHub Actions CI (`.github/workflows/ci.yml`), [`CONTRIBUTING.md`](./CONTRIBUTING.md), Vercel deploy button, `LICENSE`
+
+v1 is feature-complete against CLAUDE.md's build order (steps 1–7 all done). See "v1 status" below for an honest read on the Definition of Done checklist, not just a checkbox.
+
+> **Note on `proxy.ts`:** PLAN.md §2 specifies `middleware.ts`. This repo runs Next.js 16, where that file convention is deprecated and renamed to `proxy.ts` (identical behavior, renamed file/export) — see `node_modules/next/dist/docs/.../file-conventions/proxy.md`. The gate lives at `proxy.ts` for that reason.
+
+## v1 status
+
+Honest self-assessment against CLAUDE.md's "Definition of done":
+
+- ✅ **Body map works at all three scopes** — time range (dashboard), single workout, single exercise (workouts page, exercises page) — verified by reading through each call site.
+- ✅ **Custom exercise flow** — custom exercises resolve through the override → repo map → inference → fallback chain and are badged "estimated" until a user defines a mapping (`app/exercises/page.tsx`); code-verified, not manually run against a live custom exercise in this session.
+- ✅ **Override export/import round-trips** — unit-tested in `lib/overrides.test.ts` (`"export/import round-trips"`, merge/replace modes, and rejection of invalid/malformed input without partial writes).
+- ✅ **CI green** — `npm run typecheck`, `npm run lint`, and `npm run test` all pass locally as of this build step; `.github/workflows/ci.yml` runs the same three commands on every push/PR. Not yet observed green on GitHub Actions itself (no push has triggered it yet).
+- ⚠️ **Fresh clone + valid key: full history imports with progress UI; dashboard renders correctly on desktop and mobile** — the import screen, progress bar, and responsive layout are all implemented, but this hasn't been exercised end-to-end against a real Hevy account with real history in this session. Worth a manual pass before calling v1 fully proven.
+- ⚠️ **README deploy button works on a clean Vercel account** — the button uses Vercel's standard clone-and-prompt-env-vars URL shape pointed at this repo; not yet clicked through on an actual clean Vercel account.
+
+## Screenshots
+
+_TODO: add a screenshot or short GIF of the dashboard body map here (PLAN.md §13). None captured yet — this needs a real running session with actual workout data, not something fabricated._
+
+## Roadmap (out of scope for v1)
+
+Per PLAN.md §14:
+
+- Multi-user / shared deployments
+- Garmin or other integrations (parent Health HQ project)
+- Scheduled summaries (Telegram/email) — natural v2 via Vercel Cron
+- Per-set RIR/intensity weighting
 
 ## Docs
 
 - [`PLAN.md`](./PLAN.md) — full product & technical spec
 - [`CLAUDE.md`](./CLAUDE.md) — how to work in this repo, build order, hard invariants
-- `CONTRIBUTING.md` — coming in step 7, focused on `muscle-map.json` PRs
+- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — focused on `muscle-map.json` PRs: schema, sum-to-1.0 rule, confidence levels, alphabetization
 
 ## License
 
-MIT
+[MIT](./LICENSE)

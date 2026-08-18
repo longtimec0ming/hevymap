@@ -25,19 +25,33 @@ const NAV_ITEMS = [
 
 let backgroundSyncStarted = false;
 
-function useBackgroundSync() {
+function useBackgroundSync(enabled: boolean) {
   useEffect(() => {
-    if (backgroundSyncStarted) return;
+    if (!enabled || backgroundSyncStarted) return;
     backgroundSyncStarted = true;
     void runIncrementalSync().catch((error) => {
       console.error("Background sync failed", error);
     });
-  }, []);
+  }, [enabled]);
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  useBackgroundSync();
   const pathname = usePathname();
+  const isLoginPage = pathname === "/login";
+  useBackgroundSync(!isLoginPage);
+
+  // The login page (only reachable when ACCESS_PASSWORD is set — see
+  // proxy.ts) renders its own full-screen layout: no nav for a route the
+  // user isn't authenticated for yet, and no point syncing Hevy data before
+  // they've unlocked the app.
+  if (isLoginPage) {
+    return (
+      <>
+        {children}
+        <Toaster />
+      </>
+    );
+  }
 
   return (
     <TooltipProvider>
