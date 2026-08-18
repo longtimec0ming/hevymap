@@ -17,7 +17,7 @@ import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 const REPO_MAP = repoMuscleMap as unknown as MuscleMap;
 
 const SOURCE_LABEL: Record<ResolutionSource, string> = {
-  override: "custom mapping",
+  override: "override",
   repo_map: "repo map",
   inference: "estimated",
   fallback: "estimated",
@@ -27,6 +27,17 @@ function sourceBadgeVariant(source: ResolutionSource): "default" | "outline" | "
   if (source === "override") return "default";
   if (source === "repo_map") return "secondary";
   return "outline";
+}
+
+/** Repo-map confidence for the selected exercise, when its mapping came
+ * from the repo map (matches the same id-then-name fallback resolveExerciseMapping
+ * uses, so this always agrees with what's actually being shown). Undefined
+ * for override/inference/fallback sources — those don't carry a confidence rating. */
+function repoConfidence(identity: ExerciseIdentity): "high" | "medium" | "low" | undefined {
+  const entry =
+    REPO_MAP.find((e) => e.hevy_id === identity.id) ??
+    REPO_MAP.find((e) => e.name.toLowerCase() === identity.name.toLowerCase());
+  return entry?.confidence;
 }
 
 function contributionsToVolume(contributions: ContributionMap) {
@@ -84,6 +95,9 @@ export default function ExercisesPage() {
     ? contributionsToVolume(liveContributions ?? selected.mapping.contributions)
     : null;
 
+  const selectedTemplate = selected ? data.templates.find((t) => t.id === selected.identity.id) : undefined;
+  const confidence = selected ? repoConfidence(selected.identity) : undefined;
+
   if (!data.loaded) return <DashboardSkeleton />;
 
   return (
@@ -95,46 +109,59 @@ export default function ExercisesPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[360px_1fr]">
-        <Command className="h-[32rem] rounded-lg border border-border/70 bg-card">
-          <CommandInput placeholder="Search exercises…" value={search} onValueChange={setSearch} />
-          <CommandList className="max-h-full">
-            <CommandEmpty>No exercises found.</CommandEmpty>
-            <CommandGroup>
-              {resolved.map(({ identity, mapping }) => (
-                <CommandItem
-                  key={identity.id}
-                  value={identity.name}
-                  onSelect={() => {
-                    setSelectedId(identity.id);
-                    setLiveContributions(null);
-                  }}
-                  className="flex items-center justify-between gap-2"
-                >
-                  <span className="truncate">{identity.name}</span>
-                  <Badge variant={sourceBadgeVariant(mapping.source)} className="shrink-0 text-[10px]">
-                    {SOURCE_LABEL[mapping.source]}
-                  </Badge>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-
-        <div>
-          {!selected ? (
-            <p className="text-sm text-muted-foreground">Select an exercise to view or edit its mapping.</p>
-          ) : (
-            <div className="space-y-6">
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold">{selected.identity.name}</h2>
-                <Badge variant={sourceBadgeVariant(selected.mapping.source)}>
-                  {SOURCE_LABEL[selected.mapping.source]}
+      <Command className="h-64 rounded-lg border border-border/70 bg-card lg:h-72">
+        <CommandInput placeholder="Search exercises…" value={search} onValueChange={setSearch} />
+        <CommandList className="max-h-full">
+          <CommandEmpty>No exercises found.</CommandEmpty>
+          <CommandGroup>
+            {resolved.map(({ identity, mapping }) => (
+              <CommandItem
+                key={identity.id}
+                value={identity.name}
+                onSelect={() => {
+                  setSelectedId(identity.id);
+                  setLiveContributions(null);
+                }}
+                className="flex items-center justify-between gap-2"
+              >
+                <span className="truncate">{identity.name}</span>
+                <Badge variant={sourceBadgeVariant(mapping.source)} className="shrink-0 text-[10px]">
+                  {SOURCE_LABEL[mapping.source]}
                 </Badge>
-              </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </Command>
 
-              {previewVolume && <BodyMap volumeByMuscle={previewVolume} units={prefs.units} />}
+      {!selected ? (
+        <p className="text-sm text-muted-foreground">Select an exercise above to view or edit its mapping.</p>
+      ) : (
+        <div className="space-y-3 rounded-lg border border-border/70 bg-card p-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-base font-semibold">{selected.identity.name}</h2>
+            {selectedTemplate?.equipment && (
+              <Badge variant="outline" className="text-[10px] capitalize">
+                {selectedTemplate.equipment.replace(/_/g, " ")}
+              </Badge>
+            )}
+            <Badge variant="outline" className="text-[10px]">
+              {selectedTemplate?.is_custom ? "custom" : selected.identity.id}
+            </Badge>
+            <Badge variant={sourceBadgeVariant(selected.mapping.source)} className="text-[10px]">
+              {SOURCE_LABEL[selected.mapping.source]}
+            </Badge>
+            {confidence && (
+              <Badge variant="outline" className="text-[10px] capitalize">
+                {confidence} confidence
+              </Badge>
+            )}
+          </div>
 
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            {previewVolume && <BodyMap volumeByMuscle={previewVolume} view="both" units={prefs.units} />}
+
+            <div>
               <MappingEditor
                 key={selected.identity.id}
                 exerciseId={selected.identity.id}
@@ -148,9 +175,9 @@ export default function ExercisesPage() {
                 }}
               />
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
