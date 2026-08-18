@@ -20,7 +20,7 @@ Each deployment is your own, private copy: your data lives in Hevy and in your b
 You need Hevy workout data to get in, but **not** Hevy Pro. Two ways to connect, chosen on first run:
 
 - **A Hevy API key** — requires Hevy Pro. Get one from the Hevy app under **Settings → Developer** (or the developer settings at [hevy.com](https://hevy.com); exact wording may vary by app version — check Hevy's own help docs if you can't find it). You can either set this once in the deployment's environment (`HEVY_API_KEY`), or paste it into the app itself the first time you open it — no redeploy needed.
-- **A Hevy CSV export** — free, no Pro required. In the Hevy app: **Settings → Export data**. Upload the file on first run; it's parsed entirely in your browser and never leaves your device.
+- **A Hevy CSV export** — free, no Pro required. In the Hevy app: **Settings → Export data**. Upload the file on first run; it's parsed entirely in your browser and never leaves your device. CSV imports can't sync incrementally, so re-upload a fresh export to bring in new workouts.
 
 ## Run it
 
@@ -96,28 +96,7 @@ The 32 sub-muscles are grouped into 7 regions: **Shoulders** (front/side/rear de
 
 Every standard Hevy exercise has an entry in [`data/muscle-map.json`](./data/muscle-map.json): the exercise ID, its name, and a set of sub-muscle contribution weights that sum to exactly 1.0. A set of Incline Bench Press, for example, might allocate 0.55 to upper chest, 0.25 to front delt, and the rest split across the triceps heads — one hard set is one hard set's worth of stimulus, distributed across whatever it actually trains. Each entry also carries a `confidence` level (`high` / `medium` / `low`) so you can see at a glance which splits are well-established versus best-effort guesses.
 
-Exercises resolve in this order: your own override (set in the mapping editor) → the repo's `muscle-map.json` → keyword/equipment-based inference rules → a coarse fallback. Anything below a repo-defined mapping is visibly badged "estimated" in the UI, since custom Hevy exercises and unmapped standard ones can't ship with a verified split. If you spot a mapping you think is wrong, or want to improve a `low`-confidence entry, see [`CONTRIBUTING.md`](./CONTRIBUTING.md) — mapping PRs are the highest-value way to contribute, since a better split helps every user immediately on their next sync.
-
-## Roadmap
-
-Planned next, roughly in order (PRs welcome on any of them):
-
-- More PR types (weight, set-volume, rep PRs; all-time vs last-30-days) alongside the current estimated-1RM PRs
-- Volume zones per sub-muscle (below maintenance → productive → overreaching) scaled to your training age, and a single 0–100 stimulus score per muscle
-- Plateau detection per exercise, rolled up to the sub-muscles it trains
-- Shareable summary cards (weekly body map, streaks, PRs)
-- One-click "copy my training summary" for pasting into an AI assistant
-- A short demo GIF for this README
-
-Not planned: multi-user hosting, integrations beyond Hevy, or a backend database — HevyMap stays a single-user, self-deployed app.
-
-## Limitations
-
-- Tonnage for bodyweight exercises counts only logged *added* weight, not bodyweight; sets still count normally.
-- Custom Hevy exercises need a mapping defined by you (their IDs are per-account, so the repo can't ship one). Until then they're badged "estimated" using keyword rules.
-- Some standard-exercise mappings are `low` confidence best guesses. They're flagged in the UI and in `muscle-map.json`; mapping PRs are the best way to help.
-- CSV imports match exercises by name, not Hevy ID, and can't sync incrementally — re-upload a fresh export to bring in new workouts.
-- Without `ACCESS_PASSWORD` or `HEVYMAP_SECRET` set, an in-app-connected API key is lost on server restart/redeploy (see [Bring your own API key](#bring-your-own-api-key)).
+Exercises resolve in this order: your own override (set in the mapping editor) → the repo's `muscle-map.json` → keyword/equipment-based inference rules → a coarse fallback. Anything below a repo-defined mapping is visibly badged "estimated" in the UI: custom Hevy exercises have per-account IDs so the repo can't ship a split for them — define one in the mapping editor and it's used from then on. (Tonnage for bodyweight exercises counts only logged added weight; sets count normally.) If you spot a mapping you think is wrong, or want to improve a `low`-confidence entry, see [`CONTRIBUTING.md`](./CONTRIBUTING.md) — mapping PRs are the highest-value way to contribute, since a better split helps every user immediately on their next sync.
 
 ## Contributing / architecture
 
