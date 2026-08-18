@@ -5,7 +5,9 @@ import type { VolumeByMuscle } from "@/lib/volume";
 
 export interface SummaryStripProps {
   volumeByMuscle: VolumeByMuscle;
-  previousVolumeByMuscle: VolumeByMuscle;
+  /** Omit when there's no meaningful "previous period" (e.g. all-time) —
+   * the biggest-mover stat shows "—" instead. */
+  previousVolumeByMuscle?: VolumeByMuscle;
   sessionCount: number;
   units?: "kg" | "lbs";
 }
@@ -20,7 +22,8 @@ function totals(volume: VolumeByMuscle) {
   return { sets, tonnageKg };
 }
 
-function biggestMover(current: VolumeByMuscle, previous: VolumeByMuscle) {
+function biggestMover(current: VolumeByMuscle, previous: VolumeByMuscle | undefined) {
+  if (!previous) return { id: null as SubMuscleId | null, delta: 0 };
   let bestId: SubMuscleId | null = null;
   let bestDelta = 0;
   for (const id of Object.keys(TAXONOMY_BY_ID) as SubMuscleId[]) {

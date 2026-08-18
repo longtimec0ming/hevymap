@@ -7,6 +7,7 @@
 
 import { type DBSchema, type IDBPDatabase, openDB } from "idb";
 import type { HevyExerciseTemplate, HevyWorkout } from "./hevy";
+import { DEFAULT_PERIOD_SCOPE, type PeriodScope } from "./period";
 
 // ---------------------------------------------------------------------------
 // IndexedDB schema
@@ -148,12 +149,15 @@ export interface Prefs {
   /** date-fns weekStartsOn convention: 0 = Sunday, 1 = Monday. */
   weekStartsOn: 0 | 1;
   includeWarmups: boolean;
+  /** Dashboard timeframe selector (PLAN.md §9.1). */
+  periodScope: PeriodScope;
 }
 
 export const DEFAULT_PREFS: Prefs = {
   units: "kg",
   weekStartsOn: 1,
   includeWarmups: false,
+  periodScope: DEFAULT_PERIOD_SCOPE,
 };
 
 const PREFS_KEY = "hevymap:prefs";

@@ -1,15 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { BodyMap } from "@/components/body-map";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { HevyExerciseTemplate, HevyWorkout } from "@/lib/hevy";
+import { groupVolumeByRegion } from "@/lib/groups";
 import { getOverrides } from "@/lib/overrides";
 import { getEffectiveTargetBands } from "@/lib/targets";
-import { computeExerciseVolume, computeVolumeByMuscle } from "@/lib/volume";
+import { computeExerciseVolume, computeVolumeByMuscle, type VolumeByMuscle } from "@/lib/volume";
 import { cn } from "@/lib/utils";
+
+const REGIONS = ["Shoulders", "Chest", "Back", "Arms", "Core", "Legs"];
+
+/** Grouped "sets by sub-muscle" summary for a single workout — region
+ * headers with subtotals, sub-muscles indented underneath (default
+ * expanded), same grouping helper as the History page. */
+function MuscleGroupSummary({ volumeByMuscle }: { volumeByMuscle: VolumeByMuscle }) {
+  const groups = groupVolumeByRegion(volumeByMuscle).filter((g) => g.total.sets > 0);
+  if (groups.length === 0) return null;
+
+  return (
+    <Accordion defaultValue={REGIONS} multiple>
+      {groups.map((group) => (
+        <AccordionItem key={group.region} value={group.region}>
+          <AccordionTrigger>
+            <span className="flex w-full items-center justify-between pr-6 text-sm">
+              <span>{group.region}</span>
+              <span className="tabular-nums text-muted-foreground">{group.total.sets.toFixed(1)} sets</span>
+            </span>
+          </AccordionTrigger>
+          <AccordionContent>
+            <ul className="space-y-1 pl-3">
+              {group.children
+                .filter((child) => child.volume.sets > 0)
+                .map((child) => (
+                  <li key={child.id} className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{child.displayName}</span>
+                    <span className="tabular-nums">{child.volume.sets.toFixed(1)} sets</span>
+                  </li>
+                ))}
+            </ul>
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+}
 
 export interface WorkoutCardProps {
   workout: HevyWorkout;
@@ -27,6 +66,12 @@ export function WorkoutCard({ workout, templatesById, includeWarmups, units }: W
   const setCount = workout.exercises.reduce(
     (sum, ex) => sum + ex.sets.filter((s) => includeWarmups || s.type !== "warmup").length,
     0,
+  );
+
+  const workoutVolume = useMemo(
+    () => computeVolumeByMuscle([workout], templatesById, { overrides }, { includeWarmups }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [workout, templatesById, includeWarmups],
   );
 
   return (
@@ -55,11 +100,12 @@ export function WorkoutCard({ workout, templatesById, includeWarmups, units }: W
 
       {expanded && (
         <CardContent className="space-y-4 border-t border-border/70 px-4 py-4">
-          <BodyMap
-            volumeByMuscle={computeVolumeByMuscle([workout], templatesById, { overrides }, { includeWarmups })}
-            targetBands={targetBands}
-            units={units}
-          />
+          <BodyMap volumeByMuscle={workoutVolume} targetBands={targetBands} units={units} />
+
+          <div>
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Muscles hit</h3>
+            <MuscleGroupSummary volumeByMuscle={workoutVolume} />
+          </div>
 
           <ul className="divide-y divide-border/60">
             {workout.exercises.map((exercise, index) => {
