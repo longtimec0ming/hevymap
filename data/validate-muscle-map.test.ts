@@ -62,8 +62,8 @@ describe("validateMuscleMap", () => {
     expect(result.errors[0].message).toMatch(/invalid contribution key/);
   });
 
-  it("validates the real data/muscle-map.json file (vacuously true while empty)", () => {
-    const result = validateMuscleMap(muscleMap as MuscleMapEntry[]);
+  it("validates the real data/muscle-map.json file", () => {
+    const result = validateMuscleMap(muscleMap as unknown as MuscleMapEntry[]);
     if (!result.valid) {
       console.error(result.errors);
     }

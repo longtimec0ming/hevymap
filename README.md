@@ -53,7 +53,7 @@ Tracking `CLAUDE.md`'s build order. Updated as each step lands.
 - [x] **Step 1 — Data foundation:** `data/taxonomy.ts` (26 canonical sub-muscles), `muscle-map.json` schema + types, validation tests (sum-to-1.0, valid sub-muscle keys only)
 - [x] **Step 2 — Platform:** Hevy API proxy route (`app/api/hevy/[...path]/route.ts`), `lib/hevy.ts` client (pagination, count, incremental sync via `workouts/events`), IndexedDB layer (`lib/storage.ts`) + prefs
 - [x] **Step 3 — Volume math:** `lib/volume.ts` fractional set/tonnage allocation math + exercise resolution (override → repo map → inference → coarse fallback), `data/inference-rules.ts` keyword/equipment heuristics, `lib/overrides.ts` localStorage overrides (export/import), tests
-- [ ] **Step 4 — Muscle map seeding:** populate `data/muscle-map.json` for the full Hevy standard exercise bank
+- [x] **Step 4 — Muscle map seeding:** `data/muscle-map.json` seeded for all 451 standard Hevy exercises (the account's 11 custom exercises are excluded, per `is_custom`). Confidence: 220 high / 142 medium / 89 low — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) once available for how to propose corrections.
 - [ ] **Step 5 — Pages:** dashboard, workouts, history, exercises, settings
 - [ ] **Step 6 — Body map:** SVG anatomical figure (front + back, 26 addressable paths), heatmap + drill-down
 - [ ] **Step 7 — Ship polish:** access-password middleware, README deploy button, CONTRIBUTING.md

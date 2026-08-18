@@ -1,1 +1,5353 @@
-[]
+[
+  {
+    "hevy_id": "3BC06AD3",
+    "name": "21s Bicep Curl",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B4F2FF72",
+    "name": "Ab Scissors",
+    "contributions": {
+      "rectus_abdominis": 0.75,
+      "obliques": 0.25
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "99D5F10E",
+    "name": "Ab Wheel",
+    "contributions": {
+      "rectus_abdominis": 0.65,
+      "obliques": 0.2,
+      "front_delt": 0.1,
+      "lats": 0.05
+    },
+    "confidence": "high",
+    "notes": "Well-documented as one of the highest-EMG anti-extension ab exercises."
+  },
+  {
+    "hevy_id": "5E0DDACE",
+    "name": "Aerobics",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "glute_max": 0.15,
+      "hamstrings": 0.1,
+      "rectus_abdominis": 0.15,
+      "gastrocnemius": 0.2,
+      "side_delt": 0.1,
+      "obliques": 0.1
+    },
+    "confidence": "low",
+    "notes": "Generic modality; split is a broad estimate."
+  },
+  {
+    "hevy_id": "43573BB8",
+    "name": "Air Bike",
+    "contributions": {
+      "quads_vasti": 0.25,
+      "glute_max": 0.15,
+      "hamstrings": 0.1,
+      "front_delt": 0.15,
+      "mid_chest": 0.1,
+      "lats": 0.1,
+      "gastrocnemius": 0.15
+    },
+    "confidence": "low",
+    "notes": "Fan-bike moving handles make this more full-body than standard cycling."
+  },
+  {
+    "hevy_id": "A69FF221",
+    "name": "Arnold Press (Dumbbell)",
+    "contributions": {
+      "front_delt": 0.38,
+      "side_delt": 0.3,
+      "triceps_lat_med": 0.14,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07,
+      "rectus_abdominis": 0.03
+    },
+    "confidence": "high",
+    "notes": "The rotational arc increases side-delt EMG vs a standard overhead press."
+  },
+  {
+    "hevy_id": "D4A2FE7E",
+    "name": "Around The World",
+    "contributions": {
+      "mid_chest": 0.35,
+      "front_delt": 0.2,
+      "side_delt": 0.15,
+      "upper_chest": 0.1,
+      "lats": 0.1,
+      "mid_traps_rhomboids": 0.1
+    },
+    "confidence": "low",
+    "notes": "Circular DB arc combining fly+press; unusual movement with no standardized form."
+  },
+  {
+    "hevy_id": "5BFF35BA",
+    "name": "Assisted Pistol Squats",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.2,
+      "glute_max": 0.22,
+      "glute_med": 0.12,
+      "hamstrings": 0.06,
+      "adductors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "4F5866F8",
+    "name": "Back Extension (Hyperextension)",
+    "contributions": {
+      "spinal_erectors": 0.45,
+      "glute_max": 0.35,
+      "hamstrings": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "A05C064D",
+    "name": "Back Extension (Machine)",
+    "contributions": {
+      "spinal_erectors": 0.45,
+      "glute_max": 0.35,
+      "hamstrings": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "091737FA",
+    "name": "Back Extension (Weighted Hyperextension)",
+    "contributions": {
+      "spinal_erectors": 0.45,
+      "glute_max": 0.35,
+      "hamstrings": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F51D9080",
+    "name": "Ball Slams",
+    "contributions": {
+      "lats": 0.2,
+      "rectus_abdominis": 0.2,
+      "obliques": 0.1,
+      "front_delt": 0.15,
+      "quads_vasti": 0.15,
+      "glute_max": 0.1,
+      "triceps_long": 0.1
+    },
+    "confidence": "low",
+    "notes": "Dynamic ballistic movement; split is an estimate."
+  },
+  {
+    "hevy_id": "E8D86EE8",
+    "name": "Band Pullaparts",
+    "contributions": {
+      "rear_delt": 0.55,
+      "mid_traps_rhomboids": 0.35,
+      "upper_traps": 0.1
+    },
+    "confidence": "medium",
+    "notes": "Band resistance curve varies with band type and anchor distance."
+  },
+  {
+    "hevy_id": "084A67CA",
+    "name": "Battle Ropes",
+    "contributions": {
+      "front_delt": 0.25,
+      "side_delt": 0.15,
+      "rectus_abdominis": 0.15,
+      "obliques": 0.1,
+      "forearms": 0.15,
+      "quads_vasti": 0.1,
+      "glute_max": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "B3B1D947",
+    "name": "Bear Crawl",
+    "contributions": {
+      "front_delt": 0.2,
+      "rectus_abdominis": 0.2,
+      "obliques": 0.2,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.15,
+      "triceps_lat_med": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "2DBCA395",
+    "name": "Behind the Back Curl (Cable)",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "low",
+    "notes": "Uncommon movement with an unusual starting stretch position."
+  },
+  {
+    "hevy_id": "DDB29047",
+    "name": "Behind the Back Wrist Curl (Barbell)",
+    "contributions": {
+      "forearms": 1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "3D1CDC75",
+    "name": "Belt Squat (Machine)",
+    "contributions": {
+      "quads_vasti": 0.4,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.08,
+      "adductors": 0.09
+    },
+    "confidence": "medium",
+    "notes": "Hip-belt loading removes spinal loading, similar demand to a squat pattern without back involvement."
+  },
+  {
+    "hevy_id": "CD6DC8E5",
+    "name": "Bench Dip",
+    "contributions": {
+      "triceps_lat_med": 0.4,
+      "triceps_long": 0.2,
+      "front_delt": 0.2,
+      "mid_chest": 0.15,
+      "lower_chest": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "35B51B87",
+    "name": "Bench Press - Close Grip (Barbell)",
+    "contributions": {
+      "triceps_lat_med": 0.35,
+      "triceps_long": 0.2,
+      "mid_chest": 0.25,
+      "front_delt": 0.15,
+      "lower_chest": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "E644F828",
+    "name": "Bench Press - Wide Grip (Barbell)",
+    "contributions": {
+      "mid_chest": 0.58,
+      "lower_chest": 0.12,
+      "front_delt": 0.18,
+      "triceps_lat_med": 0.08,
+      "triceps_long": 0.04
+    },
+    "confidence": "medium",
+    "notes": "Wider grip shortens ROM and shifts load toward chest, away from triceps."
+  },
+  {
+    "hevy_id": "79D0BB3A",
+    "name": "Bench Press (Barbell)",
+    "contributions": {
+      "mid_chest": 0.5,
+      "lower_chest": 0.1,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.13,
+      "triceps_long": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "99C1F2AD",
+    "name": "Bench Press (Cable)",
+    "contributions": {
+      "mid_chest": 0.55,
+      "lower_chest": 0.12,
+      "front_delt": 0.15,
+      "triceps_lat_med": 0.12,
+      "triceps_long": 0.06
+    },
+    "confidence": "medium",
+    "notes": "Fixed cable path reduces stabilizer (front delt) demand vs free weight."
+  },
+  {
+    "hevy_id": "3601968B",
+    "name": "Bench Press (Dumbbell)",
+    "contributions": {
+      "mid_chest": 0.5,
+      "lower_chest": 0.1,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.13,
+      "triceps_long": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "0FBF7195",
+    "name": "Bench Press (Smith Machine)",
+    "contributions": {
+      "mid_chest": 0.5,
+      "lower_chest": 0.1,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.13,
+      "triceps_long": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "EA820646",
+    "name": "Bent Over Row (Band)",
+    "contributions": {
+      "lats": 0.35,
+      "mid_traps_rhomboids": 0.2,
+      "biceps": 0.13,
+      "forearms": 0.08,
+      "rear_delt": 0.11,
+      "spinal_erectors": 0.13
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "55E6546F",
+    "name": "Bent Over Row (Barbell)",
+    "contributions": {
+      "lats": 0.35,
+      "mid_traps_rhomboids": 0.2,
+      "biceps": 0.13,
+      "forearms": 0.07,
+      "rear_delt": 0.1,
+      "spinal_erectors": 0.15
+    },
+    "confidence": "medium",
+    "notes": "Isometric erector contribution during the unsupported bent-over hold is an estimate."
+  },
+  {
+    "hevy_id": "23E92538",
+    "name": "Bent Over Row (Dumbbell)",
+    "contributions": {
+      "lats": 0.35,
+      "mid_traps_rhomboids": 0.2,
+      "biceps": 0.13,
+      "forearms": 0.07,
+      "rear_delt": 0.1,
+      "spinal_erectors": 0.15
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "EB813C91",
+    "name": "Bent Over Row (Smith Machine)",
+    "contributions": {
+      "lats": 0.37,
+      "mid_traps_rhomboids": 0.2,
+      "biceps": 0.13,
+      "forearms": 0.07,
+      "rear_delt": 0.1,
+      "spinal_erectors": 0.13
+    },
+    "confidence": "medium",
+    "notes": "Fixed bar path slightly reduces balance/erector demand."
+  },
+  {
+    "hevy_id": "A5AC6449",
+    "name": "Bicep Curl (Barbell)",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "ADA8623C",
+    "name": "Bicep Curl (Cable)",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "37FCC2BB",
+    "name": "Bicep Curl (Dumbbell)",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "AF328E3D",
+    "name": "Bicep Curl (Machine)",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "0B4C1902",
+    "name": "Bicep Curl (Suspension)",
+    "contributions": {
+      "biceps": 0.75,
+      "brachialis_brachioradialis": 0.13,
+      "forearms": 0.12
+    },
+    "confidence": "medium",
+    "notes": "Body-angle-controlled resistance is less standardized than free weight."
+  },
+  {
+    "hevy_id": "A41C7261",
+    "name": "Bicycle Crunch",
+    "contributions": {
+      "obliques": 0.55,
+      "rectus_abdominis": 0.45
+    },
+    "confidence": "high",
+    "notes": "One of the highest combined obliques+rectus-abdominis EMG exercises in the literature."
+  },
+  {
+    "hevy_id": "594450D2",
+    "name": "Bicycle Crunch Raised Legs",
+    "contributions": {
+      "obliques": 0.5,
+      "rectus_abdominis": 0.5
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "BD0AD077",
+    "name": "Bird Dog",
+    "contributions": {
+      "glute_max": 0.35,
+      "rectus_abdominis": 0.15,
+      "obliques": 0.25,
+      "spinal_erectors": 0.15,
+      "front_delt": 0.1
+    },
+    "confidence": "low",
+    "notes": "Stabilization exercise; genuinely core/anti-rotation dominant despite Hevy's 'glutes' primary tag."
+  },
+  {
+    "hevy_id": "56092DD1",
+    "name": "Box Jump",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.1,
+      "glute_max": 0.3,
+      "hamstrings": 0.12,
+      "gastrocnemius": 0.15,
+      "adductors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "38FC1AB9",
+    "name": "Box Squat (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.1,
+      "glute_max": 0.32,
+      "hamstrings": 0.15,
+      "adductors": 0.1,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Sitting back onto the box shifts hips back, reducing stretch-reflex quad drive and increasing posterior-chain emphasis."
+  },
+  {
+    "hevy_id": "A0D8FA1B",
+    "name": "Boxing",
+    "contributions": {
+      "obliques": 0.25,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.15,
+      "quads_vasti": 0.1,
+      "glute_max": 0.1,
+      "rectus_abdominis": 0.1,
+      "gastrocnemius": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "0F24286A",
+    "name": "Bulgarian Split Squat (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.25,
+      "glute_med": 0.1,
+      "hamstrings": 0.08,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B5D3A742",
+    "name": "Bulgarian Split Squat (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.25,
+      "glute_med": 0.1,
+      "hamstrings": 0.08,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "BB792A36",
+    "name": "Burpee",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "glute_max": 0.15,
+      "front_delt": 0.15,
+      "mid_chest": 0.1,
+      "triceps_lat_med": 0.1,
+      "rectus_abdominis": 0.15,
+      "gastrocnemius": 0.15
+    },
+    "confidence": "low",
+    "notes": "Combines a squat thrust, push-up, and jump; a precise EMG split isn't really meaningful for this metabolic-conditioning move."
+  },
+  {
+    "hevy_id": "115CC72C",
+    "name": "Burpee Broad Jumps",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "glute_max": 0.15,
+      "front_delt": 0.15,
+      "mid_chest": 0.1,
+      "triceps_lat_med": 0.1,
+      "rectus_abdominis": 0.15,
+      "gastrocnemius": 0.15
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "86B00DDE",
+    "name": "Burpee Over the Bar",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "glute_max": 0.15,
+      "front_delt": 0.15,
+      "mid_chest": 0.1,
+      "triceps_lat_med": 0.1,
+      "rectus_abdominis": 0.15,
+      "gastrocnemius": 0.15
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "9DCE2D64",
+    "name": "Butterfly (Pec Deck)",
+    "contributions": {
+      "mid_chest": 0.8,
+      "lower_chest": 0.1,
+      "front_delt": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "CC55119B",
+    "name": "Cable Core Pallof Press",
+    "contributions": {
+      "obliques": 0.65,
+      "rectus_abdominis": 0.2,
+      "front_delt": 0.1,
+      "triceps_lat_med": 0.05
+    },
+    "confidence": "high",
+    "notes": "Textbook anti-rotation isolation exercise."
+  },
+  {
+    "hevy_id": "23A48484",
+    "name": "Cable Crunch",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "651F844C",
+    "name": "Cable Fly Crossovers",
+    "contributions": {
+      "mid_chest": 0.72,
+      "lower_chest": 0.13,
+      "front_delt": 0.15
+    },
+    "confidence": "medium",
+    "notes": "Assumes pulleys at shoulder height; exact split shifts with pulley position."
+  },
+  {
+    "hevy_id": "8C331CD8",
+    "name": "Cable Pull Through",
+    "contributions": {
+      "glute_max": 0.45,
+      "hamstrings": 0.3,
+      "spinal_erectors": 0.2,
+      "adductors": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "92D858EA",
+    "name": "Cable Twist (Down to up)",
+    "contributions": {
+      "obliques": 0.75,
+      "rectus_abdominis": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "A2D838BD",
+    "name": "Cable Twist (Up to down)",
+    "contributions": {
+      "obliques": 0.75,
+      "rectus_abdominis": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "47B9DF13",
+    "name": "Calf Extension (Machine)",
+    "contributions": {
+      "soleus": 0.65,
+      "gastrocnemius": 0.35
+    },
+    "confidence": "medium",
+    "notes": "Assumes a knee-bent seated-style press; exact machine geometry varies."
+  },
+  {
+    "hevy_id": "91237BDD",
+    "name": "Calf Press (Machine)",
+    "contributions": {
+      "soleus": 0.65,
+      "gastrocnemius": 0.35
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "6FCD7755",
+    "name": "Chest Dip",
+    "contributions": {
+      "lower_chest": 0.35,
+      "triceps_lat_med": 0.25,
+      "triceps_long": 0.15,
+      "front_delt": 0.15,
+      "mid_chest": 0.1
+    },
+    "confidence": "high",
+    "notes": "Forward-leaning torso dip biases lower chest over triceps."
+  },
+  {
+    "hevy_id": "E9E4089F",
+    "name": "Chest Dip (Assisted)",
+    "contributions": {
+      "lower_chest": 0.35,
+      "triceps_lat_med": 0.25,
+      "triceps_long": 0.15,
+      "front_delt": 0.15,
+      "mid_chest": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "29472BE1",
+    "name": "Chest Dip (Weighted)",
+    "contributions": {
+      "lower_chest": 0.35,
+      "triceps_lat_med": 0.25,
+      "triceps_long": 0.15,
+      "front_delt": 0.15,
+      "mid_chest": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "DDB7C19F",
+    "name": "Chest Fly (Band)",
+    "contributions": {
+      "mid_chest": 0.65,
+      "lower_chest": 0.15,
+      "front_delt": 0.2
+    },
+    "confidence": "medium",
+    "notes": "Band resistance curve and lack of a fixed plane increase stabilizer demand."
+  },
+  {
+    "hevy_id": "12017185",
+    "name": "Chest Fly (Dumbbell)",
+    "contributions": {
+      "mid_chest": 0.72,
+      "lower_chest": 0.13,
+      "front_delt": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "78683336",
+    "name": "Chest Fly (Machine)",
+    "contributions": {
+      "mid_chest": 0.72,
+      "lower_chest": 0.13,
+      "front_delt": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "720B0D70",
+    "name": "Chest Fly (Suspension)",
+    "contributions": {
+      "mid_chest": 0.65,
+      "lower_chest": 0.15,
+      "front_delt": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "EAC7D9C5",
+    "name": "Chest Press (Band)",
+    "contributions": {
+      "mid_chest": 0.45,
+      "upper_chest": 0.1,
+      "lower_chest": 0.08,
+      "front_delt": 0.22,
+      "triceps_lat_med": 0.09,
+      "triceps_long": 0.06
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "7EB3F7C3",
+    "name": "Chest Press (Machine)",
+    "contributions": {
+      "mid_chest": 0.48,
+      "upper_chest": 0.12,
+      "lower_chest": 0.08,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.08,
+      "triceps_long": 0.04
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "914F3A96",
+    "name": "Chest Supported Incline Row (Dumbbell)",
+    "contributions": {
+      "lats": 0.42,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.14,
+      "forearms": 0.07,
+      "rear_delt": 0.13
+    },
+    "confidence": "high",
+    "notes": "Chest support removes erector stabilization, isolating the pulling muscles more precisely."
+  },
+  {
+    "hevy_id": "B582299E",
+    "name": "Chest Supported Reverse Fly (Dumbbell)",
+    "contributions": {
+      "rear_delt": 0.64,
+      "mid_traps_rhomboids": 0.28,
+      "upper_traps": 0.08
+    },
+    "confidence": "high",
+    "notes": "Chest support removes momentum for a purer isolation than a bent-over version."
+  },
+  {
+    "hevy_id": "6A8D3193",
+    "name": "Chest Supported T Bar Row",
+    "contributions": {
+      "lats": 0.42,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.14,
+      "forearms": 0.07,
+      "rear_delt": 0.13
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F21D5693",
+    "name": "Chest Supported Y Raise (Dumbbell)",
+    "contributions": {
+      "lower_traps": 0.4,
+      "rear_delt": 0.28,
+      "mid_traps_rhomboids": 0.2,
+      "upper_traps": 0.12
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "29083183",
+    "name": "Chin Up",
+    "contributions": {
+      "lats": 0.45,
+      "biceps": 0.25,
+      "brachialis_brachioradialis": 0.05,
+      "mid_traps_rhomboids": 0.1,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "high",
+    "notes": "Supinated grip meaningfully increases biceps recruitment vs a pull-up."
+  },
+  {
+    "hevy_id": "D23C609B",
+    "name": "Chin Up (Assisted)",
+    "contributions": {
+      "lats": 0.45,
+      "biceps": 0.25,
+      "brachialis_brachioradialis": 0.05,
+      "mid_traps_rhomboids": 0.1,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "023943F1",
+    "name": "Chin Up (Weighted)",
+    "contributions": {
+      "lats": 0.45,
+      "biceps": 0.25,
+      "brachialis_brachioradialis": 0.05,
+      "mid_traps_rhomboids": 0.1,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "CC016611",
+    "name": "Clamshell",
+    "contributions": {
+      "glute_med": 0.8,
+      "glute_max": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "10D76E8F",
+    "name": "Clap Push Ups",
+    "contributions": {
+      "mid_chest": 0.38,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.18,
+      "triceps_long": 0.1,
+      "lower_chest": 0.06,
+      "rectus_abdominis": 0.08
+    },
+    "confidence": "low",
+    "notes": "Explosive plyometric variant; sparse EMG data for this specific movement."
+  },
+  {
+    "hevy_id": "ABB00838",
+    "name": "Clean",
+    "contributions": {
+      "glute_max": 0.18,
+      "hamstrings": 0.15,
+      "quads_vasti": 0.2,
+      "upper_traps": 0.15,
+      "spinal_erectors": 0.08,
+      "front_delt": 0.1,
+      "forearms": 0.09,
+      "quads_rectus_femoris": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Ballistic multi-joint lift; well-studied in strength sports but per-sub-muscle apportionment is inherently an estimate."
+  },
+  {
+    "hevy_id": "9E09CEC3",
+    "name": "Clean and Jerk",
+    "contributions": {
+      "glute_max": 0.15,
+      "hamstrings": 0.12,
+      "quads_vasti": 0.2,
+      "upper_traps": 0.12,
+      "front_delt": 0.13,
+      "side_delt": 0.08,
+      "triceps_long": 0.08,
+      "forearms": 0.07,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "low",
+    "notes": "Two combined ballistic lifts; the sub-muscle split is a rough estimate."
+  },
+  {
+    "hevy_id": "D3095577",
+    "name": "Clean and Press",
+    "contributions": {
+      "glute_max": 0.16,
+      "hamstrings": 0.13,
+      "quads_vasti": 0.18,
+      "upper_traps": 0.14,
+      "front_delt": 0.16,
+      "triceps_long": 0.09,
+      "forearms": 0.07,
+      "spinal_erectors": 0.07
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "652FEA39",
+    "name": "Clean Pull",
+    "contributions": {
+      "glute_max": 0.22,
+      "hamstrings": 0.2,
+      "quads_vasti": 0.2,
+      "upper_traps": 0.2,
+      "spinal_erectors": 0.1,
+      "forearms": 0.08
+    },
+    "confidence": "medium",
+    "notes": "Pull-only (no catch/rack); redistributes the catch-related delt/quad share into the posterior chain and traps."
+  },
+  {
+    "hevy_id": "E23F1F2B",
+    "name": "Climbing",
+    "contributions": {
+      "lats": 0.3,
+      "forearms": 0.2,
+      "biceps": 0.15,
+      "quads_vasti": 0.15,
+      "glute_max": 0.1,
+      "rectus_abdominis": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "724CDE60",
+    "name": "Concentration Curl",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "32C4D4A2",
+    "name": "Cross Body Hammer Curl",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "biceps": 0.35,
+      "forearms": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "DCF3B31B",
+    "name": "Crunch",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "EB43ADD4",
+    "name": "Crunch (Machine)",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "D928C232",
+    "name": "Crunch (Weighted)",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "D39EC9EB",
+    "name": "Curtsy Lunge (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.22,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.22,
+      "glute_med": 0.22,
+      "adductors": 0.2,
+      "hamstrings": 0.06
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "D8F7F851",
+    "name": "Cycling",
+    "contributions": {
+      "quads_vasti": 0.4,
+      "quads_rectus_femoris": 0.1,
+      "glute_max": 0.2,
+      "hamstrings": 0.2,
+      "gastrocnemius": 0.1
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based cardio; split is a coarse approximation."
+  },
+  {
+    "hevy_id": "D8911FC4",
+    "name": "Dead Bug",
+    "contributions": {
+      "rectus_abdominis": 0.6,
+      "obliques": 0.4
+    },
+    "confidence": "medium",
+    "notes": "Anti-extension stabilization exercise; split is a reasonable estimate."
+  },
+  {
+    "hevy_id": "B9380898",
+    "name": "Dead Hang",
+    "contributions": {
+      "forearms": 0.4,
+      "lats": 0.3,
+      "lower_traps": 0.15,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "99507114",
+    "name": "Deadlift (Band)",
+    "contributions": {
+      "hamstrings": 0.25,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.2,
+      "quads_vasti": 0.1,
+      "mid_traps_rhomboids": 0.05,
+      "lats": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "C6272009",
+    "name": "Deadlift (Barbell)",
+    "contributions": {
+      "hamstrings": 0.25,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.2,
+      "quads_vasti": 0.1,
+      "mid_traps_rhomboids": 0.05,
+      "lats": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "5F4E6DD3",
+    "name": "Deadlift (Dumbbell)",
+    "contributions": {
+      "hamstrings": 0.25,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.2,
+      "quads_vasti": 0.1,
+      "mid_traps_rhomboids": 0.05,
+      "lats": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "20870ED5",
+    "name": "Deadlift (Smith Machine)",
+    "contributions": {
+      "hamstrings": 0.25,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.2,
+      "quads_vasti": 0.1,
+      "mid_traps_rhomboids": 0.05,
+      "lats": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B923B230",
+    "name": "Deadlift (Trap bar)",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "hamstrings": 0.2,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.14,
+      "mid_traps_rhomboids": 0.06,
+      "lats": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "high",
+    "notes": "More upright torso and knee bend than a straight bar shifts load toward the quads."
+  },
+  {
+    "hevy_id": "FA5D0DE1",
+    "name": "Deadlift High Pull",
+    "contributions": {
+      "glute_max": 0.2,
+      "hamstrings": 0.18,
+      "spinal_erectors": 0.1,
+      "upper_traps": 0.2,
+      "side_delt": 0.15,
+      "quads_vasti": 0.1,
+      "forearms": 0.07
+    },
+    "confidence": "low",
+    "notes": "Hybrid explosive movement; split is estimated."
+  },
+  {
+    "hevy_id": "DA0F0470",
+    "name": "Decline Bench Press (Barbell)",
+    "contributions": {
+      "lower_chest": 0.55,
+      "mid_chest": 0.15,
+      "triceps_lat_med": 0.18,
+      "triceps_long": 0.07,
+      "front_delt": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "18487FA7",
+    "name": "Decline Bench Press (Dumbbell)",
+    "contributions": {
+      "lower_chest": 0.55,
+      "mid_chest": 0.15,
+      "triceps_lat_med": 0.18,
+      "triceps_long": 0.07,
+      "front_delt": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "FAF31231",
+    "name": "Decline Bench Press (Machine)",
+    "contributions": {
+      "lower_chest": 0.55,
+      "mid_chest": 0.15,
+      "triceps_lat_med": 0.18,
+      "triceps_long": 0.07,
+      "front_delt": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "FFC106CB",
+    "name": "Decline Bench Press (Smith Machine)",
+    "contributions": {
+      "lower_chest": 0.55,
+      "mid_chest": 0.15,
+      "triceps_lat_med": 0.18,
+      "triceps_long": 0.07,
+      "front_delt": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "A351AED7",
+    "name": "Decline Chest Fly (Dumbbell)",
+    "contributions": {
+      "lower_chest": 0.65,
+      "mid_chest": 0.2,
+      "front_delt": 0.15
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "BC10A922",
+    "name": "Decline Crunch",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B2398CD1",
+    "name": "Decline Crunch (Weighted)",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "C43825EA",
+    "name": "Decline Push Up",
+    "contributions": {
+      "upper_chest": 0.35,
+      "mid_chest": 0.2,
+      "front_delt": 0.25,
+      "triceps_lat_med": 0.13,
+      "triceps_long": 0.05,
+      "rectus_abdominis": 0.02
+    },
+    "confidence": "medium",
+    "notes": "Feet-elevated push-ups mimic an incline press for the torso, biasing upper chest despite the 'decline' name."
+  },
+  {
+    "hevy_id": "6575F52D",
+    "name": "Diamond Push Up",
+    "contributions": {
+      "triceps_lat_med": 0.35,
+      "triceps_long": 0.15,
+      "mid_chest": 0.25,
+      "front_delt": 0.2,
+      "rectus_abdominis": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "7DA843A3",
+    "name": "Downward Dog",
+    "contributions": {
+      "front_delt": 0.3,
+      "hamstrings": 0.2,
+      "gastrocnemius": 0.2,
+      "spinal_erectors": 0.15,
+      "triceps_long": 0.15
+    },
+    "confidence": "low",
+    "notes": "Yoga pose with minimal loading; volume tracking is only marginally meaningful here."
+  },
+  {
+    "hevy_id": "D950429E",
+    "name": "Drag Curl",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Elbows travel back, reducing front-delt assistance and shifting emphasis onto the biceps long head."
+  },
+  {
+    "hevy_id": "AFC29472",
+    "name": "Dragon Flag",
+    "contributions": {
+      "rectus_abdominis": 0.7,
+      "obliques": 0.3
+    },
+    "confidence": "medium",
+    "notes": "Advanced full-body lever; less mainstream EMG research though the biomechanics are clear."
+  },
+  {
+    "hevy_id": "B7192800",
+    "name": "Dragonfly",
+    "contributions": {
+      "rectus_abdominis": 0.7,
+      "obliques": 0.3
+    },
+    "confidence": "low",
+    "notes": "Obscure movement; difficulty/form varies a lot."
+  },
+  {
+    "hevy_id": "F1E57334",
+    "name": "Dumbbell Row",
+    "contributions": {
+      "lats": 0.45,
+      "mid_traps_rhomboids": 0.18,
+      "biceps": 0.15,
+      "forearms": 0.07,
+      "rear_delt": 0.11,
+      "brachialis_brachioradialis": 0.04
+    },
+    "confidence": "high",
+    "notes": "Bench-supported single-arm row; the free hand/knee on the bench removes most erector demand."
+  },
+  {
+    "hevy_id": "F3717B0E",
+    "name": "Dumbbell Snatch",
+    "contributions": {
+      "glute_max": 0.18,
+      "hamstrings": 0.16,
+      "quads_vasti": 0.12,
+      "upper_traps": 0.12,
+      "side_delt": 0.14,
+      "front_delt": 0.08,
+      "forearms": 0.12,
+      "obliques": 0.08
+    },
+    "confidence": "low",
+    "notes": "Single-arm ballistic full-body lift; apportionment across sub-muscles is a rough estimate."
+  },
+  {
+    "hevy_id": "F72FA239",
+    "name": "Dumbbell Squeeze Press",
+    "contributions": {
+      "mid_chest": 0.6,
+      "lower_chest": 0.1,
+      "front_delt": 0.15,
+      "triceps_lat_med": 0.1,
+      "triceps_long": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "BF6ECE89",
+    "name": "Dumbbell Step Up",
+    "contributions": {
+      "quads_vasti": 0.32,
+      "quads_rectus_femoris": 0.13,
+      "glute_max": 0.28,
+      "glute_med": 0.12,
+      "hamstrings": 0.1,
+      "adductors": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "A01BE509",
+    "name": "Elbow to Knee",
+    "contributions": {
+      "obliques": 0.6,
+      "rectus_abdominis": 0.4
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "3303376C",
+    "name": "Elliptical Trainer",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "hamstrings": 0.18,
+      "glute_max": 0.2,
+      "gastrocnemius": 0.15,
+      "soleus": 0.1,
+      "lats": 0.09,
+      "mid_chest": 0.08
+    },
+    "confidence": "low",
+    "notes": "Assumes moving handles are used; split is a coarse approximation."
+  },
+  {
+    "hevy_id": "01A35BF9",
+    "name": "EZ Bar Biceps Curl",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "BE640BA0",
+    "name": "Face Pull",
+    "contributions": {
+      "rear_delt": 0.45,
+      "mid_traps_rhomboids": 0.25,
+      "upper_traps": 0.1,
+      "biceps": 0.12,
+      "brachialis_brachioradialis": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "50C613D0",
+    "name": "Farmers Walk",
+    "contributions": {
+      "forearms": 0.3,
+      "upper_traps": 0.2,
+      "spinal_erectors": 0.15,
+      "glute_max": 0.15,
+      "quads_vasti": 0.1,
+      "obliques": 0.05,
+      "gastrocnemius": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "867AC3B6",
+    "name": "Feet Up Bench Press (Barbell)",
+    "contributions": {
+      "mid_chest": 0.52,
+      "upper_chest": 0.1,
+      "lower_chest": 0.06,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.08,
+      "triceps_long": 0.04
+    },
+    "confidence": "medium",
+    "notes": "Removing leg drive/arch flattens the bar path, reducing lower-chest bias."
+  },
+  {
+    "hevy_id": "2AF8B552",
+    "name": "Fire Hydrants",
+    "contributions": {
+      "glute_med": 0.65,
+      "glute_max": 0.25,
+      "adductors": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "D53F2886",
+    "name": "Floor Press (Barbell)",
+    "contributions": {
+      "mid_chest": 0.45,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.2,
+      "triceps_long": 0.1,
+      "lower_chest": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Floor stops the ROM before the stretch point, biasing the lockout (triceps) portion."
+  },
+  {
+    "hevy_id": "756EE329",
+    "name": "Floor Press (Dumbbell)",
+    "contributions": {
+      "mid_chest": 0.45,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.2,
+      "triceps_long": 0.1,
+      "lower_chest": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "A57D38D5",
+    "name": "Floor Triceps Dip",
+    "contributions": {
+      "triceps_lat_med": 0.4,
+      "triceps_long": 0.25,
+      "front_delt": 0.25,
+      "mid_chest": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "2FA77B28",
+    "name": "Flutter Kicks",
+    "contributions": {
+      "rectus_abdominis": 0.8,
+      "obliques": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "207DC636",
+    "name": "Frog Jumps",
+    "contributions": {
+      "quads_vasti": 0.22,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.26,
+      "hamstrings": 0.1,
+      "adductors": 0.14,
+      "gastrocnemius": 0.2
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "F6948F17",
+    "name": "Frog Pumps (Dumbbell)",
+    "contributions": {
+      "glute_max": 0.7,
+      "adductors": 0.15,
+      "hamstrings": 0.15
+    },
+    "confidence": "medium",
+    "notes": "Wide frog-leg stance adds adductor involvement vs a standard glute bridge."
+  },
+  {
+    "hevy_id": "0E608350",
+    "name": "Front Lever Hold",
+    "contributions": {
+      "lats": 0.4,
+      "rectus_abdominis": 0.2,
+      "obliques": 0.1,
+      "mid_traps_rhomboids": 0.15,
+      "forearms": 0.1,
+      "biceps": 0.05
+    },
+    "confidence": "low",
+    "notes": "Advanced calisthenics skill; split is estimated."
+  },
+  {
+    "hevy_id": "30F03BF0",
+    "name": "Front Lever Raise",
+    "contributions": {
+      "lats": 0.4,
+      "rectus_abdominis": 0.2,
+      "obliques": 0.1,
+      "mid_traps_rhomboids": 0.15,
+      "forearms": 0.1,
+      "biceps": 0.05
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "47B036EF",
+    "name": "Front Raise (Band)",
+    "contributions": {
+      "front_delt": 0.72,
+      "upper_chest": 0.15,
+      "side_delt": 0.13
+    },
+    "confidence": "medium",
+    "notes": "Band resistance curve is less standardized than free weight."
+  },
+  {
+    "hevy_id": "BD86EFD5",
+    "name": "Front Raise (Barbell)",
+    "contributions": {
+      "front_delt": 0.75,
+      "upper_chest": 0.15,
+      "side_delt": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "DBB91A3C",
+    "name": "Front Raise (Cable)",
+    "contributions": {
+      "front_delt": 0.75,
+      "upper_chest": 0.15,
+      "side_delt": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "8293E554",
+    "name": "Front Raise (Dumbbell)",
+    "contributions": {
+      "front_delt": 0.75,
+      "upper_chest": 0.15,
+      "side_delt": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "796E8E2C",
+    "name": "Front Raise (Suspension)",
+    "contributions": {
+      "front_delt": 0.7,
+      "upper_chest": 0.15,
+      "side_delt": 0.1,
+      "rectus_abdominis": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "5046D0A9",
+    "name": "Front Squat",
+    "contributions": {
+      "quads_vasti": 0.42,
+      "quads_rectus_femoris": 0.25,
+      "glute_max": 0.18,
+      "hamstrings": 0.07,
+      "adductors": 0.05,
+      "spinal_erectors": 0.03
+    },
+    "confidence": "high",
+    "notes": "More upright torso and front-loading make front squats consistently more quad-dominant than back squats."
+  },
+  {
+    "hevy_id": "1283BBA6",
+    "name": "Full Squat",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "quads_rectus_femoris": 0.14,
+      "glute_max": 0.34,
+      "hamstrings": 0.1,
+      "adductors": 0.1,
+      "spinal_erectors": 0.02
+    },
+    "confidence": "medium",
+    "notes": "'Full' depth is subjective; greater hip flexion at depth increases glute recruitment."
+  },
+  {
+    "hevy_id": "CDA23948",
+    "name": "Glute Bridge",
+    "contributions": {
+      "glute_max": 0.6,
+      "hamstrings": 0.28,
+      "quads_vasti": 0.12
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "49C922A1",
+    "name": "Glute Bridge (Barbell)",
+    "contributions": {
+      "glute_max": 0.6,
+      "hamstrings": 0.28,
+      "quads_vasti": 0.12
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "68B83EE0",
+    "name": "Glute Ham Raise",
+    "contributions": {
+      "hamstrings": 0.65,
+      "glute_max": 0.35
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "CBA02382",
+    "name": "Glute Kickback (Machine)",
+    "contributions": {
+      "glute_max": 0.7,
+      "hamstrings": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "987234AB",
+    "name": "Glute Kickback on Floor",
+    "contributions": {
+      "glute_max": 0.7,
+      "hamstrings": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "3D0C7C75",
+    "name": "Goblet Squat",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.18,
+      "glute_max": 0.24,
+      "hamstrings": 0.07,
+      "adductors": 0.13,
+      "spinal_erectors": 0.03
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "4180C405",
+    "name": "Good Morning (Barbell)",
+    "contributions": {
+      "hamstrings": 0.35,
+      "glute_max": 0.25,
+      "spinal_erectors": 0.35,
+      "quads_vasti": 0.05
+    },
+    "confidence": "high",
+    "notes": "Bar-on-back loading gives this the longest spinal moment arm of the hip-hinge family."
+  },
+  {
+    "hevy_id": "05487216",
+    "name": "Gorilla Row (Kettlebell)",
+    "contributions": {
+      "lats": 0.35,
+      "mid_traps_rhomboids": 0.18,
+      "biceps": 0.12,
+      "forearms": 0.08,
+      "rear_delt": 0.09,
+      "spinal_erectors": 0.1,
+      "obliques": 0.08
+    },
+    "confidence": "low",
+    "notes": "Less-standardized movement; form varies widely between lifters."
+  },
+  {
+    "hevy_id": "AC5A4C58",
+    "name": "Hack Squat",
+    "contributions": {
+      "quads_vasti": 0.55,
+      "quads_rectus_femoris": 0.2,
+      "glute_max": 0.15,
+      "hamstrings": 0.05,
+      "adductors": 0.05
+    },
+    "confidence": "high",
+    "notes": "Upright torso and fixed path make this one of the most quad-dominant squat variants."
+  },
+  {
+    "hevy_id": "1E42FD5F",
+    "name": "Hack Squat (Machine)",
+    "contributions": {
+      "quads_vasti": 0.55,
+      "quads_rectus_femoris": 0.2,
+      "glute_max": 0.15,
+      "hamstrings": 0.05,
+      "adductors": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "1D4B3D6B",
+    "name": "Hammer Curl (Band)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "biceps": 0.35,
+      "forearms": 0.2
+    },
+    "confidence": "high",
+    "notes": "Neutral grip shifts EMG emphasis from biceps brachii toward brachialis/brachioradialis."
+  },
+  {
+    "hevy_id": "36E8F14E",
+    "name": "Hammer Curl (Cable)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "biceps": 0.35,
+      "forearms": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "7E3BC8B6",
+    "name": "Hammer Curl (Dumbbell)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "biceps": 0.35,
+      "forearms": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "BE3615CF",
+    "name": "Handstand Hold",
+    "contributions": {
+      "front_delt": 0.3,
+      "side_delt": 0.2,
+      "triceps_lat_med": 0.15,
+      "rectus_abdominis": 0.15,
+      "obliques": 0.1,
+      "forearms": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "90B04F96",
+    "name": "Handstand Push Up",
+    "contributions": {
+      "front_delt": 0.38,
+      "side_delt": 0.2,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.09,
+      "upper_chest": 0.08,
+      "rectus_abdominis": 0.05,
+      "obliques": 0.04
+    },
+    "confidence": "medium",
+    "notes": "Advanced inverted press; balance/core demand is technique-dependent."
+  },
+  {
+    "hevy_id": "BD4E7E53",
+    "name": "Hang Clean",
+    "contributions": {
+      "glute_max": 0.18,
+      "hamstrings": 0.15,
+      "quads_vasti": 0.2,
+      "upper_traps": 0.15,
+      "spinal_erectors": 0.08,
+      "front_delt": 0.1,
+      "forearms": 0.09,
+      "quads_rectus_femoris": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "F4E77594",
+    "name": "Hang Snatch",
+    "contributions": {
+      "glute_max": 0.16,
+      "hamstrings": 0.14,
+      "quads_vasti": 0.16,
+      "upper_traps": 0.14,
+      "side_delt": 0.1,
+      "front_delt": 0.08,
+      "spinal_erectors": 0.07,
+      "forearms": 0.1,
+      "mid_traps_rhomboids": 0.05
+    },
+    "confidence": "low",
+    "notes": "Extremely technical ballistic lift; apportionment across sub-muscles is a rough estimate."
+  },
+  {
+    "hevy_id": "08590920",
+    "name": "Hanging Knee Raise",
+    "contributions": {
+      "rectus_abdominis": 0.78,
+      "obliques": 0.14,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F8356514",
+    "name": "Hanging Leg Raise",
+    "contributions": {
+      "rectus_abdominis": 0.78,
+      "obliques": 0.14,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "567FB505",
+    "name": "Heel Taps",
+    "contributions": {
+      "obliques": 0.75,
+      "rectus_abdominis": 0.25
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "BE89C631",
+    "name": "Hex Press (Dumbbell)",
+    "contributions": {
+      "mid_chest": 0.6,
+      "lower_chest": 0.1,
+      "front_delt": 0.15,
+      "triceps_lat_med": 0.1,
+      "triceps_long": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Squeezing dumbbells together emphasizes horizontal adduction (inner/mid chest)."
+  },
+  {
+    "hevy_id": "C9CCB878",
+    "name": "High Knee Skips",
+    "contributions": {
+      "quads_rectus_femoris": 0.25,
+      "gastrocnemius": 0.3,
+      "glute_max": 0.2,
+      "hamstrings": 0.15,
+      "rectus_abdominis": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "150E076B",
+    "name": "High Knees",
+    "contributions": {
+      "quads_rectus_femoris": 0.3,
+      "gastrocnemius": 0.25,
+      "glute_max": 0.15,
+      "hamstrings": 0.15,
+      "rectus_abdominis": 0.15
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "023947AB",
+    "name": "HIIT",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "glute_max": 0.15,
+      "hamstrings": 0.1,
+      "rectus_abdominis": 0.15,
+      "front_delt": 0.1,
+      "gastrocnemius": 0.15,
+      "mid_chest": 0.15
+    },
+    "confidence": "low",
+    "notes": "Generic modality; the actual muscles trained depend entirely on the specific circuit performed."
+  },
+  {
+    "hevy_id": "1C34A172",
+    "name": "Hiking",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "quads_rectus_femoris": 0.08,
+      "hamstrings": 0.15,
+      "glute_max": 0.2,
+      "gastrocnemius": 0.17,
+      "soleus": 0.15,
+      "adductors": 0.05
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based cardio; incline/pack load not modeled."
+  },
+  {
+    "hevy_id": "C469EA70",
+    "name": "Hip Abduction (Cable)",
+    "contributions": {
+      "glute_med": 0.85,
+      "glute_max": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F4B4C6EE",
+    "name": "Hip Abduction (Machine)",
+    "contributions": {
+      "glute_med": 0.85,
+      "glute_max": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "22578A94",
+    "name": "Hip Adduction (Cable)",
+    "contributions": {
+      "adductors": 1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "8BEBFED6",
+    "name": "Hip Adduction (Machine)",
+    "contributions": {
+      "adductors": 1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "92B8C7E1",
+    "name": "Hip Thrust",
+    "contributions": {
+      "glute_max": 0.65,
+      "hamstrings": 0.25,
+      "quads_vasti": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "D57C2EC7",
+    "name": "Hip Thrust (Barbell)",
+    "contributions": {
+      "glute_max": 0.65,
+      "hamstrings": 0.25,
+      "quads_vasti": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "DA5430FC",
+    "name": "Hip Thrust (Dumbbell)",
+    "contributions": {
+      "glute_max": 0.65,
+      "hamstrings": 0.25,
+      "quads_vasti": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "68CE0B9B",
+    "name": "Hip Thrust (Machine)",
+    "contributions": {
+      "glute_max": 0.65,
+      "hamstrings": 0.25,
+      "quads_vasti": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "291ABA92",
+    "name": "Hip Thrust (Smith Machine)",
+    "contributions": {
+      "glute_max": 0.65,
+      "hamstrings": 0.25,
+      "quads_vasti": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "970ADF87",
+    "name": "Hollow Rock",
+    "contributions": {
+      "rectus_abdominis": 0.8,
+      "obliques": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "50DFDFAB",
+    "name": "Incline Bench Press (Barbell)",
+    "contributions": {
+      "upper_chest": 0.55,
+      "front_delt": 0.25,
+      "triceps_lat_med": 0.13,
+      "triceps_long": 0.07
+    },
+    "confidence": "high",
+    "notes": "Assumes 30-45° incline; steeper biases front delt."
+  },
+  {
+    "hevy_id": "07B38369",
+    "name": "Incline Bench Press (Dumbbell)",
+    "contributions": {
+      "upper_chest": 0.55,
+      "front_delt": 0.25,
+      "triceps_lat_med": 0.13,
+      "triceps_long": 0.07
+    },
+    "confidence": "high",
+    "notes": "Assumes 30-45° incline; steeper biases front delt."
+  },
+  {
+    "hevy_id": "3A6FA3D1",
+    "name": "Incline Bench Press (Smith Machine)",
+    "contributions": {
+      "upper_chest": 0.55,
+      "front_delt": 0.25,
+      "triceps_lat_med": 0.13,
+      "triceps_long": 0.07
+    },
+    "confidence": "high",
+    "notes": "Assumes 30-45° incline; steeper biases front delt."
+  },
+  {
+    "hevy_id": "D3E2AB55",
+    "name": "Incline Chest Fly (Dumbbell)",
+    "contributions": {
+      "upper_chest": 0.65,
+      "front_delt": 0.2,
+      "mid_chest": 0.15
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "FBF92739",
+    "name": "Incline Chest Press (Machine)",
+    "contributions": {
+      "upper_chest": 0.58,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.14,
+      "triceps_long": 0.08
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "39C99849",
+    "name": "Incline Push Ups",
+    "contributions": {
+      "lower_chest": 0.35,
+      "mid_chest": 0.25,
+      "front_delt": 0.15,
+      "triceps_lat_med": 0.17,
+      "triceps_long": 0.06,
+      "rectus_abdominis": 0.02
+    },
+    "confidence": "medium",
+    "notes": "Hands elevated on a bench mimics a decline press for the torso, biasing lower chest."
+  },
+  {
+    "hevy_id": "425805F4",
+    "name": "Inverted Row",
+    "contributions": {
+      "lats": 0.35,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.16,
+      "forearms": 0.08,
+      "rear_delt": 0.1,
+      "rectus_abdominis": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Assumes a moderate body angle; more horizontal (feet elevated) shifts further toward lats/traps."
+  },
+  {
+    "hevy_id": "24706DCD",
+    "name": "Iso-Lateral Chest Press (Machine)",
+    "contributions": {
+      "mid_chest": 0.5,
+      "lower_chest": 0.08,
+      "upper_chest": 0.05,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.11,
+      "triceps_long": 0.06
+    },
+    "confidence": "medium",
+    "notes": "Assumes a flat/slight-incline Hammer-Strength-style path."
+  },
+  {
+    "hevy_id": "BC3492DA",
+    "name": "Iso-Lateral High Row (Machine)",
+    "contributions": {
+      "lats": 0.48,
+      "mid_traps_rhomboids": 0.18,
+      "biceps": 0.13,
+      "forearms": 0.06,
+      "rear_delt": 0.1,
+      "lower_traps": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Higher pull angle hybridizes a lat pulldown and row."
+  },
+  {
+    "hevy_id": "91FAFBA3",
+    "name": "Iso-Lateral Low Row",
+    "contributions": {
+      "lats": 0.4,
+      "mid_traps_rhomboids": 0.22,
+      "biceps": 0.14,
+      "forearms": 0.06,
+      "rear_delt": 0.13,
+      "brachialis_brachioradialis": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "AA1EB7D8",
+    "name": "Iso-Lateral Row (Machine)",
+    "contributions": {
+      "lats": 0.4,
+      "mid_traps_rhomboids": 0.22,
+      "biceps": 0.14,
+      "forearms": 0.06,
+      "rear_delt": 0.13,
+      "brachialis_brachioradialis": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "D410F649",
+    "name": "Jack Knife (Suspension)",
+    "contributions": {
+      "rectus_abdominis": 0.8,
+      "obliques": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "32B0B590",
+    "name": "Jackknife Sit Up",
+    "contributions": {
+      "rectus_abdominis": 0.75,
+      "obliques": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "74103F24",
+    "name": "JM Press (Barbell)",
+    "contributions": {
+      "triceps_lat_med": 0.45,
+      "triceps_long": 0.25,
+      "mid_chest": 0.15,
+      "front_delt": 0.15
+    },
+    "confidence": "medium",
+    "notes": "Hybrid of a close-grip bench and skullcrusher."
+  },
+  {
+    "hevy_id": "040BA2E3",
+    "name": "Jump Rope",
+    "contributions": {
+      "gastrocnemius": 0.4,
+      "soleus": 0.2,
+      "quads_vasti": 0.15,
+      "glute_max": 0.1,
+      "forearms": 0.1,
+      "front_delt": 0.05
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "BA3DE542",
+    "name": "Jump Shrug",
+    "contributions": {
+      "glute_max": 0.28,
+      "hamstrings": 0.18,
+      "quads_vasti": 0.2,
+      "gastrocnemius": 0.12,
+      "upper_traps": 0.18,
+      "spinal_erectors": 0.04
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "70D4EBBF",
+    "name": "Jump Squat",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.28,
+      "hamstrings": 0.1,
+      "gastrocnemius": 0.17,
+      "adductors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "991833C2",
+    "name": "Jumping Jack",
+    "contributions": {
+      "side_delt": 0.25,
+      "glute_med": 0.2,
+      "gastrocnemius": 0.2,
+      "adductors": 0.15,
+      "quads_vasti": 0.1,
+      "rectus_abdominis": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "5CC07A1F",
+    "name": "Jumping Lunge",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.13,
+      "glute_max": 0.24,
+      "glute_med": 0.08,
+      "hamstrings": 0.1,
+      "gastrocnemius": 0.1,
+      "adductors": 0.07
+    },
+    "confidence": "low",
+    "notes": "Plyometric; sparse EMG data for jumping-lunge variants."
+  },
+  {
+    "hevy_id": "55BA475A",
+    "name": "Kettlebell Around the World",
+    "contributions": {
+      "front_delt": 0.2,
+      "side_delt": 0.2,
+      "rear_delt": 0.15,
+      "upper_traps": 0.1,
+      "mid_chest": 0.1,
+      "obliques": 0.15,
+      "rectus_abdominis": 0.1
+    },
+    "confidence": "low",
+    "notes": "Name is used for several different drills in practice; split is a broad estimate."
+  },
+  {
+    "hevy_id": "F99C211D",
+    "name": "Kettlebell Clean",
+    "contributions": {
+      "glute_max": 0.2,
+      "hamstrings": 0.18,
+      "quads_vasti": 0.15,
+      "upper_traps": 0.15,
+      "forearms": 0.12,
+      "front_delt": 0.1,
+      "spinal_erectors": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "4E239ED8",
+    "name": "Kettlebell Curl",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "A127DA73",
+    "name": "Kettlebell Goblet Squat",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.18,
+      "glute_max": 0.24,
+      "hamstrings": 0.07,
+      "adductors": 0.13,
+      "spinal_erectors": 0.03
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "4288G454",
+    "name": "Kettlebell Halo",
+    "contributions": {
+      "front_delt": 0.28,
+      "side_delt": 0.28,
+      "rear_delt": 0.22,
+      "upper_traps": 0.15,
+      "mid_traps_rhomboids": 0.07
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "9B13BA4B",
+    "name": "Kettlebell High Pull",
+    "contributions": {
+      "glute_max": 0.25,
+      "hamstrings": 0.2,
+      "upper_traps": 0.2,
+      "side_delt": 0.15,
+      "spinal_erectors": 0.1,
+      "forearms": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "6433CD93",
+    "name": "Kettlebell Shoulder Press",
+    "contributions": {
+      "front_delt": 0.42,
+      "side_delt": 0.22,
+      "triceps_lat_med": 0.14,
+      "triceps_long": 0.07,
+      "upper_traps": 0.08,
+      "obliques": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Typically single-arm; adds an anti-lateral-flexion core demand."
+  },
+  {
+    "hevy_id": "89304423",
+    "name": "Kettlebell Snatch",
+    "contributions": {
+      "glute_max": 0.18,
+      "hamstrings": 0.16,
+      "quads_vasti": 0.12,
+      "upper_traps": 0.12,
+      "side_delt": 0.14,
+      "front_delt": 0.08,
+      "forearms": 0.12,
+      "obliques": 0.08
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "F8A0FCCA",
+    "name": "Kettlebell Swing",
+    "contributions": {
+      "glute_max": 0.4,
+      "hamstrings": 0.3,
+      "spinal_erectors": 0.1,
+      "front_delt": 0.1,
+      "upper_traps": 0.1
+    },
+    "confidence": "high",
+    "notes": "Well-studied ballistic hip hinge; EMG literature consistently shows glute/hamstring dominance."
+  },
+  {
+    "hevy_id": "5F8903BF",
+    "name": "Kettlebell Turkish Get Up",
+    "contributions": {
+      "front_delt": 0.15,
+      "side_delt": 0.1,
+      "rectus_abdominis": 0.15,
+      "obliques": 0.2,
+      "glute_max": 0.15,
+      "quads_vasti": 0.15,
+      "spinal_erectors": 0.1
+    },
+    "confidence": "low",
+    "notes": "Highly complex multi-stage, multi-plane movement; whole-movement estimate only."
+  },
+  {
+    "hevy_id": "A91838C0",
+    "name": "Kipping Pull Up",
+    "contributions": {
+      "lats": 0.4,
+      "mid_traps_rhomboids": 0.1,
+      "biceps": 0.12,
+      "forearms": 0.06,
+      "rear_delt": 0.07,
+      "rectus_abdominis": 0.15,
+      "glute_max": 0.1
+    },
+    "confidence": "low",
+    "notes": "Hip/leg momentum reduces and redistributes loading unpredictably vs a strict pull-up."
+  },
+  {
+    "hevy_id": "98237BA2",
+    "name": "Knee Raise Parallel Bars",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "D82EA543",
+    "name": "Kneeling Pulldown (band)",
+    "contributions": {
+      "lats": 0.55,
+      "mid_traps_rhomboids": 0.15,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.05,
+      "forearms": 0.05,
+      "rear_delt": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "B74A95BB",
+    "name": "Kneeling Push Up",
+    "contributions": {
+      "mid_chest": 0.46,
+      "lower_chest": 0.11,
+      "front_delt": 0.21,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.07
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "6D54A050",
+    "name": "L-Sit Hold",
+    "contributions": {
+      "rectus_abdominis": 0.55,
+      "obliques": 0.1,
+      "triceps_long": 0.2,
+      "triceps_lat_med": 0.15
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "923874CA",
+    "name": "Landmine 180",
+    "contributions": {
+      "obliques": 0.45,
+      "rectus_abdominis": 0.1,
+      "front_delt": 0.2,
+      "mid_traps_rhomboids": 0.1,
+      "biceps": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "low",
+    "notes": "Dynamic rotational movement with a lot of individual technique variance."
+  },
+  {
+    "hevy_id": "D7D7FCCE",
+    "name": "Landmine Row",
+    "contributions": {
+      "lats": 0.38,
+      "mid_traps_rhomboids": 0.2,
+      "biceps": 0.12,
+      "forearms": 0.06,
+      "rear_delt": 0.1,
+      "spinal_erectors": 0.14
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "983274DD",
+    "name": "Landmine Squat and Press",
+    "contributions": {
+      "quads_vasti": 0.25,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.18,
+      "front_delt": 0.18,
+      "upper_chest": 0.1,
+      "triceps_long": 0.07,
+      "spinal_erectors": 0.05,
+      "adductors": 0.05
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "4E5257DE",
+    "name": "Lat Pulldown - Close Grip (Cable)",
+    "contributions": {
+      "lats": 0.5,
+      "biceps": 0.2,
+      "brachialis_brachioradialis": 0.05,
+      "mid_traps_rhomboids": 0.13,
+      "forearms": 0.07,
+      "rear_delt": 0.05
+    },
+    "confidence": "high",
+    "notes": "Narrower grip deepens the lat stretch and raises biceps involvement."
+  },
+  {
+    "hevy_id": "D2FE7B2E",
+    "name": "Lat Pulldown (Band)",
+    "contributions": {
+      "lats": 0.55,
+      "mid_traps_rhomboids": 0.15,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.05,
+      "forearms": 0.05,
+      "rear_delt": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Band path/anchor point varies by setup."
+  },
+  {
+    "hevy_id": "6A6C31A5",
+    "name": "Lat Pulldown (Cable)",
+    "contributions": {
+      "lats": 0.55,
+      "mid_traps_rhomboids": 0.15,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.05,
+      "forearms": 0.05,
+      "rear_delt": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "473CF5B8",
+    "name": "Lat Pulldown (Machine)",
+    "contributions": {
+      "lats": 0.55,
+      "mid_traps_rhomboids": 0.15,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.05,
+      "forearms": 0.05,
+      "rear_delt": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "EC02979E",
+    "name": "Lateral Band Walks",
+    "contributions": {
+      "glute_med": 0.75,
+      "glute_max": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "07EBC4DC",
+    "name": "Lateral Box Jump",
+    "contributions": {
+      "quads_vasti": 0.24,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.26,
+      "glute_med": 0.12,
+      "hamstrings": 0.1,
+      "gastrocnemius": 0.15,
+      "adductors": 0.05
+    },
+    "confidence": "low",
+    "notes": "Uncommon movement with less standardized form."
+  },
+  {
+    "hevy_id": "DC59D143",
+    "name": "Lateral Leg Raises",
+    "contributions": {
+      "glute_med": 0.85,
+      "glute_max": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F2A37357",
+    "name": "Lateral Lunge",
+    "contributions": {
+      "quads_vasti": 0.25,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.18,
+      "glute_med": 0.2,
+      "adductors": 0.22,
+      "hamstrings": 0.07
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "DF200976",
+    "name": "Lateral Raise (Band)",
+    "contributions": {
+      "side_delt": 0.78,
+      "front_delt": 0.08,
+      "upper_traps": 0.14
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "BE289E45",
+    "name": "Lateral Raise (Cable)",
+    "contributions": {
+      "side_delt": 0.82,
+      "front_delt": 0.06,
+      "upper_traps": 0.12
+    },
+    "confidence": "high",
+    "notes": "Constant cable tension keeps the shoulder loaded through the top of the ROM, unlike a dumbbell."
+  },
+  {
+    "hevy_id": "422B08F1",
+    "name": "Lateral Raise (Dumbbell)",
+    "contributions": {
+      "side_delt": 0.78,
+      "front_delt": 0.08,
+      "upper_traps": 0.14
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "D5D0354D",
+    "name": "Lateral Raise (Machine)",
+    "contributions": {
+      "side_delt": 0.8,
+      "front_delt": 0.07,
+      "upper_traps": 0.13
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "D731CCA8",
+    "name": "Lateral Squat",
+    "contributions": {
+      "quads_vasti": 0.25,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.18,
+      "glute_med": 0.2,
+      "adductors": 0.22,
+      "hamstrings": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Same lateral-loading pattern as a lateral lunge, held in a squat stance."
+  },
+  {
+    "hevy_id": "75A4F6C4",
+    "name": "Leg Extension (Machine)",
+    "contributions": {
+      "quads_vasti": 0.7,
+      "quads_rectus_femoris": 0.3
+    },
+    "confidence": "high",
+    "notes": "Seated hip-flexed position shortens rectus femoris, reducing its force contribution vs the vasti."
+  },
+  {
+    "hevy_id": "C7973E0E",
+    "name": "Leg Press (Machine)",
+    "contributions": {
+      "quads_vasti": 0.45,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.25,
+      "hamstrings": 0.1,
+      "adductors": 0.05
+    },
+    "confidence": "high",
+    "notes": "Assumes a standard/mid foot placement."
+  },
+  {
+    "hevy_id": "0EB695C9",
+    "name": "Leg Press Horizontal (Machine)",
+    "contributions": {
+      "quads_vasti": 0.45,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.25,
+      "hamstrings": 0.1,
+      "adductors": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "0482DA98",
+    "name": "Leg Raise Parallel Bars",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "293483AD",
+    "name": "Low Cable Fly Crossovers",
+    "contributions": {
+      "upper_chest": 0.6,
+      "mid_chest": 0.25,
+      "front_delt": 0.15
+    },
+    "confidence": "medium",
+    "notes": "Pulleys set low; cable path runs upward across the chest, biasing upper chest."
+  },
+  {
+    "hevy_id": "8A2E6481",
+    "name": "Low Row (Suspension)",
+    "contributions": {
+      "lats": 0.35,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.16,
+      "forearms": 0.08,
+      "rear_delt": 0.1,
+      "rectus_abdominis": 0.07
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "5E1A7777",
+    "name": "Lunge",
+    "contributions": {
+      "quads_vasti": 0.34,
+      "quads_rectus_femoris": 0.16,
+      "glute_max": 0.24,
+      "glute_med": 0.09,
+      "hamstrings": 0.1,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "6E6EE645",
+    "name": "Lunge (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.34,
+      "quads_rectus_femoris": 0.16,
+      "glute_max": 0.24,
+      "glute_med": 0.09,
+      "hamstrings": 0.1,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B537D09F",
+    "name": "Lunge (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.34,
+      "quads_rectus_femoris": 0.16,
+      "glute_max": 0.24,
+      "glute_med": 0.09,
+      "hamstrings": 0.1,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "BD5935CF",
+    "name": "Lying Knee Raise",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B8127AD1",
+    "name": "Lying Leg Curl (Machine)",
+    "contributions": {
+      "hamstrings": 0.8,
+      "gastrocnemius": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "09C9F635",
+    "name": "Lying Leg Raise",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "22FEDCA4",
+    "name": "Lying Neck Curls",
+    "contributions": {
+      "upper_traps": 1
+    },
+    "confidence": "low",
+    "notes": "Taxonomy has no dedicated neck/cervical sub-muscle; approximated via upper traps, the closest anatomically adjacent region."
+  },
+  {
+    "hevy_id": "31B8DA0F",
+    "name": "Lying Neck Curls (Weighted)",
+    "contributions": {
+      "upper_traps": 1
+    },
+    "confidence": "low",
+    "notes": "Taxonomy has no dedicated neck/cervical sub-muscle; approximated via upper traps."
+  },
+  {
+    "hevy_id": "0910BD28",
+    "name": "Lying Neck Extension",
+    "contributions": {
+      "upper_traps": 1
+    },
+    "confidence": "low",
+    "notes": "Taxonomy has no dedicated neck/cervical sub-muscle; approximated via upper traps."
+  },
+  {
+    "hevy_id": "D6A73CF2",
+    "name": "Lying Neck Extension (Weighted)",
+    "contributions": {
+      "upper_traps": 1
+    },
+    "confidence": "low",
+    "notes": "Taxonomy has no dedicated neck/cervical sub-muscle; approximated via upper traps."
+  },
+  {
+    "hevy_id": "C732C341",
+    "name": "Meadows Rows (Barbell)",
+    "contributions": {
+      "lats": 0.45,
+      "mid_traps_rhomboids": 0.15,
+      "biceps": 0.12,
+      "forearms": 0.06,
+      "rear_delt": 0.12,
+      "obliques": 0.1
+    },
+    "confidence": "medium",
+    "notes": "Landmine-anchored unilateral arc gives a strong lat stretch plus anti-rotation demand."
+  },
+  {
+    "hevy_id": "F49E31D6",
+    "name": "Mountain Climber",
+    "contributions": {
+      "rectus_abdominis": 0.35,
+      "obliques": 0.2,
+      "front_delt": 0.15,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.15
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "9F9C164B",
+    "name": "Muscle Up",
+    "contributions": {
+      "lats": 0.3,
+      "biceps": 0.12,
+      "triceps_lat_med": 0.18,
+      "mid_chest": 0.12,
+      "front_delt": 0.13,
+      "mid_traps_rhomboids": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "low",
+    "notes": "Highly technical pull-to-dip transition; split is estimated."
+  },
+  {
+    "hevy_id": "F60BDDF8",
+    "name": "Negative Pull Up",
+    "contributions": {
+      "lats": 0.5,
+      "mid_traps_rhomboids": 0.13,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.07,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Eccentric-only, but the same prime movers as a strict pull-up."
+  },
+  {
+    "hevy_id": "108D7A14",
+    "name": "Nordic Hamstrings Curls",
+    "contributions": {
+      "hamstrings": 0.85,
+      "glute_max": 0.15
+    },
+    "confidence": "high",
+    "notes": "Pure knee-flexion eccentric movement; heavily studied for hamstring-injury prevention."
+  },
+  {
+    "hevy_id": "DBE341AA",
+    "name": "Oblique Crunch",
+    "contributions": {
+      "obliques": 0.9,
+      "rectus_abdominis": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B140095E",
+    "name": "One Arm Push Up",
+    "contributions": {
+      "mid_chest": 0.38,
+      "lower_chest": 0.08,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.08,
+      "obliques": 0.06,
+      "rectus_abdominis": 0.04
+    },
+    "confidence": "low",
+    "notes": "Rare, advanced unilateral variant with large individual technique variance."
+  },
+  {
+    "hevy_id": "582ADA23",
+    "name": "Overhead Curl (Cable)",
+    "contributions": {
+      "biceps": 0.82,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.08
+    },
+    "confidence": "low",
+    "notes": "Uncommon angle; stretches the long head at the bottom but exact split is a rough estimate."
+  },
+  {
+    "hevy_id": "4C6721B9",
+    "name": "Overhead Dumbbell Lunge",
+    "contributions": {
+      "quads_vasti": 0.26,
+      "quads_rectus_femoris": 0.11,
+      "glute_max": 0.2,
+      "glute_med": 0.08,
+      "hamstrings": 0.08,
+      "adductors": 0.05,
+      "front_delt": 0.1,
+      "triceps_long": 0.05,
+      "rectus_abdominis": 0.07
+    },
+    "confidence": "low",
+    "notes": "Compound combo movement; split is an estimate, not literature-backed."
+  },
+  {
+    "hevy_id": "54E60954",
+    "name": "Overhead Plate Raise",
+    "contributions": {
+      "front_delt": 0.5,
+      "side_delt": 0.15,
+      "upper_traps": 0.25,
+      "triceps_long": 0.1
+    },
+    "confidence": "low",
+    "notes": "Uncommon front-raise-to-overhead path; exact muscle timing is a rough estimate."
+  },
+  {
+    "hevy_id": "7B8D84E8",
+    "name": "Overhead Press (Barbell)",
+    "contributions": {
+      "front_delt": 0.45,
+      "side_delt": 0.2,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07,
+      "rectus_abdominis": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "6AC96645",
+    "name": "Overhead Press (Dumbbell)",
+    "contributions": {
+      "front_delt": 0.44,
+      "side_delt": 0.23,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07,
+      "rectus_abdominis": 0.03
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B09A1304",
+    "name": "Overhead Press (Smith Machine)",
+    "contributions": {
+      "front_delt": 0.47,
+      "side_delt": 0.22,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07
+    },
+    "confidence": "high",
+    "notes": "Fixed bar path removes balance demand, so no core-bracing share."
+  },
+  {
+    "hevy_id": "2CFED196",
+    "name": "Overhead Squat",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.15,
+      "front_delt": 0.12,
+      "side_delt": 0.08,
+      "spinal_erectors": 0.08,
+      "rectus_abdominis": 0.08,
+      "adductors": 0.07
+    },
+    "confidence": "low",
+    "notes": "Advanced/rare movement with a heavy shoulder-stabilization demand; split is a rough estimate."
+  },
+  {
+    "hevy_id": "B5EFBF9C",
+    "name": "Overhead Triceps Extension (Cable)",
+    "contributions": {
+      "triceps_long": 0.6,
+      "triceps_lat_med": 0.4
+    },
+    "confidence": "high",
+    "notes": "Overhead shoulder position stretches and biases the long head."
+  },
+  {
+    "hevy_id": "FBEE8279",
+    "name": "Partial Glute Bridge (Barbell)",
+    "contributions": {
+      "glute_max": 0.68,
+      "hamstrings": 0.2,
+      "adductors": 0.08,
+      "quads_vasti": 0.04
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "CE1054CE",
+    "name": "Pause Squat (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.34,
+      "quads_rectus_femoris": 0.14,
+      "glute_max": 0.28,
+      "hamstrings": 0.08,
+      "adductors": 0.09,
+      "spinal_erectors": 0.07
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "018ADC12",
+    "name": "Pendlay Row (Barbell)",
+    "contributions": {
+      "lats": 0.38,
+      "mid_traps_rhomboids": 0.2,
+      "biceps": 0.11,
+      "forearms": 0.06,
+      "rear_delt": 0.09,
+      "spinal_erectors": 0.16
+    },
+    "confidence": "medium",
+    "notes": "Dead-stop-from-floor reps eliminate momentum, raising erector demand from each dead start."
+  },
+  {
+    "hevy_id": "30E293E3",
+    "name": "Pendulum Squat (Machine)",
+    "contributions": {
+      "quads_vasti": 0.55,
+      "quads_rectus_femoris": 0.22,
+      "glute_max": 0.15,
+      "hamstrings": 0.05,
+      "adductors": 0.03
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "0EFE8162",
+    "name": "Pike Pushup",
+    "contributions": {
+      "front_delt": 0.42,
+      "upper_chest": 0.15,
+      "side_delt": 0.13,
+      "triceps_lat_med": 0.18,
+      "triceps_long": 0.08,
+      "rectus_abdominis": 0.04
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "EC2510CD",
+    "name": "Pilates",
+    "contributions": {
+      "rectus_abdominis": 0.3,
+      "obliques": 0.2,
+      "glute_max": 0.15,
+      "front_delt": 0.1,
+      "hamstrings": 0.1,
+      "spinal_erectors": 0.15
+    },
+    "confidence": "low",
+    "notes": "General conditioning class, not a targeted hard-set movement — split is a rough full-body approximation."
+  },
+  {
+    "hevy_id": "942BAD12",
+    "name": "Pinwheel Curl (Dumbbell)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "biceps": 0.35,
+      "forearms": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "3FF6A22E",
+    "name": "Pistol Squat",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.2,
+      "glute_max": 0.22,
+      "glute_med": 0.12,
+      "hamstrings": 0.06,
+      "adductors": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Advanced single-leg movement; form varies a lot between lifters."
+  },
+  {
+    "hevy_id": "C6C9B8A0",
+    "name": "Plank",
+    "contributions": {
+      "rectus_abdominis": 0.55,
+      "obliques": 0.3,
+      "front_delt": 0.15
+    },
+    "confidence": "medium",
+    "notes": "Isometric anti-extension hold also isometrically loads the shoulders."
+  },
+  {
+    "hevy_id": "31436F5D",
+    "name": "Plank Pushup",
+    "contributions": {
+      "mid_chest": 0.3,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.18,
+      "triceps_long": 0.07,
+      "rectus_abdominis": 0.15,
+      "obliques": 0.1
+    },
+    "confidence": "low",
+    "notes": "Plank-to-push-up transition; heavy anti-rotation core demand makes the split subjective."
+  },
+  {
+    "hevy_id": "9283ABD5",
+    "name": "Plate Curl",
+    "contributions": {
+      "biceps": 0.78,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "DBF9273A",
+    "name": "Plate Front Raise",
+    "contributions": {
+      "front_delt": 0.75,
+      "upper_chest": 0.15,
+      "side_delt": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "982734D4",
+    "name": "Plate Press",
+    "contributions": {
+      "mid_chest": 0.62,
+      "front_delt": 0.15,
+      "triceps_lat_med": 0.15,
+      "lower_chest": 0.08
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "9373FSD1",
+    "name": "Plate Squeeze (Svend Press)",
+    "contributions": {
+      "mid_chest": 0.65,
+      "upper_chest": 0.1,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.05
+    },
+    "confidence": "low",
+    "notes": "Very short ROM isometric-squeeze movement; exact split is a rough estimate."
+  },
+  {
+    "hevy_id": "C628D768",
+    "name": "Power Clean",
+    "contributions": {
+      "glute_max": 0.18,
+      "hamstrings": 0.15,
+      "quads_vasti": 0.2,
+      "upper_traps": 0.15,
+      "spinal_erectors": 0.08,
+      "front_delt": 0.1,
+      "forearms": 0.09,
+      "quads_rectus_femoris": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "E22F9358",
+    "name": "Power Snatch",
+    "contributions": {
+      "glute_max": 0.16,
+      "hamstrings": 0.14,
+      "quads_vasti": 0.16,
+      "upper_traps": 0.14,
+      "side_delt": 0.1,
+      "front_delt": 0.08,
+      "spinal_erectors": 0.07,
+      "forearms": 0.1,
+      "mid_traps_rhomboids": 0.05
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "4F942934",
+    "name": "Preacher Curl (Barbell)",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "high",
+    "notes": "Fixed arm position eliminates shoulder swing, isolating the short head."
+  },
+  {
+    "hevy_id": "FAB6EB2F",
+    "name": "Preacher Curl (Dumbbell)",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "1E9A6B8E",
+    "name": "Preacher Curl (Machine)",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "84A77566",
+    "name": "Press Under",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "front_delt": 0.2,
+      "side_delt": 0.15,
+      "spinal_erectors": 0.1,
+      "glute_max": 0.15,
+      "adductors": 0.1
+    },
+    "confidence": "low",
+    "notes": "Technical drill rarely used for volume tracking; split is a rough estimate."
+  },
+  {
+    "hevy_id": "1B2B1E7C",
+    "name": "Pull Up",
+    "contributions": {
+      "lats": 0.5,
+      "mid_traps_rhomboids": 0.13,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.07,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "2C37EC5E",
+    "name": "Pull Up (Assisted)",
+    "contributions": {
+      "lats": 0.5,
+      "mid_traps_rhomboids": 0.13,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.07,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "56808FD2",
+    "name": "Pull Up (Band)",
+    "contributions": {
+      "lats": 0.5,
+      "mid_traps_rhomboids": 0.13,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.07,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "729237D1",
+    "name": "Pull Up (Weighted)",
+    "contributions": {
+      "lats": 0.5,
+      "mid_traps_rhomboids": 0.13,
+      "biceps": 0.15,
+      "brachialis_brachioradialis": 0.07,
+      "forearms": 0.08,
+      "rear_delt": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "67280085",
+    "name": "Pullover (Dumbbell)",
+    "contributions": {
+      "lats": 0.45,
+      "mid_chest": 0.2,
+      "triceps_long": 0.2,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "high",
+    "notes": "Classic straight-arm shoulder-extension movement; well documented as a lats/chest/triceps-long-head hybrid."
+  },
+  {
+    "hevy_id": "B123DD01",
+    "name": "Pullover (Machine)",
+    "contributions": {
+      "lats": 0.48,
+      "mid_chest": 0.18,
+      "triceps_long": 0.19,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "542F3CD5",
+    "name": "Push Press",
+    "contributions": {
+      "front_delt": 0.35,
+      "side_delt": 0.18,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.07,
+      "upper_traps": 0.08,
+      "quads_vasti": 0.1,
+      "glute_max": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Leg drive contributes meaningfully to the initial dip-and-drive."
+  },
+  {
+    "hevy_id": "392887AA",
+    "name": "Push Up",
+    "contributions": {
+      "mid_chest": 0.45,
+      "lower_chest": 0.1,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.07,
+      "rectus_abdominis": 0.03
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "947DAC23",
+    "name": "Push Up - Close Grip",
+    "contributions": {
+      "mid_chest": 0.35,
+      "lower_chest": 0.08,
+      "front_delt": 0.17,
+      "triceps_lat_med": 0.24,
+      "triceps_long": 0.13,
+      "rectus_abdominis": 0.03
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "19372ABC",
+    "name": "Push Up (Weighted)",
+    "contributions": {
+      "mid_chest": 0.45,
+      "lower_chest": 0.1,
+      "front_delt": 0.2,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.07,
+      "rectus_abdominis": 0.03
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "FE389074",
+    "name": "Rack Pull",
+    "contributions": {
+      "mid_traps_rhomboids": 0.15,
+      "upper_traps": 0.1,
+      "lats": 0.1,
+      "spinal_erectors": 0.2,
+      "glute_max": 0.2,
+      "hamstrings": 0.2,
+      "forearms": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Partial-ROM deadlift from knee height; heavy load makes the upper-back isometric role substantial."
+  },
+  {
+    "hevy_id": "C315DC2A",
+    "name": "Rear Delt Reverse Fly (Cable)",
+    "contributions": {
+      "rear_delt": 0.62,
+      "mid_traps_rhomboids": 0.28,
+      "upper_traps": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "E5988A0A",
+    "name": "Rear Delt Reverse Fly (Dumbbell)",
+    "contributions": {
+      "rear_delt": 0.62,
+      "mid_traps_rhomboids": 0.28,
+      "upper_traps": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "D8281C62",
+    "name": "Rear Delt Reverse Fly (Machine)",
+    "contributions": {
+      "rear_delt": 0.62,
+      "mid_traps_rhomboids": 0.28,
+      "upper_traps": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "1ADF8723",
+    "name": "Rear Kick (Machine)",
+    "contributions": {
+      "glute_max": 0.7,
+      "hamstrings": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "7FD2EC3E",
+    "name": "Recumbent Bike",
+    "contributions": {
+      "quads_vasti": 0.45,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.13,
+      "hamstrings": 0.2,
+      "gastrocnemius": 0.1
+    },
+    "confidence": "low",
+    "notes": "Reclined fixed hip angle reduces glute involvement vs upright cycling."
+  },
+  {
+    "hevy_id": "1B89CA1B",
+    "name": "Renegade Row (Dumbbell)",
+    "contributions": {
+      "lats": 0.28,
+      "mid_traps_rhomboids": 0.14,
+      "biceps": 0.1,
+      "forearms": 0.08,
+      "rear_delt": 0.08,
+      "obliques": 0.2,
+      "rectus_abdominis": 0.12
+    },
+    "confidence": "low",
+    "notes": "Plank-position anti-rotation demand dominates; split is technique-dependent."
+  },
+  {
+    "hevy_id": "7952B5CD",
+    "name": "Reverse Crunch",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high",
+    "notes": "Posterior pelvic tilt shifts the flexion focus lower, but the taxonomy has no upper/lower rectus split."
+  },
+  {
+    "hevy_id": "112FC6B7",
+    "name": "Reverse Curl (Barbell)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "forearms": 0.35,
+      "biceps": 0.2
+    },
+    "confidence": "high",
+    "notes": "Pronated grip strongly favors brachioradialis/forearm extensors over biceps brachii."
+  },
+  {
+    "hevy_id": "9F48F858",
+    "name": "Reverse Curl (Cable)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "forearms": 0.35,
+      "biceps": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B567DD46",
+    "name": "Reverse Curl (Dumbbell)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "forearms": 0.35,
+      "biceps": 0.2
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "9264ADA1",
+    "name": "Reverse Fly Single Arm (Cable)",
+    "contributions": {
+      "rear_delt": 0.62,
+      "mid_traps_rhomboids": 0.28,
+      "upper_traps": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "1FF4097B",
+    "name": "Reverse Grip Concentration Curl",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "forearms": 0.35,
+      "biceps": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "046E25A2",
+    "name": "Reverse Grip Lat Pulldown (Cable)",
+    "contributions": {
+      "lats": 0.48,
+      "biceps": 0.25,
+      "brachialis_brachioradialis": 0.05,
+      "mid_traps_rhomboids": 0.12,
+      "forearms": 0.05,
+      "rear_delt": 0.05
+    },
+    "confidence": "high",
+    "notes": "Underhand grip strongly recruits biceps."
+  },
+  {
+    "hevy_id": "8B5BED30",
+    "name": "Reverse Grip Triceps Pushdown",
+    "contributions": {
+      "triceps_lat_med": 0.7,
+      "triceps_long": 0.3
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "7C0028C3",
+    "name": "Reverse Hyperextension",
+    "contributions": {
+      "glute_max": 0.5,
+      "hamstrings": 0.3,
+      "spinal_erectors": 0.2
+    },
+    "confidence": "high",
+    "notes": "Fixed torso removes much of the erector's dynamic role vs a standard hyperextension."
+  },
+  {
+    "hevy_id": "C284D923",
+    "name": "Reverse Lunge",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.3,
+      "glute_med": 0.1,
+      "hamstrings": 0.13,
+      "adductors": 0.07
+    },
+    "confidence": "high",
+    "notes": "Stepping backward reduces knee-shear/quad dominance and shifts toward the posterior chain vs a forward lunge."
+  },
+  {
+    "hevy_id": "818BA121",
+    "name": "Reverse Lunge (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.3,
+      "glute_med": 0.1,
+      "hamstrings": 0.13,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "FFDA283B",
+    "name": "Reverse Lunge (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.3,
+      "glute_med": 0.1,
+      "hamstrings": 0.13,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "99B49684",
+    "name": "Reverse Plank",
+    "contributions": {
+      "rectus_abdominis": 0.45,
+      "glute_max": 0.2,
+      "triceps_lat_med": 0.2,
+      "spinal_erectors": 0.15
+    },
+    "confidence": "low",
+    "notes": "Uncommon supine isometric; engages a wide, hard-to-apportion mix of posterior-chain and arm muscles."
+  },
+  {
+    "hevy_id": "D8460FA6",
+    "name": "Reverse Wrist Curl (Dumbbell)",
+    "contributions": {
+      "forearms": 1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "51A0EDAA",
+    "name": "Ring Dips",
+    "contributions": {
+      "lower_chest": 0.3,
+      "triceps_lat_med": 0.23,
+      "triceps_long": 0.14,
+      "front_delt": 0.2,
+      "mid_chest": 0.13
+    },
+    "confidence": "low",
+    "notes": "Ring instability makes torso lean, and thus the chest/triceps split, highly technique-dependent."
+  },
+  {
+    "hevy_id": "5F09F0FC",
+    "name": "Ring Pull Up",
+    "contributions": {
+      "lats": 0.45,
+      "mid_traps_rhomboids": 0.12,
+      "biceps": 0.15,
+      "forearms": 0.1,
+      "rear_delt": 0.12,
+      "brachialis_brachioradialis": 0.06
+    },
+    "confidence": "low",
+    "notes": "Ring instability increases stabilizer demand; technique varies a lot."
+  },
+  {
+    "hevy_id": "AEA56BDC",
+    "name": "Ring Push Up",
+    "contributions": {
+      "mid_chest": 0.38,
+      "lower_chest": 0.08,
+      "front_delt": 0.25,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.08,
+      "rectus_abdominis": 0.05
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "2B4B7310",
+    "name": "Romanian Deadlift (Barbell)",
+    "contributions": {
+      "hamstrings": 0.45,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.15,
+      "mid_traps_rhomboids": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "72CFFAD5",
+    "name": "Romanian Deadlift (Dumbbell)",
+    "contributions": {
+      "hamstrings": 0.45,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.15,
+      "mid_traps_rhomboids": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "0B9B92BA",
+    "name": "Romanian Deadlift (Smith Machine)",
+    "contributions": {
+      "hamstrings": 0.45,
+      "glute_max": 0.3,
+      "spinal_erectors": 0.15,
+      "mid_traps_rhomboids": 0.05,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "234897AB",
+    "name": "Rope Cable Curl",
+    "contributions": {
+      "biceps": 0.55,
+      "brachialis_brachioradialis": 0.28,
+      "forearms": 0.17
+    },
+    "confidence": "medium",
+    "notes": "Rope allows a semi-supinated finish, hybridizing a standard and hammer curl."
+  },
+  {
+    "hevy_id": "9273BA17",
+    "name": "Rope Straight Arm Pulldown",
+    "contributions": {
+      "lats": 0.72,
+      "triceps_long": 0.15,
+      "mid_traps_rhomboids": 0.13
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "0222DB42",
+    "name": "Rowing Machine",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "glute_max": 0.15,
+      "hamstrings": 0.1,
+      "lats": 0.2,
+      "mid_traps_rhomboids": 0.1,
+      "biceps": 0.1,
+      "spinal_erectors": 0.05,
+      "forearms": 0.1
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based; leg-drive vs pull-back ratio varies by technique and stroke rate."
+  },
+  {
+    "hevy_id": "AC1BB830",
+    "name": "Running",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "quads_rectus_femoris": 0.1,
+      "hamstrings": 0.2,
+      "glute_max": 0.2,
+      "gastrocnemius": 0.2,
+      "soleus": 0.1
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based cardio; sub-muscle split is a coarse approximation for the body-map heatmap only, not a hard-set-based measurement."
+  },
+  {
+    "hevy_id": "BB83BDDE",
+    "name": "Russian Twist (Bodyweight)",
+    "contributions": {
+      "obliques": 0.7,
+      "rectus_abdominis": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "2982AA23",
+    "name": "Russian Twist (Weighted)",
+    "contributions": {
+      "obliques": 0.7,
+      "rectus_abdominis": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "C7AE420A",
+    "name": "Scapular Pull Ups",
+    "contributions": {
+      "mid_traps_rhomboids": 0.35,
+      "lower_traps": 0.3,
+      "lats": 0.25,
+      "forearms": 0.1
+    },
+    "confidence": "medium",
+    "notes": "Scapular elevation/depression only, no elbow flexion."
+  },
+  {
+    "hevy_id": "DF3BDB9C",
+    "name": "Seal Row (Barbell)",
+    "contributions": {
+      "lats": 0.42,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.14,
+      "forearms": 0.07,
+      "rear_delt": 0.13
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "7E93E23F",
+    "name": "Seal Row (Dumbbell)",
+    "contributions": {
+      "lats": 0.42,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.14,
+      "forearms": 0.07,
+      "rear_delt": 0.13
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F1D60854",
+    "name": "Seated Cable Row - Bar Grip",
+    "contributions": {
+      "lats": 0.38,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.14,
+      "forearms": 0.07,
+      "rear_delt": 0.13,
+      "brachialis_brachioradialis": 0.04
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "C3BCABB3",
+    "name": "Seated Cable Row - Bar Wide Grip",
+    "contributions": {
+      "lats": 0.28,
+      "mid_traps_rhomboids": 0.28,
+      "upper_traps": 0.08,
+      "rear_delt": 0.2,
+      "biceps": 0.1,
+      "forearms": 0.06
+    },
+    "confidence": "high",
+    "notes": "Wide grip with flared elbows shifts load toward rear delt/traps and away from lats."
+  },
+  {
+    "hevy_id": "0393F233",
+    "name": "Seated Cable Row - V Grip (Cable)",
+    "contributions": {
+      "lats": 0.42,
+      "mid_traps_rhomboids": 0.22,
+      "biceps": 0.16,
+      "forearms": 0.08,
+      "rear_delt": 0.08,
+      "brachialis_brachioradialis": 0.04
+    },
+    "confidence": "high",
+    "notes": "Narrow neutral grip with elbows tucked biases lats."
+  },
+  {
+    "hevy_id": "062AB91A",
+    "name": "Seated Calf Raise",
+    "contributions": {
+      "soleus": 0.75,
+      "gastrocnemius": 0.25
+    },
+    "confidence": "high",
+    "notes": "Bent-knee position neutralizes the gastrocnemius, well-documented as soleus-dominant."
+  },
+  {
+    "hevy_id": "6B4C797E",
+    "name": "Seated Chest Flys (Cable)",
+    "contributions": {
+      "mid_chest": 0.72,
+      "lower_chest": 0.13,
+      "front_delt": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "5122E7D9",
+    "name": "Seated Dip Machine",
+    "contributions": {
+      "triceps_lat_med": 0.38,
+      "triceps_long": 0.22,
+      "front_delt": 0.15,
+      "mid_chest": 0.15,
+      "lower_chest": 0.1
+    },
+    "confidence": "medium",
+    "notes": "Torso angle varies by machine model."
+  },
+  {
+    "hevy_id": "8BAB2735",
+    "name": "Seated Incline Curl (Dumbbell)",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.09,
+      "forearms": 0.06
+    },
+    "confidence": "high",
+    "notes": "Arm behind the torso plane increases long-head stretch."
+  },
+  {
+    "hevy_id": "C01F58D1",
+    "name": "Seated Incline Hammer Curl (Dumbbell)",
+    "contributions": {
+      "brachialis_brachioradialis": 0.45,
+      "biceps": 0.38,
+      "forearms": 0.17
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "9372FFAA",
+    "name": "Seated Lateral Raise (Dumbbell)",
+    "contributions": {
+      "side_delt": 0.82,
+      "front_delt": 0.07,
+      "upper_traps": 0.11
+    },
+    "confidence": "high",
+    "notes": "Seated position removes body-english momentum for a purer isolation."
+  },
+  {
+    "hevy_id": "11A123F3",
+    "name": "Seated Leg Curl (Machine)",
+    "contributions": {
+      "hamstrings": 0.82,
+      "gastrocnemius": 0.18
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "91AF29E0",
+    "name": "Seated Overhead Press (Barbell)",
+    "contributions": {
+      "front_delt": 0.47,
+      "side_delt": 0.22,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "9930DF71",
+    "name": "Seated Overhead Press (Dumbbell)",
+    "contributions": {
+      "front_delt": 0.44,
+      "side_delt": 0.23,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.08,
+      "upper_traps": 0.06,
+      "rectus_abdominis": 0.03
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "1006DF48",
+    "name": "Seated Palms Up Wrist Curl",
+    "contributions": {
+      "forearms": 1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "1DF4A847",
+    "name": "Seated Row (Machine)",
+    "contributions": {
+      "lats": 0.38,
+      "mid_traps_rhomboids": 0.24,
+      "biceps": 0.14,
+      "forearms": 0.07,
+      "rear_delt": 0.13,
+      "brachialis_brachioradialis": 0.04
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "9237BAD1",
+    "name": "Seated Shoulder Press (Machine)",
+    "contributions": {
+      "front_delt": 0.47,
+      "side_delt": 0.22,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "234BC743",
+    "name": "Seated Triceps Press",
+    "contributions": {
+      "triceps_lat_med": 0.75,
+      "triceps_long": 0.25
+    },
+    "confidence": "medium",
+    "notes": "Exact machine arm position (elbows-in vs overhead) isn't specified."
+  },
+  {
+    "hevy_id": "95F2E076",
+    "name": "Seated Wrist Curl (Barbell)",
+    "contributions": {
+      "forearms": 1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "9202CC23",
+    "name": "Seated Wrist Extension (Barbell)",
+    "contributions": {
+      "forearms": 1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "878CD1D0",
+    "name": "Shoulder Press (Dumbbell)",
+    "contributions": {
+      "front_delt": 0.44,
+      "side_delt": 0.23,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07,
+      "rectus_abdominis": 0.03
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "059E835D",
+    "name": "Shoulder Press (Machine Plates)",
+    "contributions": {
+      "front_delt": 0.47,
+      "side_delt": 0.22,
+      "triceps_lat_med": 0.16,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "502FCE31",
+    "name": "Shoulder Taps",
+    "contributions": {
+      "rectus_abdominis": 0.25,
+      "obliques": 0.3,
+      "front_delt": 0.2,
+      "side_delt": 0.1,
+      "triceps_lat_med": 0.15
+    },
+    "confidence": "low",
+    "notes": "Genuinely a core anti-rotation exercise despite Hevy's 'shoulders' primary tag."
+  },
+  {
+    "hevy_id": "0B841777",
+    "name": "Shrug (Barbell)",
+    "contributions": {
+      "upper_traps": 0.85,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "FFABC123",
+    "name": "Shrug (Cable)",
+    "contributions": {
+      "upper_traps": 0.85,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "ABEC557F",
+    "name": "Shrug (Dumbbell)",
+    "contributions": {
+      "upper_traps": 0.85,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "19A38071",
+    "name": "Shrug (Machine)",
+    "contributions": {
+      "upper_traps": 0.85,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "742E5BD5",
+    "name": "Shrug (Smith Machine)",
+    "contributions": {
+      "upper_traps": 0.85,
+      "mid_traps_rhomboids": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "37F9EDA7",
+    "name": "Side Bend",
+    "contributions": {
+      "obliques": 0.9,
+      "rectus_abdominis": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "026FD047",
+    "name": "Side Bend (Dumbbell)",
+    "contributions": {
+      "obliques": 0.9,
+      "rectus_abdominis": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "E3EDA509",
+    "name": "Side Plank",
+    "contributions": {
+      "obliques": 0.85,
+      "rectus_abdominis": 0.05,
+      "front_delt": 0.1
+    },
+    "confidence": "high",
+    "notes": "Classic lateral anti-flexion isolation for the obliques."
+  },
+  {
+    "hevy_id": "8372BBCC",
+    "name": "Single Arm Cable Crossover",
+    "contributions": {
+      "mid_chest": 0.68,
+      "lower_chest": 0.13,
+      "front_delt": 0.12,
+      "obliques": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Unilateral pull adds an anti-rotation core demand."
+  },
+  {
+    "hevy_id": "D0C4A899",
+    "name": "Single Arm Cable Row",
+    "contributions": {
+      "lats": 0.38,
+      "mid_traps_rhomboids": 0.2,
+      "biceps": 0.13,
+      "forearms": 0.06,
+      "rear_delt": 0.11,
+      "obliques": 0.12
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "B33B526E",
+    "name": "Single Arm Curl (Cable)",
+    "contributions": {
+      "biceps": 0.8,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "1837BA23",
+    "name": "Single Arm Landmine Press (Barbell)",
+    "contributions": {
+      "front_delt": 0.35,
+      "upper_chest": 0.2,
+      "side_delt": 0.12,
+      "triceps_lat_med": 0.14,
+      "triceps_long": 0.06,
+      "obliques": 0.08,
+      "upper_traps": 0.05
+    },
+    "confidence": "medium",
+    "notes": "The landmine's angled arc is press-like toward upper chest, not a true vertical lockout."
+  },
+  {
+    "hevy_id": "2EE45F81",
+    "name": "Single Arm Lat Pulldown",
+    "contributions": {
+      "lats": 0.5,
+      "biceps": 0.15,
+      "mid_traps_rhomboids": 0.13,
+      "forearms": 0.05,
+      "rear_delt": 0.05,
+      "obliques": 0.12
+    },
+    "confidence": "medium",
+    "notes": "Unilateral pull adds an anti-lateral-flexion core demand."
+  },
+  {
+    "hevy_id": "DE68C825",
+    "name": "Single Arm Lateral Raise (Cable)",
+    "contributions": {
+      "side_delt": 0.82,
+      "front_delt": 0.06,
+      "upper_traps": 0.12
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "8347DFD1",
+    "name": "Single Arm Tricep Extension (Dumbbell)",
+    "contributions": {
+      "triceps_long": 0.58,
+      "triceps_lat_med": 0.42
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "552AB030",
+    "name": "Single Arm Triceps Pushdown (Cable)",
+    "contributions": {
+      "triceps_lat_med": 0.75,
+      "triceps_long": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "629AE73D",
+    "name": "Single Leg Extensions",
+    "contributions": {
+      "quads_vasti": 0.7,
+      "quads_rectus_femoris": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "CBC0D834",
+    "name": "Single Leg Glute Bridge",
+    "contributions": {
+      "glute_max": 0.55,
+      "hamstrings": 0.22,
+      "glute_med": 0.13,
+      "quads_vasti": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "487B3755",
+    "name": "Single Leg Hip Thrust",
+    "contributions": {
+      "glute_max": 0.55,
+      "hamstrings": 0.22,
+      "glute_med": 0.13,
+      "quads_vasti": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "D1CD146F",
+    "name": "Single Leg Hip Thrust (Dumbbell)",
+    "contributions": {
+      "glute_max": 0.55,
+      "hamstrings": 0.22,
+      "glute_med": 0.13,
+      "quads_vasti": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "3FD83744",
+    "name": "Single Leg Press (Machine)",
+    "contributions": {
+      "quads_vasti": 0.43,
+      "quads_rectus_femoris": 0.14,
+      "glute_max": 0.25,
+      "glute_med": 0.06,
+      "hamstrings": 0.09,
+      "adductors": 0.03
+    },
+    "confidence": "medium",
+    "notes": "Unilateral loading adds a small balance/glute-med demand."
+  },
+  {
+    "hevy_id": "93472AC1",
+    "name": "Single Leg Romanian Deadlift (Barbell)",
+    "contributions": {
+      "hamstrings": 0.38,
+      "glute_max": 0.25,
+      "glute_med": 0.12,
+      "spinal_erectors": 0.15,
+      "obliques": 0.06,
+      "forearms": 0.04
+    },
+    "confidence": "medium",
+    "notes": "Balance demand adds a glute-med/oblique stabilizing role."
+  },
+  {
+    "hevy_id": "937292AB",
+    "name": "Single Leg Romanian Deadlift (Dumbbell)",
+    "contributions": {
+      "hamstrings": 0.38,
+      "glute_max": 0.25,
+      "glute_med": 0.12,
+      "spinal_erectors": 0.15,
+      "obliques": 0.06,
+      "forearms": 0.04
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "238BA231",
+    "name": "Single Leg Standing Calf Raise",
+    "contributions": {
+      "gastrocnemius": 0.68,
+      "soleus": 0.32
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "E51CCBE5",
+    "name": "Single Leg Standing Calf Raise (Barbell)",
+    "contributions": {
+      "gastrocnemius": 0.68,
+      "soleus": 0.32
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "5DA40761",
+    "name": "Single Leg Standing Calf Raise (Dumbbell)",
+    "contributions": {
+      "gastrocnemius": 0.68,
+      "soleus": 0.32
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B05C2C29",
+    "name": "Single Leg Standing Calf Raise (Machine)",
+    "contributions": {
+      "gastrocnemius": 0.68,
+      "soleus": 0.32
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F5DEF1EB",
+    "name": "Sissy Squat (Weighted)",
+    "contributions": {
+      "quads_vasti": 0.55,
+      "quads_rectus_femoris": 0.4,
+      "adductors": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Hips stay extended throughout, making this a near-pure knee-extension movement (unusual, but biomechanically unambiguous)."
+  },
+  {
+    "hevy_id": "022DF610",
+    "name": "Sit Up",
+    "contributions": {
+      "rectus_abdominis": 0.75,
+      "obliques": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "9237BA12",
+    "name": "Sit Up (Weighted)",
+    "contributions": {
+      "rectus_abdominis": 0.75,
+      "obliques": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "24A809EF",
+    "name": "Skating",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "glute_med": 0.2,
+      "glute_max": 0.15,
+      "adductors": 0.15,
+      "gastrocnemius": 0.1,
+      "hamstrings": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "5D99A2FA",
+    "name": "Ski Erg",
+    "contributions": {
+      "lats": 0.3,
+      "triceps_long": 0.15,
+      "mid_traps_rhomboids": 0.1,
+      "rectus_abdominis": 0.15,
+      "glute_max": 0.1,
+      "quads_vasti": 0.1,
+      "forearms": 0.1
+    },
+    "confidence": "low",
+    "notes": "Standing double-pole motion is more arm/lat dominant than seated rowing."
+  },
+  {
+    "hevy_id": "84325755",
+    "name": "Skiing",
+    "contributions": {
+      "quads_vasti": 0.4,
+      "glute_max": 0.15,
+      "glute_med": 0.1,
+      "adductors": 0.1,
+      "hamstrings": 0.1,
+      "spinal_erectors": 0.15
+    },
+    "confidence": "low",
+    "notes": "Downhill skiing involves heavy sustained eccentric quad loading."
+  },
+  {
+    "hevy_id": "875F585F",
+    "name": "Skullcrusher (Barbell)",
+    "contributions": {
+      "triceps_long": 0.5,
+      "triceps_lat_med": 0.5
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "68F8A292",
+    "name": "Skullcrusher (Dumbbell)",
+    "contributions": {
+      "triceps_long": 0.5,
+      "triceps_lat_med": 0.5
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "7D1BD41D",
+    "name": "Sled Pull",
+    "contributions": {
+      "hamstrings": 0.2,
+      "glute_max": 0.3,
+      "quads_vasti": 0.2,
+      "gastrocnemius": 0.1,
+      "spinal_erectors": 0.1,
+      "forearms": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "7757171F",
+    "name": "Sled Push",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "quads_rectus_femoris": 0.1,
+      "glute_max": 0.25,
+      "gastrocnemius": 0.1,
+      "front_delt": 0.12,
+      "triceps_long": 0.08,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "FB09C938",
+    "name": "Snatch",
+    "contributions": {
+      "glute_max": 0.16,
+      "hamstrings": 0.14,
+      "quads_vasti": 0.16,
+      "upper_traps": 0.14,
+      "side_delt": 0.1,
+      "front_delt": 0.08,
+      "spinal_erectors": 0.07,
+      "forearms": 0.1,
+      "mid_traps_rhomboids": 0.05
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "911A58D3",
+    "name": "Snowboarding",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "glute_med": 0.15,
+      "adductors": 0.1,
+      "obliques": 0.15,
+      "hamstrings": 0.1,
+      "spinal_erectors": 0.1,
+      "glute_max": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "2348AB72",
+    "name": "Spider Curl (Barbell)",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "90427D4A",
+    "name": "Spider Curl (Dumbbell)",
+    "contributions": {
+      "biceps": 0.85,
+      "brachialis_brachioradialis": 0.1,
+      "forearms": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "C10A5AC9",
+    "name": "Spiderman",
+    "contributions": {
+      "obliques": 0.55,
+      "rectus_abdominis": 0.35,
+      "front_delt": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "213AB238",
+    "name": "Spinning",
+    "contributions": {
+      "quads_vasti": 0.4,
+      "quads_rectus_femoris": 0.1,
+      "glute_max": 0.2,
+      "hamstrings": 0.2,
+      "gastrocnemius": 0.1
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based cardio; split is a coarse approximation."
+  },
+  {
+    "hevy_id": "E764B907",
+    "name": "Split Jerk",
+    "contributions": {
+      "front_delt": 0.2,
+      "side_delt": 0.12,
+      "triceps_long": 0.12,
+      "upper_traps": 0.1,
+      "quads_vasti": 0.25,
+      "glute_max": 0.12,
+      "spinal_erectors": 0.09
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "20C1A3CB",
+    "name": "Split Squat (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.36,
+      "quads_rectus_femoris": 0.16,
+      "glute_max": 0.24,
+      "glute_med": 0.09,
+      "hamstrings": 0.08,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "9283BABA",
+    "name": "Sprints",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "quads_rectus_femoris": 0.1,
+      "hamstrings": 0.2,
+      "glute_max": 0.2,
+      "gastrocnemius": 0.2,
+      "soleus": 0.1
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based cardio; split is a coarse approximation."
+  },
+  {
+    "hevy_id": "F1258206",
+    "name": "Squat (Band)",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.08,
+      "adductors": 0.09,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "D04AC939",
+    "name": "Squat (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.08,
+      "adductors": 0.09,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "9694DA61",
+    "name": "Squat (Bodyweight)",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.08,
+      "adductors": 0.09,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Depth/tempo varies a lot for bodyweight squats."
+  },
+  {
+    "hevy_id": "DCFF3E9F",
+    "name": "Squat (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.38,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.09,
+      "adductors": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "CC35A01F",
+    "name": "Squat (Machine)",
+    "contributions": {
+      "quads_vasti": 0.38,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.09,
+      "adductors": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "DDCC3821",
+    "name": "Squat (Smith Machine)",
+    "contributions": {
+      "quads_vasti": 0.38,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.09,
+      "adductors": 0.1
+    },
+    "confidence": "high",
+    "notes": "Fixed bar path reduces balance/erector demand vs a free-standing squat."
+  },
+  {
+    "hevy_id": "B82D6418",
+    "name": "Squat (Suspension)",
+    "contributions": {
+      "quads_vasti": 0.35,
+      "quads_rectus_femoris": 0.15,
+      "glute_max": 0.28,
+      "hamstrings": 0.08,
+      "adductors": 0.09,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "A8814C06",
+    "name": "Squat Row",
+    "contributions": {
+      "quads_vasti": 0.25,
+      "quads_rectus_femoris": 0.1,
+      "glute_max": 0.2,
+      "lats": 0.2,
+      "mid_traps_rhomboids": 0.12,
+      "biceps": 0.08,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "low",
+    "notes": "Uncommon combo/machine-specific movement."
+  },
+  {
+    "hevy_id": "4377A52B",
+    "name": "Stair Machine (Floors)",
+    "contributions": {
+      "quads_vasti": 0.25,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.25,
+      "hamstrings": 0.12,
+      "gastrocnemius": 0.2,
+      "soleus": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "4377A52C",
+    "name": "Stair Machine (Steps)",
+    "contributions": {
+      "quads_vasti": 0.25,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.25,
+      "hamstrings": 0.12,
+      "gastrocnemius": 0.2,
+      "soleus": 0.1
+    },
+    "confidence": "low"
+  },
+  {
+    "hevy_id": "ACB2751D",
+    "name": "Standing Cable Glute Kickbacks",
+    "contributions": {
+      "glute_max": 0.7,
+      "hamstrings": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "06745E58",
+    "name": "Standing Calf Raise",
+    "contributions": {
+      "gastrocnemius": 0.7,
+      "soleus": 0.3
+    },
+    "confidence": "high",
+    "notes": "Knee-extended position keeps the gastrocnemius fully engaged, well-documented as gastroc-dominant."
+  },
+  {
+    "hevy_id": "E53CCBE5",
+    "name": "Standing Calf Raise (Barbell)",
+    "contributions": {
+      "gastrocnemius": 0.7,
+      "soleus": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "6DA40660",
+    "name": "Standing Calf Raise (Dumbbell)",
+    "contributions": {
+      "gastrocnemius": 0.7,
+      "soleus": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "E05C2C38",
+    "name": "Standing Calf Raise (Machine)",
+    "contributions": {
+      "gastrocnemius": 0.7,
+      "soleus": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "AA52E8D2",
+    "name": "Standing Calf Raise (Smith)",
+    "contributions": {
+      "gastrocnemius": 0.7,
+      "soleus": 0.3
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "6120CAAB",
+    "name": "Standing Leg Curls",
+    "contributions": {
+      "hamstrings": 0.78,
+      "gastrocnemius": 0.18,
+      "glute_med": 0.04
+    },
+    "confidence": "medium",
+    "notes": "Unilateral standing position adds a small balance demand."
+  },
+  {
+    "hevy_id": "073032BB",
+    "name": "Standing Military Press (Barbell)",
+    "contributions": {
+      "front_delt": 0.45,
+      "side_delt": 0.2,
+      "triceps_lat_med": 0.15,
+      "triceps_long": 0.08,
+      "upper_traps": 0.07,
+      "rectus_abdominis": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "28927A36",
+    "name": "Standing Y Raise (Cable)",
+    "contributions": {
+      "lower_traps": 0.35,
+      "rear_delt": 0.3,
+      "upper_traps": 0.15,
+      "mid_traps_rhomboids": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "128A2381",
+    "name": "Step Up",
+    "contributions": {
+      "quads_vasti": 0.32,
+      "quads_rectus_femoris": 0.13,
+      "glute_max": 0.28,
+      "glute_med": 0.12,
+      "hamstrings": 0.1,
+      "adductors": 0.05
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "EE2938D1",
+    "name": "Sternum Pull up (Gironda)",
+    "contributions": {
+      "lats": 0.48,
+      "mid_traps_rhomboids": 0.22,
+      "rear_delt": 0.1,
+      "biceps": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "medium",
+    "notes": "Pulling to the sternum with a backward lean biases lower lats and mid-back."
+  },
+  {
+    "hevy_id": "D2387AB1",
+    "name": "Straight Arm Lat Pulldown (Cable)",
+    "contributions": {
+      "lats": 0.75,
+      "triceps_long": 0.15,
+      "mid_traps_rhomboids": 0.1
+    },
+    "confidence": "high",
+    "notes": "Locked elbows isolate the lats via shoulder extension; triceps long head assists."
+  },
+  {
+    "hevy_id": "2A48E443",
+    "name": "Straight Leg Deadlift",
+    "contributions": {
+      "hamstrings": 0.5,
+      "glute_max": 0.25,
+      "spinal_erectors": 0.18,
+      "forearms": 0.07
+    },
+    "confidence": "high",
+    "notes": "Even less knee bend than an RDL deepens the hamstring stretch further."
+  },
+  {
+    "hevy_id": "527DA061",
+    "name": "Stretching",
+    "contributions": {
+      "hamstrings": 0.15,
+      "glute_max": 0.15,
+      "spinal_erectors": 0.15,
+      "front_delt": 0.15,
+      "lats": 0.1,
+      "quads_vasti": 0.15,
+      "gastrocnemius": 0.15
+    },
+    "confidence": "low",
+    "notes": "Flexibility work, not a resistance movement; split is nominal only so the schema is satisfiable and shouldn't materially move volume targets."
+  },
+  {
+    "hevy_id": "7593855D",
+    "name": "Suitcase Carry (Dumbbell)",
+    "contributions": {
+      "forearms": 0.28,
+      "obliques": 0.25,
+      "upper_traps": 0.12,
+      "spinal_erectors": 0.15,
+      "glute_max": 0.12,
+      "quads_vasti": 0.08
+    },
+    "confidence": "medium",
+    "notes": "Unilateral load gives the obliques a much larger anti-lateral-flexion role than a bilateral farmer's walk."
+  },
+  {
+    "hevy_id": "D20D7BBE",
+    "name": "Sumo Deadlift",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "hamstrings": 0.18,
+      "glute_max": 0.28,
+      "adductors": 0.14,
+      "spinal_erectors": 0.1,
+      "mid_traps_rhomboids": 0.04,
+      "lats": 0.04,
+      "forearms": 0.02
+    },
+    "confidence": "high",
+    "notes": "Wide stance/upright torso reduces erector/hip-hinge stress and increases quad/adductor involvement vs conventional."
+  },
+  {
+    "hevy_id": "3F5F8D40",
+    "name": "Sumo Squat",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.28,
+      "adductors": 0.26,
+      "hamstrings": 0.1
+    },
+    "confidence": "high",
+    "notes": "Wide stance/toes-out substantially increases adductor recruitment vs a standard squat."
+  },
+  {
+    "hevy_id": "6622E5A0",
+    "name": "Sumo Squat (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.28,
+      "adductors": 0.26,
+      "hamstrings": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "05293BCA",
+    "name": "Sumo Squat (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.28,
+      "adductors": 0.26,
+      "hamstrings": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "5E10D0E6",
+    "name": "Sumo Squat (Kettlebell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.08,
+      "glute_max": 0.28,
+      "adductors": 0.26,
+      "hamstrings": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "218DA87C",
+    "name": "Superman",
+    "contributions": {
+      "spinal_erectors": 0.55,
+      "glute_max": 0.3,
+      "hamstrings": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "B60A678F",
+    "name": "Swimming",
+    "contributions": {
+      "lats": 0.25,
+      "front_delt": 0.15,
+      "side_delt": 0.1,
+      "triceps_long": 0.1,
+      "rectus_abdominis": 0.1,
+      "obliques": 0.1,
+      "gastrocnemius": 0.1,
+      "mid_chest": 0.1
+    },
+    "confidence": "low",
+    "notes": "Assumes freestyle as the default stroke."
+  },
+  {
+    "hevy_id": "08A2974E",
+    "name": "T Bar Row",
+    "contributions": {
+      "lats": 0.4,
+      "mid_traps_rhomboids": 0.22,
+      "biceps": 0.13,
+      "forearms": 0.07,
+      "rear_delt": 0.1,
+      "spinal_erectors": 0.08
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "90E506D5",
+    "name": "Thruster (Barbell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.16,
+      "front_delt": 0.18,
+      "side_delt": 0.08,
+      "triceps_long": 0.08,
+      "spinal_erectors": 0.05,
+      "adductors": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Front squat + overhead press combo; well-understood pattern even if the exact split is estimated."
+  },
+  {
+    "hevy_id": "10313AFD",
+    "name": "Thruster (Kettlebell)",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.16,
+      "front_delt": 0.18,
+      "side_delt": 0.08,
+      "triceps_long": 0.08,
+      "spinal_erectors": 0.05,
+      "adductors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "75BAC5C3",
+    "name": "Toe Touch",
+    "contributions": {
+      "rectus_abdominis": 0.8,
+      "obliques": 0.2
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "B94E35E1",
+    "name": "Toes to Bar",
+    "contributions": {
+      "rectus_abdominis": 0.65,
+      "obliques": 0.15,
+      "forearms": 0.1,
+      "lats": 0.1
+    },
+    "confidence": "medium",
+    "notes": "Full-ROM dynamic version of a hanging leg raise; adds momentum/lat involvement."
+  },
+  {
+    "hevy_id": "FBB62888",
+    "name": "Torso Rotation",
+    "contributions": {
+      "obliques": 0.85,
+      "rectus_abdominis": 0.15
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "243710DE",
+    "name": "Treadmill",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "quads_rectus_femoris": 0.1,
+      "hamstrings": 0.2,
+      "glute_max": 0.2,
+      "gastrocnemius": 0.2,
+      "soleus": 0.1
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based cardio; split is a coarse approximation."
+  },
+  {
+    "hevy_id": "28BB4A95",
+    "name": "Triceps Dip",
+    "contributions": {
+      "triceps_lat_med": 0.35,
+      "triceps_long": 0.25,
+      "front_delt": 0.15,
+      "mid_chest": 0.15,
+      "lower_chest": 0.1
+    },
+    "confidence": "high",
+    "notes": "Upright-torso dip biases triceps over chest, opposite of the forward-lean chest dip."
+  },
+  {
+    "hevy_id": "4B4BF8C2",
+    "name": "Triceps Dip (Assisted)",
+    "contributions": {
+      "triceps_lat_med": 0.35,
+      "triceps_long": 0.25,
+      "front_delt": 0.15,
+      "mid_chest": 0.15,
+      "lower_chest": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "10347BAC",
+    "name": "Triceps Dip (Weighted)",
+    "contributions": {
+      "triceps_lat_med": 0.35,
+      "triceps_long": 0.25,
+      "front_delt": 0.15,
+      "mid_chest": 0.15,
+      "lower_chest": 0.1
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "2F8D3067",
+    "name": "Triceps Extension (Barbell)",
+    "contributions": {
+      "triceps_long": 0.58,
+      "triceps_lat_med": 0.42
+    },
+    "confidence": "medium",
+    "notes": "Assumed overhead/seated variant; lying vs overhead changes the long-head bias."
+  },
+  {
+    "hevy_id": "21310F5F",
+    "name": "Triceps Extension (Cable)",
+    "contributions": {
+      "triceps_long": 0.58,
+      "triceps_lat_med": 0.42
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "3765684D",
+    "name": "Triceps Extension (Dumbbell)",
+    "contributions": {
+      "triceps_long": 0.58,
+      "triceps_lat_med": 0.42
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "3092FADD",
+    "name": "Triceps Extension (Machine)",
+    "contributions": {
+      "triceps_long": 0.58,
+      "triceps_lat_med": 0.42
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "6182EE83",
+    "name": "Triceps Extension (Suspension)",
+    "contributions": {
+      "triceps_long": 0.55,
+      "triceps_lat_med": 0.45
+    },
+    "confidence": "low",
+    "notes": "Suspension-trainer angle varies a lot by set-up."
+  },
+  {
+    "hevy_id": "EC3B69A3",
+    "name": "Triceps Kickback (Cable)",
+    "contributions": {
+      "triceps_lat_med": 0.7,
+      "triceps_long": 0.3
+    },
+    "confidence": "medium",
+    "notes": "Elbow-behind-torso position shortens the long head, biasing lateral/medial heads despite the common belief kickbacks target the long head."
+  },
+  {
+    "hevy_id": "6127A3AD",
+    "name": "Triceps Kickback (Dumbbell)",
+    "contributions": {
+      "triceps_lat_med": 0.7,
+      "triceps_long": 0.3
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "CDC472B1",
+    "name": "Triceps Pressdown",
+    "contributions": {
+      "triceps_lat_med": 0.75,
+      "triceps_long": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "93A552C6",
+    "name": "Triceps Pushdown",
+    "contributions": {
+      "triceps_lat_med": 0.75,
+      "triceps_long": 0.25
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "94B7239B",
+    "name": "Triceps Rope Pushdown",
+    "contributions": {
+      "triceps_lat_med": 0.72,
+      "triceps_long": 0.28
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "7AB9A362",
+    "name": "Upright Row (Barbell)",
+    "contributions": {
+      "side_delt": 0.4,
+      "upper_traps": 0.3,
+      "front_delt": 0.1,
+      "biceps": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "medium",
+    "notes": "Assumes a moderate-width grip; wider grips shift load toward side delt, narrower toward traps."
+  },
+  {
+    "hevy_id": "286C1D0B",
+    "name": "Upright Row (Cable)",
+    "contributions": {
+      "side_delt": 0.4,
+      "upper_traps": 0.3,
+      "front_delt": 0.1,
+      "biceps": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "797F0782",
+    "name": "Upright Row (Dumbbell)",
+    "contributions": {
+      "side_delt": 0.4,
+      "upper_traps": 0.3,
+      "front_delt": 0.1,
+      "biceps": 0.12,
+      "forearms": 0.08
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "6BE68B62",
+    "name": "V Up",
+    "contributions": {
+      "rectus_abdominis": 0.85,
+      "obliques": 0.15
+    },
+    "confidence": "high",
+    "notes": "Simultaneous upper+lower flexion makes this one of the highest-EMG rectus abdominis exercises."
+  },
+  {
+    "hevy_id": "72880C57",
+    "name": "Vertical Traction (Machine)",
+    "contributions": {
+      "lats": 0.55,
+      "mid_traps_rhomboids": 0.14,
+      "biceps": 0.15,
+      "forearms": 0.05,
+      "rear_delt": 0.06,
+      "brachialis_brachioradialis": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "72297E8C",
+    "name": "Waiter Curl (Dumbbell)",
+    "contributions": {
+      "biceps": 0.78,
+      "brachialis_brachioradialis": 0.12,
+      "forearms": 0.1
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "33EDD7DB",
+    "name": "Walking",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "quads_rectus_femoris": 0.08,
+      "hamstrings": 0.15,
+      "glute_max": 0.2,
+      "gastrocnemius": 0.17,
+      "soleus": 0.15,
+      "adductors": 0.05
+    },
+    "confidence": "low",
+    "notes": "Time/distance-based cardio; split is a coarse approximation."
+  },
+  {
+    "hevy_id": "32HKJ34K",
+    "name": "Walking Lunge",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "quads_rectus_femoris": 0.13,
+      "glute_max": 0.28,
+      "glute_med": 0.11,
+      "hamstrings": 0.11,
+      "adductors": 0.07
+    },
+    "confidence": "high",
+    "notes": "Continuous forward momentum increases hip-extension/glute drive vs a static lunge."
+  },
+  {
+    "hevy_id": "A733CC5B",
+    "name": "Walking Lunge (Dumbbell)",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "quads_rectus_femoris": 0.13,
+      "glute_max": 0.28,
+      "glute_med": 0.11,
+      "hamstrings": 0.11,
+      "adductors": 0.07
+    },
+    "confidence": "high"
+  },
+  {
+    "hevy_id": "F30A4F01",
+    "name": "Walking Lunge (Sandbag)",
+    "contributions": {
+      "quads_vasti": 0.3,
+      "quads_rectus_femoris": 0.13,
+      "glute_max": 0.28,
+      "glute_med": 0.11,
+      "hamstrings": 0.11,
+      "adductors": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Sandbag load distribution (shouldered/hugged) is less standardized than a dumbbell."
+  },
+  {
+    "hevy_id": "A1F47ACC",
+    "name": "Wall Ball",
+    "contributions": {
+      "quads_vasti": 0.28,
+      "quads_rectus_femoris": 0.12,
+      "glute_max": 0.18,
+      "front_delt": 0.15,
+      "triceps_long": 0.1,
+      "side_delt": 0.07,
+      "adductors": 0.05,
+      "spinal_erectors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "C8706C80",
+    "name": "Wall Sit",
+    "contributions": {
+      "quads_vasti": 0.55,
+      "quads_rectus_femoris": 0.2,
+      "glute_max": 0.1,
+      "rectus_abdominis": 0.1,
+      "adductors": 0.05
+    },
+    "confidence": "medium"
+  },
+  {
+    "hevy_id": "79EF4E4F",
+    "name": "Warm Up",
+    "contributions": {
+      "quads_vasti": 0.2,
+      "glute_max": 0.15,
+      "hamstrings": 0.15,
+      "front_delt": 0.15,
+      "mid_chest": 0.1,
+      "lats": 0.1,
+      "gastrocnemius": 0.15
+    },
+    "confidence": "low",
+    "notes": "Generic category; actual muscles depend entirely on what was done. Split is nominal only."
+  },
+  {
+    "hevy_id": "7C50F118",
+    "name": "Wide Pull Up",
+    "contributions": {
+      "lats": 0.55,
+      "mid_traps_rhomboids": 0.15,
+      "rear_delt": 0.1,
+      "biceps": 0.1,
+      "forearms": 0.06,
+      "brachialis_brachioradialis": 0.04
+    },
+    "confidence": "high",
+    "notes": "Wider grip shortens elbow-flexor leverage, shifting emphasis to lat width and rear delt."
+  },
+  {
+    "hevy_id": "B31EB524",
+    "name": "Wide-Elbow Triceps Press (Dumbbell)",
+    "contributions": {
+      "triceps_lat_med": 0.35,
+      "triceps_long": 0.15,
+      "mid_chest": 0.3,
+      "front_delt": 0.2
+    },
+    "confidence": "low",
+    "notes": "Uncommon/ambiguously named movement (flared-elbow tate-press style)."
+  },
+  {
+    "hevy_id": "0E4523F4",
+    "name": "Wrist Roller",
+    "contributions": {
+      "forearms": 0.8,
+      "front_delt": 0.15,
+      "brachialis_brachioradialis": 0.05
+    },
+    "confidence": "medium",
+    "notes": "Isometric shoulder-flexion holding load adds a front-delt share."
+  },
+  {
+    "hevy_id": "8C9D2928",
+    "name": "Yoga",
+    "contributions": {
+      "front_delt": 0.15,
+      "rectus_abdominis": 0.15,
+      "obliques": 0.1,
+      "hamstrings": 0.15,
+      "glute_max": 0.15,
+      "spinal_erectors": 0.15,
+      "gastrocnemius": 0.15
+    },
+    "confidence": "low",
+    "notes": "General practice, not a targeted hard-set movement — split is a rough full-body approximation."
+  },
+  {
+    "hevy_id": "40C6A9FC",
+    "name": "Zercher Squat",
+    "contributions": {
+      "quads_vasti": 0.38,
+      "quads_rectus_femoris": 0.22,
+      "glute_max": 0.18,
+      "hamstrings": 0.07,
+      "adductors": 0.05,
+      "spinal_erectors": 0.03,
+      "biceps": 0.07
+    },
+    "confidence": "medium",
+    "notes": "Bar held in the elbow crooks adds an isometric biceps hold."
+  },
+  {
+    "hevy_id": "123EE239",
+    "name": "Zottman Curl (Dumbbell)",
+    "contributions": {
+      "biceps": 0.45,
+      "brachialis_brachioradialis": 0.3,
+      "forearms": 0.25
+    },
+    "confidence": "medium",
+    "notes": "Supinated concentric (biceps) + pronated eccentric (brachioradialis/forearms) combine two grip emphases in one rep."
+  }
+]
