@@ -154,6 +154,16 @@ describe("lib/hevy", () => {
     expect(result.updated).toEqual([]);
   });
 
+  it("syncWorkoutEvents tolerates Hevy's empty-result shape ({ workouts: [] }, no events key)", async () => {
+    // Observed live 2026-08-18: with nothing since `since`, the API returns
+    // { page: 1, page_count: 1, workouts: [] } — no `events` array at all.
+    fetchMock.mockResolvedValueOnce(jsonResponse({ page: 1, page_count: 1, workouts: [] }));
+
+    const result = await syncWorkoutEvents("2026-08-18T20:00:00Z");
+
+    expect(result).toEqual({ updated: [], deletedIds: [] });
+  });
+
   it("throws HevyApiError with the status on a non-2xx response", async () => {
     fetchMock.mockResolvedValueOnce(jsonResponse({ error: "nope" }, 401));
 

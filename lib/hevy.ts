@@ -243,7 +243,19 @@ export async function getWorkoutEventsPage(
   page: number,
   pageSize: number = EVENTS_MAX_PAGE_SIZE,
 ): Promise<PaginatedWorkoutEvents> {
-  return hevyFetch<PaginatedWorkoutEvents>("workouts/events", { since, page, pageSize });
+  const raw = await hevyFetch<Partial<PaginatedWorkoutEvents>>("workouts/events", {
+    since,
+    page,
+    pageSize,
+  });
+  // Observed 2026-08-18: when there are no events since `since`, Hevy returns
+  // `{ page, page_count, workouts: [] }` (no `events` key at all) instead of
+  // `{ ..., events: [] }`. Normalise so callers can always iterate `events`.
+  return {
+    page: raw.page ?? page,
+    page_count: raw.page_count ?? 1,
+    events: Array.isArray(raw.events) ? raw.events : [],
+  };
 }
 
 /** Fetches every workout on the account, paginating until exhausted. Used
