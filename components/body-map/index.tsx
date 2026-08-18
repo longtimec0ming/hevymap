@@ -105,7 +105,7 @@ export function BodyMap({
               onMuscleHover={handleHover}
               onMuscleFocus={handleFocus}
             />
-            <span className="text-xs uppercase tracking-wide text-zinc-500">Front</span>
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Front</span>
           </div>
         )}
         {showBack && (
@@ -118,7 +118,7 @@ export function BodyMap({
               onMuscleHover={handleHover}
               onMuscleFocus={handleFocus}
             />
-            <span className="text-xs uppercase tracking-wide text-zinc-500">Back</span>
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Back</span>
           </div>
         )}
       </div>

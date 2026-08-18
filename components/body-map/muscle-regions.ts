@@ -472,11 +472,36 @@ const HAIR = symmetric([
   [200, 45],
 ]);
 
+// Back-of-head hair: the same crop up top, but instead of stopping at the
+// temple it keeps going — a full cap that covers the crown all the way down
+// to the nape, with a narrow waist at ear height so the ear still pokes out.
+const HAIR_BACK = symmetric([
+  [200, 12],
+  [172, 15],
+  [153, 32],
+  [145, 58],
+  [148, 78],
+  [169, 88],
+  [167, 98],
+  [170, 108],
+  [148, 120],
+  [143, 130],
+  [168, 138],
+  [200, 140],
+]);
+
 // Drawn before the head so only the outer rim of each ear shows.
 const EAR_PROFILE: Section = [[163, 84], [155, 87], [152, 97], [157, 106], [164, 103]];
 const EARS = [
   loop(EAR_PROFILE),
   loop(EAR_PROFILE.map(([x, y]) => [FIGURE_WIDTH - x, y] as Pt)),
+];
+
+// Back view: same ear, pulled in a touch so it reads narrower from behind.
+const EAR_PROFILE_BACK: Section = [[163, 84], [157, 87], [156, 97], [159, 106], [164, 103]];
+const EARS_BACK = [
+  loop(EAR_PROFILE_BACK),
+  loop(EAR_PROFILE_BACK.map(([x, y]) => [FIGURE_WIDTH - x, y] as Pt)),
 ];
 
 // Thick athletic neck running into the trap slope.
@@ -733,6 +758,10 @@ const FRONT_DETAILS: string[] = [
   "M143,842 C144,848 145,851 145,854",
   "M154,844 C155,849 155,852 155,855",
   "M165,843 C165,848 165,851 164,853",
+  // Palm creases: this is the palm side of the hand.
+  "M52,518 C62,522 72,522 80,518",
+  "M50,528 C62,533 74,533 84,527",
+  "M52,538 C64,541 74,540 82,535",
 ];
 
 // ---------------------------------------------------------------------------
@@ -922,6 +951,11 @@ const BACK_DETAILS: string[] = [
   "M150,782 C150,794 151,802 152,810",
   // Heel.
   "M137,838 C146,844 160,844 170,838",
+  // Knuckle row: this is the back of the hand, not the palm.
+  "M42,551 C44,556 50,556 52,551",
+  "M54,554 C56,559 62,559 64,554",
+  "M66,552 C68,557 74,557 76,552",
+  "M78,541 C80,546 86,546 88,541",
 ];
 
 // ---------------------------------------------------------------------------
@@ -929,14 +963,14 @@ const BACK_DETAILS: string[] = [
 // ---------------------------------------------------------------------------
 
 const BASE = [full(THIGH), full(SHANK), full(UPPER_ARM), full(FOREARM), HAND];
-const CENTRE = [...EARS, HEAD, NECK];
-const HAIR_ART = [HAIR];
+const CENTRE_FRONT = [...EARS, HEAD, NECK];
+const CENTRE_BACK = [...EARS_BACK, HEAD, NECK];
 const OUTLINE = [full(UPPER_ARM), full(FOREARM), full(THIGH), full(SHANK)];
 
 export const FRONT_ART: ViewArt = {
   base: [...BASE, full(TORSO_FRONT), FOOT_FRONT],
-  centre: CENTRE,
-  hair: HAIR_ART,
+  centre: CENTRE_FRONT,
+  hair: [HAIR],
   silhouette: FRONT_SILHOUETTE,
   regions: FRONT_REGIONS,
   outline: [...OUTLINE, full(TORSO_FRONT), FOOT_FRONT, HAND],
@@ -945,8 +979,8 @@ export const FRONT_ART: ViewArt = {
 
 export const BACK_ART: ViewArt = {
   base: [...BASE, full(TORSO_BACK), FOOT_BACK],
-  centre: CENTRE,
-  hair: HAIR_ART,
+  centre: CENTRE_BACK,
+  hair: [HAIR_BACK],
   silhouette: BACK_SILHOUETTE,
   regions: BACK_REGIONS,
   outline: [...OUTLINE, full(TORSO_BACK), FOOT_BACK, HAND],
