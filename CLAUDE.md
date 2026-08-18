@@ -35,7 +35,7 @@ A and B are independent. C depends on A's taxonomy and B's storage interfaces (a
 - Warm-up sets excluded from volume by default (Hevy set type flag); respect the settings toggle everywhere volume is computed.
 - Client fetches go only to `/api/*` — never directly to api.hevyapp.com.
 - Keep `muscle-map.json` alphabetized by exercise name to minimize PR diff noise.
-- **Keep `README.md` current.** Any commit that completes a build step, adds a command/env var, or changes setup instructions must update `README.md` in the same commit: tick off the relevant box in its "Build status" checklist, and update Stack/Commands/Environment/Deploy sections if they changed. Treat this the same as updating a test — the task isn't done until README reflects it.
+- **Keep `README.md` current.** Any change that alters setup, env vars, features, or commands must update the relevant README section in the same commit. Treat this the same as updating a test — the task isn't done until README reflects it.
 
 ## Commands
 - `npm run dev` / `npm run build`

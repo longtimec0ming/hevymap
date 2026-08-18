@@ -2,6 +2,12 @@
   "name": "hevymap",
   "version": "0.1.0",
   "private": true,
+  "description": "Sub-muscle volume tracker for Hevy: allocates your logged sets to 26 sub-muscles and visualizes weekly volume on an anatomical body map.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/longtimec0ming/hevymap.git"
+  },
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
