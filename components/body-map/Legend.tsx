@@ -12,11 +12,11 @@ const SAMPLE_BAND: readonly [number, number] = [1, 2];
 
 export function Legend({ className }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-3 text-xs text-zinc-400 ${className ?? ""}`}>
+    <div className={`flex items-center gap-3 text-xs text-muted-foreground ${className ?? ""}`}>
       {STOPS.map(({ label, sets }) => (
         <div key={label} className="flex items-center gap-1.5">
           <span
-            className="inline-block h-3 w-3 rounded-sm border border-zinc-600"
+            className="inline-block h-3 w-3 rounded-sm border border-border"
             style={{
               // "No data" muscles keep the figure's neutral muscle tone rather
               // than disappearing, so the swatch has to match it.

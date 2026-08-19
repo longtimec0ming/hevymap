@@ -16,7 +16,6 @@ import {
   workoutDurationStats,
 } from "@/lib/stats";
 import { formatWeight } from "@/lib/units";
-import { cn } from "@/lib/utils";
 import type { HevyWorkout } from "@/lib/hevy";
 import type { VolumeByMuscle } from "@/lib/volume";
 
@@ -77,15 +76,11 @@ function Tile({
       <CardContent className="flex items-center gap-2 px-2.5">
         <Icon className="size-3.5 shrink-0 text-brand" strokeWidth={1.75} />
         <div className="min-w-0 leading-tight">
-          <p className={cn("truncate text-sm font-semibold tabular-nums tracking-tight")}>
-            {value} <span className="text-[10px] font-normal text-muted-foreground">{label}</span>
-            {deltaPct !== undefined && (
-              <>
-                {" "}
-                <Delta pct={deltaPct} />
-              </>
-            )}
+          <p className="flex items-baseline gap-1 text-sm font-semibold tabular-nums tracking-tight">
+            {value}
+            {deltaPct !== undefined && <Delta pct={deltaPct} />}
           </p>
+          <p className="text-[10px] leading-tight text-muted-foreground">{label}</p>
         </div>
       </CardContent>
     </Card>
@@ -117,7 +112,7 @@ export function StatTiles({
   const prevHours = hasPrevious ? workoutDurationStats(previousWorkoutsInPeriod!).totalHours : 0;
 
   return (
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-8">
       <Tile
         icon={Dumbbell}
         label="Workouts"

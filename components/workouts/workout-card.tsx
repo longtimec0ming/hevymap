@@ -56,10 +56,13 @@ export interface WorkoutCardProps {
   templatesById: ReadonlyMap<string, HevyExerciseTemplate>;
   includeWarmups: boolean;
   units: "kg" | "lbs";
+  /** Initial value for `expanded`, e.g. when linked to directly from the
+   * dashboard's Recent workouts card. */
+  defaultExpanded?: boolean;
 }
 
-export function WorkoutCard({ workout, templatesById, includeWarmups, units }: WorkoutCardProps) {
-  const [expanded, setExpanded] = useState(false);
+export function WorkoutCard({ workout, templatesById, includeWarmups, units, defaultExpanded }: WorkoutCardProps) {
+  const [expanded, setExpanded] = useState(defaultExpanded ?? false);
   const [selectedExerciseIndex, setSelectedExerciseIndex] = useState<number | null>(null);
 
   const targetBands = getEffectiveTargetBands();
@@ -76,7 +79,7 @@ export function WorkoutCard({ workout, templatesById, includeWarmups, units }: W
   );
 
   return (
-    <Card className="border-border/70">
+    <Card id={`workout-${workout.id}`} className="border-border/70">
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}

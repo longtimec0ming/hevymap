@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useWorkoutData } from "@/lib/hooks/use-workout-data";
 import { runIncrementalSync } from "@/lib/sync";
 import { cn } from "@/lib/utils";
@@ -150,7 +151,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <div className="border-t border-sidebar-border px-3 py-3">
             <SyncStatus />
-            <p className="mt-3 text-[11px] tabular-nums text-sidebar-foreground/40">{APP_VERSION}</p>
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <p className="text-[11px] tabular-nums text-sidebar-foreground/40">{APP_VERSION}</p>
+              <ThemeToggle />
+            </div>
           </div>
         </aside>
 

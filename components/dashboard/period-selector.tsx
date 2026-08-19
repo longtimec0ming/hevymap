@@ -1,16 +1,19 @@
 "use client";
 
-// Dashboard timeframe selector (PLAN.md §9.1): rolling 7 days / calendar
-// week / calendar month / custom range / all-time. Presets are a Tabs
-// strip; custom range is a date-range popover with two native date inputs.
-// The chosen scope is persisted via usePrefs (lib/storage.ts Prefs.periodScope).
+// Dashboard timeframe selector (PLAN.md §9.1): calendar week / calendar
+// month / all-time as a Tabs strip, plus a "Last N days" Select (7/14/30/90)
+// and a custom-range popover. The chosen scope is persisted via usePrefs
+// (lib/storage.ts Prefs.periodScope); old persisted "rolling7" values still
+// resolve correctly since rolling7 is just one of the Select's options.
 
 import { useState } from "react";
 import { format } from "date-fns";
 import { CalendarRange } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import type { DateRange, PeriodKind, PeriodScope } from "@/lib/period";
 
 export interface PeriodSelectorProps {
@@ -21,12 +24,27 @@ export interface PeriodSelectorProps {
   currentRange: DateRange;
 }
 
-const PRESETS: { kind: Exclude<PeriodKind, "custom">; label: string }[] = [
-  { kind: "rolling7", label: "7 days" },
+type TabKind = "week" | "month" | "allTime";
+
+const TABS: { kind: TabKind; label: string }[] = [
   { kind: "week", label: "This week" },
   { kind: "month", label: "This month" },
   { kind: "allTime", label: "All time" },
 ];
+
+const ROLLING_KINDS = ["rolling7", "rolling14", "rolling30", "rolling90"] as const;
+type RollingKind = (typeof ROLLING_KINDS)[number];
+
+const ROLLING_OPTIONS: { kind: RollingKind; label: string }[] = [
+  { kind: "rolling7", label: "Last 7 days" },
+  { kind: "rolling14", label: "Last 14 days" },
+  { kind: "rolling30", label: "Last 30 days" },
+  { kind: "rolling90", label: "Last 90 days" },
+];
+
+function isRollingKind(kind: PeriodKind): kind is RollingKind {
+  return (ROLLING_KINDS as readonly PeriodKind[]).includes(kind);
+}
 
 function toDateInputValue(date: Date): string {
   return format(date, "yyyy-MM-dd");
@@ -37,25 +55,48 @@ export function PeriodSelector({ scope, onScopeChange, currentRange }: PeriodSel
   const [customEnd, setCustomEnd] = useState(scope.customEnd ?? toDateInputValue(currentRange.end));
   const [popoverOpen, setPopoverOpen] = useState(false);
 
-  const presetValue = scope.kind === "custom" ? "" : scope.kind;
+  const tabValue = scope.kind === "week" || scope.kind === "month" || scope.kind === "allTime" ? scope.kind : "";
+  const rollingValue = isRollingKind(scope.kind) ? scope.kind : "";
 
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Tabs
-        value={presetValue}
+        value={tabValue}
         onValueChange={(value) => {
           if (!value) return;
-          onScopeChange({ kind: value as Exclude<PeriodKind, "custom"> });
+          onScopeChange({ kind: value as TabKind });
         }}
       >
         <TabsList>
-          {PRESETS.map((preset) => (
-            <TabsTrigger key={preset.kind} value={preset.kind}>
-              {preset.label}
+          {TABS.map((tab) => (
+            <TabsTrigger key={tab.kind} value={tab.kind}>
+              {tab.label}
             </TabsTrigger>
           ))}
         </TabsList>
       </Tabs>
+
+      <Select
+        value={rollingValue}
+        onValueChange={(value) => {
+          if (!value) return;
+          onScopeChange({ kind: value as RollingKind });
+        }}
+      >
+        <SelectTrigger
+          size="sm"
+          className={cn(rollingValue && "bg-secondary text-secondary-foreground hover:bg-secondary")}
+        >
+          <SelectValue placeholder="Last…" />
+        </SelectTrigger>
+        <SelectContent>
+          {ROLLING_OPTIONS.map((option) => (
+            <SelectItem key={option.kind} value={option.kind}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger

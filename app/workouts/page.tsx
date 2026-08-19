@@ -1,5 +1,7 @@
 "use client";
 
+import { Suspense, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 import { ImportScreen } from "@/components/import/import-screen";
 import { WorkoutCard } from "@/components/workouts/workout-card";
@@ -7,8 +9,28 @@ import { usePrefs } from "@/lib/hooks/use-prefs";
 import { useWorkoutData } from "@/lib/hooks/use-workout-data";
 
 export default function WorkoutsPage() {
+  return (
+    <Suspense fallback={<DashboardSkeleton />}>
+      <WorkoutsPageContent />
+    </Suspense>
+  );
+}
+
+function WorkoutsPageContent() {
   const data = useWorkoutData();
   const [prefs] = usePrefs();
+  const searchParams = useSearchParams();
+  const targetWorkoutId = searchParams.get("workout");
+  const hasScrolled = useRef(false);
+
+  useEffect(() => {
+    if (!data.loaded || !targetWorkoutId || hasScrolled.current) return;
+    const el = document.getElementById(`workout-${targetWorkoutId}`);
+    if (el) {
+      el.scrollIntoView({ block: "start" });
+      hasScrolled.current = true;
+    }
+  }, [data.loaded, targetWorkoutId]);
 
   if (!data.loaded) return <DashboardSkeleton />;
   if (data.needsImport) return <ImportScreen onComplete={data.refresh} />;
@@ -35,6 +57,7 @@ export default function WorkoutsPage() {
               templatesById={data.templatesById}
               includeWarmups={prefs.includeWarmups}
               units={prefs.units}
+              defaultExpanded={workout.id === targetWorkoutId}
             />
           ))}
         </div>

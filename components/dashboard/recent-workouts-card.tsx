@@ -1,6 +1,6 @@
 "use client";
 
-// Dashboard "Recent workouts" card (item 4): the last 5 workouts with date,
+// Dashboard "Recent workouts" card (item 4): the last 3 workouts with date,
 // title, duration, sets, and a muscle-distribution mini-bar (same component
 // as the collapsed workout row, components/workouts/muscle-distribution-bar.tsx),
 // plus a "See all ->" link to /workouts. No range/bucket controls — this
@@ -14,7 +14,7 @@ import type { HevyExerciseTemplate, HevyWorkout } from "@/lib/hevy";
 import { getOverrides } from "@/lib/overrides";
 import { computeVolumeByMuscle } from "@/lib/volume";
 
-const RECENT_COUNT = 5;
+const RECENT_COUNT = 3;
 
 function formatDuration(startTime: string, endTime: string): string {
   const minutes = Math.max(0, Math.round((new Date(endTime).getTime() - new Date(startTime).getTime()) / 60000));
@@ -62,20 +62,25 @@ export function RecentWorkoutsCard({ workouts, templatesById, includeWarmups }: 
               );
               const volume = computeVolumeByMuscle([workout], templatesById, { overrides }, { includeWarmups });
               return (
-                <li key={workout.id} className="py-2.5 first:pt-0 last:pb-0">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">{workout.title || "Workout"}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(workout.start_time).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
-                        {" · "}
-                        {formatDuration(workout.start_time, workout.end_time)}
-                        {" · "}
-                        {setCount} sets
-                      </p>
+                <li key={workout.id} className="first:pt-0 last:pb-0">
+                  <Link
+                    href={`/workouts?workout=${workout.id}`}
+                    className="block rounded-md px-1.5 py-2.5 -mx-1.5 transition-colors hover:bg-muted"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium">{workout.title || "Workout"}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(workout.start_time).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                          {" · "}
+                          {formatDuration(workout.start_time, workout.end_time)}
+                          {" · "}
+                          {setCount} sets
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <MuscleDistributionBar volumeByMuscle={volume} className="mt-2" />
+                    <MuscleDistributionBar volumeByMuscle={volume} className="mt-2" />
+                  </Link>
                 </li>
               );
             })}

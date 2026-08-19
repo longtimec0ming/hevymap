@@ -55,8 +55,8 @@ const SUB_MUSCLE_COLORS = [
   "var(--chart-4)",
   "var(--chart-5)",
   "var(--brand)",
-  "color-mix(in oklch, var(--chart-1) 55%, white)",
-  "color-mix(in oklch, var(--chart-3) 55%, white)",
+  "color-mix(in oklch, var(--chart-1) 55%, var(--foreground))",
+  "color-mix(in oklch, var(--chart-3) 55%, var(--foreground))",
 ];
 
 export function SetsBySubMuscleCard({ workouts, templatesById, weekStartsOn, includeWarmups }: SetsBySubMuscleCardProps) {

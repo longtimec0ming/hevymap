@@ -129,15 +129,15 @@ export function BodyMap({
 
       {tooltip && activeTaxon && activeStatus && (
         <div
-          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-md border border-zinc-700 bg-zinc-900/95 px-3 py-2 text-xs text-zinc-100 shadow-lg"
+          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-md border border-border bg-popover px-3 py-2 text-xs text-popover-foreground shadow-lg"
           style={{ left: tooltip.x, top: tooltip.y - 10 }}
           role="status"
         >
           <div className="font-medium">{activeTaxon.displayName}</div>
-          <div className="mt-1 tabular-nums text-zinc-300">
+          <div className="mt-1 tabular-nums text-muted-foreground">
             {formatSets(activeStatus.sets)} sets · {formatWeight(activeStatus.tonnageKg, units)}
           </div>
-          <div className="tabular-nums text-zinc-300">{activeStatus.percentOfTarget}% of target</div>
+          <div className="tabular-nums text-muted-foreground">{activeStatus.percentOfTarget}% of target</div>
         </div>
       )}
     </div>

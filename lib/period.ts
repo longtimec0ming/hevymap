@@ -1,8 +1,12 @@
 // Calendar-week range helpers respecting the user's weekStartsOn pref, plus
 // the dashboard timeframe selector's date math (PLAN.md §9.1 / §10): rolling
-// 7 days, calendar week, calendar month, custom range, all-time — and the
-// pro-rating math ("vs (pro-rated) targets") that scales weekly target
-// bands to whatever period length is selected.
+// N days (7/14/30/90), calendar week, calendar month, custom range,
+// all-time — and the pro-rating math ("vs (pro-rated) targets") that scales
+// weekly target bands to whatever period length is selected. "week" and
+// "month" only count elapsed time (today through the start of the
+// week/month): mid-week or mid-month, range.end is capped at end-of-today
+// rather than running to the end of the calendar period, so targets don't
+// get pro-rated against days that haven't happened yet.
 
 import {
   differenceInCalendarDays,
@@ -27,8 +31,8 @@ export interface DateRange {
 
 /** The calendar week `weeksAgo` weeks before the current one (0 = this
  * week), per weekStartsOn (0 = Sunday, 1 = Monday, date-fns convention). */
-export function weekRange(weekStartsOn: 0 | 1, weeksAgo = 0): DateRange {
-  const anchor = subWeeks(new Date(), weeksAgo);
+export function weekRange(weekStartsOn: 0 | 1, weeksAgo = 0, now = new Date()): DateRange {
+  const anchor = subWeeks(now, weeksAgo);
   return {
     start: startOfWeek(anchor, { weekStartsOn }),
     end: endOfWeek(anchor, { weekStartsOn }),
@@ -47,7 +51,7 @@ export function filterWorkoutsInRange(workouts: HevyWorkout[], range: DateRange)
 // Dashboard timeframe selector (PLAN.md §9.1)
 // ---------------------------------------------------------------------------
 
-export type PeriodKind = "rolling7" | "week" | "month" | "custom" | "allTime";
+export type PeriodKind = "rolling7" | "rolling14" | "rolling30" | "rolling90" | "week" | "month" | "custom" | "allTime";
 
 /** Persisted in Prefs.periodScope (lib/storage.ts). customStart/customEnd
  * are "yyyy-MM-dd" date-only strings (native <input type="date"> format),
@@ -60,9 +64,15 @@ export interface PeriodScope {
 
 export const DEFAULT_PERIOD_SCOPE: PeriodScope = { kind: "week" };
 
+/** The last `days` days including today: [today - (days-1) 00:00, today
+ * 23:59:59]. */
+export function rollingRange(days: number, now = new Date()): DateRange {
+  return { start: startOfDay(subDays(now, days - 1)), end: endOfDay(now) };
+}
+
 /** The last 7 days including today: [today - 6 days 00:00, today 23:59:59]. */
 export function rolling7DayRange(now = new Date()): DateRange {
-  return { start: startOfDay(subDays(now, 6)), end: endOfDay(now) };
+  return rollingRange(7, now);
 }
 
 /** The calendar month `monthsAgo` months before the current one (0 = this
@@ -104,6 +114,13 @@ function formatRangeLabel(range: DateRange): string {
   return `${dayFormatter.format(range.start)} – ${dayFormatter.format(range.end)}`;
 }
 
+/** Appends "(N of M days)" to a range label when the period has been
+ * truncated to elapsed time (mid-week / mid-month), so the pro-rating basis
+ * is visible in the header. No-op when the full period has already elapsed. */
+function withElapsedSuffix(label: string, elapsedDays: number, fullDays: number): string {
+  return elapsedDays < fullDays ? `${label} (${elapsedDays} of ${fullDays} days)` : label;
+}
+
 /** Resolves a PeriodScope + the user's weekStartsOn pref into a concrete
  * date range, day count, and label. `workouts` is only consulted for
  * kind === "allTime" (to find the earliest workout). */
@@ -114,13 +131,19 @@ export function resolvePeriod(
   now = new Date(),
 ): ResolvedPeriod {
   switch (scope.kind) {
-    case "rolling7": {
-      const range = rolling7DayRange(now);
-      return { range, days: periodDays(range), label: "Last 7 days", isAllTime: false };
-    }
+    case "rolling7":
+      return resolveRolling(7, "Last 7 days", now);
+    case "rolling14":
+      return resolveRolling(14, "Last 14 days", now);
+    case "rolling30":
+      return resolveRolling(30, "Last 30 days", now);
+    case "rolling90":
+      return resolveRolling(90, "Last 90 days", now);
     case "month": {
-      const range = monthRange(now);
-      return { range, days: periodDays(range), label: formatRangeLabel(range), isAllTime: false };
+      const fullRange = monthRange(now);
+      const range = { start: fullRange.start, end: fullRange.end < endOfDay(now) ? fullRange.end : endOfDay(now) };
+      const days = periodDays(range);
+      return { range, days, label: withElapsedSuffix(formatRangeLabel(range), days, periodDays(fullRange)), isAllTime: false };
     }
     case "custom": {
       const range =
@@ -135,10 +158,17 @@ export function resolvePeriod(
     }
     case "week":
     default: {
-      const range = weekRange(weekStartsOn);
-      return { range, days: periodDays(range), label: formatRangeLabel(range), isAllTime: false };
+      const fullRange = weekRange(weekStartsOn, 0, now);
+      const range = { start: fullRange.start, end: fullRange.end < endOfDay(now) ? fullRange.end : endOfDay(now) };
+      const days = periodDays(range);
+      return { range, days, label: withElapsedSuffix(formatRangeLabel(range), days, periodDays(fullRange)), isAllTime: false };
     }
   }
+}
+
+function resolveRolling(days: number, label: string, now: Date): ResolvedPeriod {
+  const range = rollingRange(days, now);
+  return { range, days: periodDays(range), label, isAllTime: false };
 }
 
 /** The same-length window immediately preceding `currentRange`, for

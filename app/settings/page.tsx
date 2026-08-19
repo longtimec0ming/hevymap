@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { OverridesPanel } from "@/components/settings/overrides-panel";
 import { SyncPanel } from "@/components/settings/sync-panel";
 import { TargetEditor } from "@/components/settings/target-editor";
@@ -19,6 +20,21 @@ export default function SettingsPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Settings</h1>
       </div>
+
+      <Card className="border-border/70">
+        <CardHeader>
+          <CardTitle className="text-base">Appearance</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <Label>Theme</Label>
+              <p className="text-xs text-muted-foreground">Light, dark, or match your system setting.</p>
+            </div>
+            <ThemeToggle />
+          </div>
+        </CardContent>
+      </Card>
 
       <Card className="border-border/70">
         <CardHeader>

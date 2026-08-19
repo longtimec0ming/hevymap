@@ -12,11 +12,19 @@ import {
   proRateFactor,
   resolvePeriod,
   rolling7DayRange,
+  rollingRange,
   weekRange,
   weeklyAverageVolume,
   type PeriodScope,
 } from "./period";
 import type { VolumeByMuscle } from "./volume";
+
+// Matches lib/period.ts's internal dayFormatter so label assertions aren't
+// tied to a specific locale's month/day ordering.
+const dayFormatter = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" });
+function rangeLabel(start: Date, end: Date): string {
+  return `${dayFormatter.format(start)} – ${dayFormatter.format(end)}`;
+}
 
 function makeWorkout(id: string, startTime: string): HevyWorkout {
   return {
@@ -85,6 +93,25 @@ describe("rolling7DayRange", () => {
     expect(range.start.getMinutes()).toBe(0);
     expect(range.end.getHours()).toBe(23);
     expect(range.end.getMinutes()).toBe(59);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// rollingRange
+// ---------------------------------------------------------------------------
+
+describe("rollingRange", () => {
+  it("spans exactly `days` calendar days ending today, inclusive", () => {
+    const now = new Date("2026-08-18T15:30:00Z");
+
+    expect(periodDays(rollingRange(14, now))).toBe(14);
+    expect(periodDays(rollingRange(30, now))).toBe(30);
+    expect(periodDays(rollingRange(90, now))).toBe(90);
+  });
+
+  it("rollingRange(7, now) matches rolling7DayRange(now)", () => {
+    const now = new Date("2026-08-18T15:30:00Z");
+    expect(rollingRange(7, now)).toEqual(rolling7DayRange(now));
   });
 });
 
@@ -241,6 +268,15 @@ describe("resolvePeriod", () => {
     expect(resolved.isAllTime).toBe(false);
   });
 
+  it("rolling14/30/90 resolve to their respective trailing windows", () => {
+    expect(resolvePeriod({ kind: "rolling14" }, 1, [], now).days).toBe(14);
+    expect(resolvePeriod({ kind: "rolling14" }, 1, [], now).label).toBe("Last 14 days");
+    expect(resolvePeriod({ kind: "rolling30" }, 1, [], now).days).toBe(30);
+    expect(resolvePeriod({ kind: "rolling30" }, 1, [], now).label).toBe("Last 30 days");
+    expect(resolvePeriod({ kind: "rolling90" }, 1, [], now).days).toBe(90);
+    expect(resolvePeriod({ kind: "rolling90" }, 1, [], now).label).toBe("Last 90 days");
+  });
+
   it("week resolves per weekStartsOn", () => {
     const scope: PeriodScope = { kind: "week" };
     const mon = resolvePeriod(scope, 1, [], now);
@@ -249,11 +285,42 @@ describe("resolvePeriod", () => {
     expect(sun.range.start.getDay()).toBe(0);
   });
 
-  it("month resolves to the current calendar month", () => {
+  it("week counts only elapsed days mid-week, and labels the elapsed fraction", () => {
+    const wednesday = new Date("2026-08-19T12:00:00Z"); // 3rd day of the Mon-start week
+    const resolved = resolvePeriod({ kind: "week" }, 1, [], wednesday);
+    expect(resolved.days).toBe(3);
+    expect(resolved.range.end.getDate()).toBe(19); // capped at today, not Sunday the 23rd
+    expect(resolved.label).toBe(`${rangeLabel(resolved.range.start, resolved.range.end)} (3 of 7 days)`);
+  });
+
+  it("week label has no elapsed-fraction suffix on the last day of the week", () => {
+    const sunday = new Date("2026-08-23T12:00:00Z"); // last day of the Mon-start week
+    const resolved = resolvePeriod({ kind: "week" }, 1, [], sunday);
+    expect(resolved.days).toBe(7);
+    expect(resolved.label).toBe(rangeLabel(resolved.range.start, resolved.range.end));
+  });
+
+  it("month resolves to the current calendar month, capped at today mid-month", () => {
     const scope: PeriodScope = { kind: "month" };
-    const resolved = resolvePeriod(scope, 1, [], now);
+    const resolved = resolvePeriod(scope, 1, [], now); // now = Aug 18
     expect(resolved.range.start.getDate()).toBe(1);
-    expect(resolved.range.end.getDate()).toBe(31); // August
+    expect(resolved.range.end.getDate()).toBe(18); // capped at "now", not the 31st
+  });
+
+  it("month resolves to the full calendar month on the last day of a 30-day month", () => {
+    const sep30 = new Date("2026-09-30T12:00:00Z");
+    const resolved = resolvePeriod({ kind: "month" }, 1, [], sep30);
+    expect(resolved.days).toBe(30);
+    expect(resolved.range.end.getDate()).toBe(30);
+    expect(resolved.label).toBe(rangeLabel(resolved.range.start, resolved.range.end)); // no elapsed suffix
+  });
+
+  it("month counts only elapsed days mid-month, and labels the elapsed fraction", () => {
+    const aug19 = new Date("2026-08-19T12:00:00Z");
+    const resolved = resolvePeriod({ kind: "month" }, 1, [], aug19);
+    expect(resolved.days).toBe(19);
+    expect(resolved.range.end.getDate()).toBe(19);
+    expect(resolved.label).toBe(`${rangeLabel(resolved.range.start, resolved.range.end)} (19 of 31 days)`);
   });
 
   it("custom resolves to the given date-only strings", () => {
@@ -290,6 +357,28 @@ describe("previousPeriodRange", () => {
     const scope: PeriodScope = { kind: "allTime" };
     const current = allTimeRange([], new Date());
     expect(previousPeriodRange(scope, current)).toBeNull();
+  });
+
+  it("matches the elapsed length of a mid-week 'week' period, not the full 7 days", () => {
+    const wednesday = new Date("2026-08-19T12:00:00Z");
+    const scope: PeriodScope = { kind: "week" };
+    const current = resolvePeriod(scope, 1, [], wednesday).range;
+    const previous = previousPeriodRange(scope, current);
+
+    expect(previous).not.toBeNull();
+    expect(periodDays(previous!)).toBe(3); // same as the elapsed current period, not 7
+    expect(previous!.end.getTime()).toBeLessThan(current.start.getTime());
+  });
+
+  it("matches the elapsed length of a mid-month 'month' period, not the full month", () => {
+    const aug19 = new Date("2026-08-19T12:00:00Z");
+    const scope: PeriodScope = { kind: "month" };
+    const current = resolvePeriod(scope, 1, [], aug19).range;
+    const previous = previousPeriodRange(scope, current);
+
+    expect(previous).not.toBeNull();
+    expect(periodDays(previous!)).toBe(19);
+    expect(previous!.end.getTime()).toBeLessThan(current.start.getTime());
   });
 });
 
