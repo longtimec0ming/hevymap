@@ -142,7 +142,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <TooltipProvider>
       <div className="flex min-h-screen">
         {/* Desktop sidebar */}
-        <aside className="hidden md:flex md:w-60 md:shrink-0 md:flex-col md:border-r md:border-sidebar-border md:bg-sidebar">
+        <aside className="hidden md:sticky md:top-0 md:flex md:h-screen md:w-60 md:shrink-0 md:flex-col md:border-r md:border-sidebar-border md:bg-sidebar">
           <div className="flex h-14 items-center px-4">
             <Logo />
           </div>
