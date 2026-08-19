@@ -54,6 +54,7 @@ export function PrsOverTimeCard({
                   allowDecimals={false}
                 />
                 <Tooltip
+                  wrapperStyle={{ zIndex: 50, outline: "none" }}
                   cursor={{ fill: "var(--muted)" }}
                   content={<ChartTooltip formatValue={(v) => `${v} PR${v === 1 ? "" : "s"}`} />}
                 />

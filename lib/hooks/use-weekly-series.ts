@@ -1,8 +1,8 @@
 "use client";
 
 // Shared calendar-week volume series builder — used by the dashboard's
-// sparkline grid and the history page's trend charts / WoW table, so both
-// compute weeks the same way.
+// sparkline grid and the Trends page's trend charts, so both compute weeks
+// the same way.
 
 import { useMemo } from "react";
 import type { HevyExerciseTemplate, HevyWorkout } from "@/lib/hevy";

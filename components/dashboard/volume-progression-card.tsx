@@ -56,6 +56,7 @@ export function VolumeProgressionCard({
                   tickFormatter={(v: number) => v.toLocaleString(undefined, { notation: "compact" })}
                 />
                 <Tooltip
+                  wrapperStyle={{ zIndex: 50, outline: "none" }}
                   cursor={{ stroke: "var(--border)" }}
                   content={<ChartTooltip formatValue={(v) => `${v.toLocaleString(undefined, { maximumFractionDigits: 0 })} ${units}`} />}
                 />

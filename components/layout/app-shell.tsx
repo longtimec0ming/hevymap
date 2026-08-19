@@ -13,7 +13,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Dumbbell, History, LayoutDashboard, ListTree, Menu, RefreshCw, Settings, X } from "lucide-react";
+import { Dumbbell, LayoutDashboard, ListTree, Menu, RefreshCw, Settings, TrendingUp, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/workouts", label: "Workouts", icon: Dumbbell },
-  { href: "/history", label: "History", icon: History },
+  { href: "/trends", label: "Trends", icon: TrendingUp },
   { href: "/exercises", label: "Exercises", icon: ListTree },
   { href: "/settings", label: "Settings", icon: Settings },
 ] as const;

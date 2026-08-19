@@ -123,8 +123,10 @@ export function SetsBySubMuscleCard({ workouts, templatesById, weekStartsOn, inc
                     />
                     <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} tickLine={false} axisLine={false} width={32} />
                     <Tooltip
+                      wrapperStyle={{ zIndex: 50, outline: "none" }}
+                      allowEscapeViewBox={{ x: true, y: true }}
                       cursor={{ fill: "var(--muted)" }}
-                      content={<ChartTooltip formatValue={(v) => `${v.toFixed(1)} sets`} />}
+                      content={<ChartTooltip hideZero formatValue={(v) => `${v.toFixed(1)} sets`} />}
                     />
                     <Legend wrapperStyle={{ fontSize: 11, color: "var(--muted-foreground)" }} />
                     {ids.map((id, i) => (

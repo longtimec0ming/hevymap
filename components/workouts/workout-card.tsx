@@ -23,6 +23,9 @@ function MuscleGroupSummary({ volumeByMuscle }: { volumeByMuscle: VolumeByMuscle
   const groups = groupVolumeByRegion(volumeByMuscle).filter((g) => g.total.sets > 0);
   if (groups.length === 0) return null;
 
+  const totalSets = groups.reduce((sum, g) => sum + g.total.sets, 0);
+  const pct = (sets: number) => (totalSets > 0 ? Math.round((sets / totalSets) * 100) : 0);
+
   return (
     <Accordion defaultValue={REGIONS} multiple>
       {groups.map((group) => (
@@ -30,7 +33,9 @@ function MuscleGroupSummary({ volumeByMuscle }: { volumeByMuscle: VolumeByMuscle
           <AccordionTrigger>
             <span className="flex w-full items-center justify-between pr-6 text-sm">
               <span>{group.region}</span>
-              <span className="tabular-nums text-muted-foreground">{group.total.sets.toFixed(1)} sets</span>
+              <span className="tabular-nums text-muted-foreground">
+                {group.total.sets.toFixed(1)} sets · {pct(group.total.sets)}%
+              </span>
             </span>
           </AccordionTrigger>
           <AccordionContent>
@@ -40,7 +45,9 @@ function MuscleGroupSummary({ volumeByMuscle }: { volumeByMuscle: VolumeByMuscle
                 .map((child) => (
                   <li key={child.id} className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>{child.displayName}</span>
-                    <span className="tabular-nums">{child.volume.sets.toFixed(1)} sets</span>
+                    <span className="tabular-nums">
+                      {child.volume.sets.toFixed(1)} sets · {pct(child.volume.sets)}%
+                    </span>
                   </li>
                 ))}
             </ul>
@@ -112,7 +119,9 @@ export function WorkoutCard({ workout, templatesById, includeWarmups, units, def
             <MuscleGroupSummary volumeByMuscle={workoutVolume} />
           </div>
 
-          <ul className="divide-y divide-border/60">
+          <div>
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Exercises</h3>
+            <ul className="divide-y divide-border/60">
             {workout.exercises.map((exercise, index) => {
               const isSelected = selectedExerciseIndex === index;
               const template = templatesById.get(exercise.exercise_template_id);
@@ -143,7 +152,8 @@ export function WorkoutCard({ workout, templatesById, includeWarmups, units, def
                 </li>
               );
             })}
-          </ul>
+            </ul>
+          </div>
         </CardContent>
       )}
     </Card>

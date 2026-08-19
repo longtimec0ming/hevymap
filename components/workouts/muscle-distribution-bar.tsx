@@ -4,10 +4,12 @@
 // text underneath, e.g. "Chest 38% · Shoulders 22% · Arms 15%". Computed
 // from a workout's VolumeByMuscle via lib/groups.ts's region grouping.
 // Used both on the (collapsed) workout row and the dashboard's Recent
-// workouts card, so distribution is visible without expanding.
+// workouts card, so distribution is visible without expanding. Hovering
+// the bar shows a tooltip listing every region with sets > 0.
 
 import { groupVolumeByRegion } from "@/lib/groups";
 import { REGION_COLORS } from "@/lib/region-colors";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { VolumeByMuscle } from "@/lib/volume";
 
 export interface MuscleDistributionBarProps {
@@ -32,11 +34,31 @@ export function MuscleDistributionBar({ volumeByMuscle, className }: MuscleDistr
 
   return (
     <div className={className}>
-      <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-muted">
-        {withShare.map((g) => (
-          <div key={g.region} style={{ width: `${g.pct}%`, backgroundColor: g.color }} title={`${g.region}: ${g.pct.toFixed(0)}%`} />
-        ))}
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <span className="flex h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                {withShare.map((g) => (
+                  <span key={g.region} style={{ width: `${g.pct}%`, backgroundColor: g.color }} />
+                ))}
+              </span>
+            }
+          />
+          <TooltipContent side="top" align="start">
+            <div className="flex flex-col gap-1">
+              {withShare.map((g) => (
+                <div key={g.region} className="flex items-center gap-1.5 whitespace-nowrap text-xs">
+                  <span className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: g.color }} />
+                  <span>{g.region}</span>
+                  <span className="tabular-nums">{g.pct.toFixed(0)}%</span>
+                  <span className="tabular-nums opacity-80">({g.sets.toFixed(1)} sets)</span>
+                </div>
+              ))}
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <p className="mt-1.5 text-xs text-muted-foreground">
         {topThree.map((g, i) => (
           <span key={g.region}>

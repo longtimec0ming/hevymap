@@ -57,6 +57,7 @@ export function SetsByGroupCard({ workouts, templatesById, weekStartsOn, include
                 />
                 <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} tickLine={false} axisLine={false} width={32} />
                 <Tooltip
+                  wrapperStyle={{ zIndex: 50, outline: "none" }}
                   cursor={{ fill: "var(--muted)" }}
                   content={<ChartTooltip formatValue={(v) => `${v.toFixed(1)} sets`} />}
                 />

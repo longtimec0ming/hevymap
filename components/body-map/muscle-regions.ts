@@ -540,6 +540,39 @@ const HAND = (() => {
   );
 })();
 
+// Back view of the hand: HAND, flipped horizontally about the wrist's own
+// centreline (cx = midpoint of the two wrist edge points, 50 and 80) rather
+// than about the figure's centreline. From behind, with the arms hanging,
+// the thumb sits on the inside next to the body, not on the outside — HAND
+// draws it at the outer edge (x≈46), so back view needs the mirror image.
+// The FOREARM wrist row ([50,504]..[80,500]) is itself symmetric about the
+// same cx=65, so the flipped hand still joins the forearm cleanly.
+const HAND_BACK = (() => {
+  const cx = 65;
+  const flip = ([x, y]: Pt): Pt => [2 * cx - x, y];
+  const wristOuter: Pt = flip([50, 504]);
+  const wristInner: Pt = flip([80, 500]);
+  const thumb = digit(flip([46, 522]), 54, 21, 7.4);
+  const index = digit(flip([47, 554]), 10, 23, 6.8);
+  const middle = digit(flip([59, 557]), 0, 26, 7);
+  const ring = digit(flip([71, 555]), -11, 23, 6.6);
+  const pinky = digit(flip([83, 544]), -26, 19, 5.8);
+  return (
+    `M${pt(wristOuter)} ` +
+    `${curve(flip([47, 508]), flip([44, 512]), thumb.start)} ` +
+    `${thumb.path} ` +
+    `${curve(flip([46, 532]), flip([42, 544]), index.start)} ` +
+    `${index.path} ` +
+    `${web(index.end, middle.start, 3)} ` +
+    `${middle.path} ` +
+    `${web(middle.end, ring.start, 3)} ` +
+    `${ring.path} ` +
+    `${web(ring.end, pinky.start, 3)} ` +
+    `${pinky.path} ` +
+    `${curve(flip([92, 540]), flip([88, 514]), wristInner)} Z`
+  );
+})();
+
 // Foot, seen from the front: the shin rolls into the instep and the toes are
 // only implied by the detail strokes, which reads far better at this size
 // than five separately drawn digits.
@@ -942,7 +975,7 @@ const BACK_SILHOUETTE: string[] = [
   block(FOREARM, 0.12, 2.95, 3, 4, 0.09),
   // Thoracolumbar fascia / flank strip between the lower lat and the glutes.
   block(TORSO_BACK, 6.55, 7.05, [1.2, 1.35], 4, 0.13),
-  HAND,
+  HAND_BACK,
   FOOT_BACK,
 ];
 
@@ -951,24 +984,25 @@ const BACK_DETAILS: string[] = [
   "M150,782 C150,794 151,802 152,810",
   // Heel.
   "M137,838 C146,844 160,844 170,838",
-  // Knuckle row: this is the back of the hand, not the palm.
-  "M42,551 C44,556 50,556 52,551",
-  "M54,554 C56,559 62,559 64,554",
-  "M66,552 C68,557 74,557 76,552",
-  "M78,541 C80,546 86,546 88,541",
+  // Knuckle row: this is the back of the hand, not the palm. Flipped about
+  // the wrist's cx=65 to match HAND_BACK.
+  "M88,551 C86,556 80,556 78,551",
+  "M76,554 C74,559 68,559 66,554",
+  "M64,552 C62,557 56,557 54,552",
+  "M52,541 C50,546 44,546 42,541",
 ];
 
 // ---------------------------------------------------------------------------
 // Assembled views
 // ---------------------------------------------------------------------------
 
-const BASE = [full(THIGH), full(SHANK), full(UPPER_ARM), full(FOREARM), HAND];
+const BASE = [full(THIGH), full(SHANK), full(UPPER_ARM), full(FOREARM)];
 const CENTRE_FRONT = [...EARS, HEAD, NECK];
 const CENTRE_BACK = [...EARS_BACK, HEAD, NECK];
 const OUTLINE = [full(UPPER_ARM), full(FOREARM), full(THIGH), full(SHANK)];
 
 export const FRONT_ART: ViewArt = {
-  base: [...BASE, full(TORSO_FRONT), FOOT_FRONT],
+  base: [...BASE, HAND, full(TORSO_FRONT), FOOT_FRONT],
   centre: CENTRE_FRONT,
   hair: [HAIR],
   silhouette: FRONT_SILHOUETTE,
@@ -978,11 +1012,11 @@ export const FRONT_ART: ViewArt = {
 };
 
 export const BACK_ART: ViewArt = {
-  base: [...BASE, full(TORSO_BACK), FOOT_BACK],
+  base: [...BASE, HAND_BACK, full(TORSO_BACK), FOOT_BACK],
   centre: CENTRE_BACK,
   hair: [HAIR_BACK],
   silhouette: BACK_SILHOUETTE,
   regions: BACK_REGIONS,
-  outline: [...OUTLINE, full(TORSO_BACK), FOOT_BACK, HAND],
+  outline: [...OUTLINE, full(TORSO_BACK), FOOT_BACK, HAND_BACK],
   details: BACK_DETAILS,
 };

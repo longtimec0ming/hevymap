@@ -38,6 +38,7 @@ export function WorkoutsPerWeekCard({ workouts, weekStartsOn }: { workouts: Hevy
                   allowDecimals={false}
                 />
                 <Tooltip
+                  wrapperStyle={{ zIndex: 50, outline: "none" }}
                   cursor={{ fill: "var(--muted)" }}
                   content={<ChartTooltip formatValue={(v) => `${v} workout${v === 1 ? "" : "s"}`} />}
                 />

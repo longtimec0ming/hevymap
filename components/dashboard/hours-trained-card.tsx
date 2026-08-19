@@ -38,6 +38,7 @@ export function HoursTrainedCard({ workouts, weekStartsOn }: { workouts: HevyWor
                 />
                 <YAxis tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} tickLine={false} axisLine={false} width={32} />
                 <Tooltip
+                  wrapperStyle={{ zIndex: 50, outline: "none" }}
                   cursor={{ stroke: "var(--border)" }}
                   content={<ChartTooltip formatValue={(v) => `${v.toFixed(1)}h`} />}
                 />
